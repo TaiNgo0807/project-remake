@@ -39,6 +39,8 @@
     <!-- css -->
     <link rel="stylesheet" href="reset.css" />
     <link rel="stylesheet" href="style.css" />
+    <!-- javascript -->
+    <link rel="stylesheet" href="script.js" />
     <!-- icon -->
     <link
       rel="apple-touch-icon"
@@ -61,25 +63,24 @@
   </head>
 
   <body>
-    <div class="header">
+    <div class="header" id="header">
       <div class="nav-container">
         <a href="#" class="logo">
-          <img src="./picture/logo.png" alt="" height="40px" />
-          <span style="margin-left: 8px; font-size: 20px">Việt Sang</span>
+          <img src="./picture/logo.png" alt="Logo" height="40" />
+          <span>Việt Sang</span>
         </a>
-        <button class="hamburger" id="hamburger-btn">☰</button>
+        <button class="hamburger" id="hamburger-btn" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
         <ul class="nav-menu" id="nav-menu">
-          <li class="nav-items"><a href="#" class="nav-link">Trang chủ</a></li>
-          <li class="nav-items"><a href="#" class="nav-link">Sản Phẩm</a></li>
-          <li class="nav-items">
-            <a href="#" class="nav-link">Mạng xã hội</a>
-          </li>
-          <li class="nav-items">
-            <a href="#" class="nav-link">Về chúng tôi</a>
-          </li>
+          <li><a href="#" class="nav-link">Trang chủ</a></li>
+          <li><a href="#" class="nav-link">Sản Phẩm</a></li>
+          <li><a href="#" class="nav-link">Mạng xã hội</a></li>
+          <li><a href="#" class="nav-link">Về chúng tôi</a></li>
         </ul>
       </div>
     </div>
+
     <section class="hero">
       <div class="container">
         <div class="hero-title">
@@ -318,21 +319,15 @@
             </div>
           </div>
           <div class="form" data-aos="fade-up">
-            <div class="form-field"  data-aos="fade-up">
-              <input
-                type="text"
-                placeholder=" "
-                class="input-info-client"
-               
-              />
+            <div class="form-field" data-aos="fade-up">
+              <input type="text" placeholder=" " class="input-info-client" />
               <label for="name" class="form-label">Tên của bạn</label>
             </div>
-            <div class="form-field"  data-aos="fade-up">
+            <div class="form-field" data-aos="fade-up">
               <input
                 type="phone-number"
                 placeholder=" "
                 class="input-info-client"
-               
               /><label for="name" class="form-label">Số điện thoại</label>
             </div>
             <div class="form-field" data-aos="fade-up">
@@ -342,13 +337,14 @@
                 class="input-info-client"
               /><label for="name" class="form-label">Email của bạn</label>
             </div>
-            <div class="form-field"  data-aos="fade-up">
+            <div class="form-field" data-aos="fade-up">
               <input
                 type="text"
                 placeholder=" "
                 class="input-info-client"
-               
-              /><label for="name" class="form-label">Câu hỏi dành cho chúng tui</label>
+              /><label for="name" class="form-label"
+                >Câu hỏi dành cho chúng tui</label
+              >
             </div>
             <button
               type="submit"
@@ -362,28 +358,26 @@
       </div>
     </section>
 
-    <script>
-      // Đổi màu header khi cuộn
-      window.addEventListener("scroll", function () {
-        const header = document.querySelector(".header");
-        if (window.scrollY > 50) {
-          header.classList.add("scrolled");
-        } else {
-          header.classList.remove("scrolled");
-        }
-      });
-
-      // Toggle menu khi click hamburger
-      document
-        .getElementById("hamburger-btn")
-        .addEventListener("click", function () {
-          document.getElementById("nav-menu").classList.toggle("show");
-        });
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-
     <script>
       AOS.init();
+    </script>
+
+    <script>
+      const header = document.getElementById("header");
+      const btn = document.getElementById("hamburger-btn");
+      const menu = document.getElementById("nav-menu");
+
+      // Scroll đổi màu header
+      window.addEventListener("scroll", () => {
+        header.classList.toggle("scrolled", window.scrollY > 50);
+      });
+
+      // Toggle hamburger/menu
+      btn.addEventListener("click", () => {
+        btn.classList.toggle("open");
+        menu.classList.toggle("show");
+      });
     </script>
   </body>
   <footer class="footer">
