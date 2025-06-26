@@ -249,8 +249,8 @@ html {
   border-radius: 50%;
   background-color: #4caf50;
   position: absolute;
-  bottom: -20px;
-  right: -20px;
+  bottom: -15px;
+  right: -15px;
   padding: 10px;
   width: 100px;
   height: 100px;
@@ -274,6 +274,8 @@ html {
   text-transform: uppercase;
   outline: none;
   border: #4caf50;
+  border-width: 2px;
+  border-style: solid;
   padding: 12px 30px;
   cursor: pointer;
   transition: 0.3s ease;
