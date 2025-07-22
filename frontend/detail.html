@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nông nghiệp Việt Sang</title>
+    <!-- Icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <!-- AOS CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+      rel="stylesheet"
+    />
+
+    <!-- AOS JS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <!-- bosstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+      crossorigin="anonymous"
+    ></script>
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- css -->
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+    <!-- icon -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/picture/favicon_io/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/picture/favicon_io/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/picture/favicon_io/favicon-16x16.png"
+    />
+    <link rel="manifest" href="/picture/favicon_io/site.webmanifest" />
+  </head>
+
+  <body class="index-page">
+    <div class="header" id="header">
+      <div class="nav-container">
+        <a href="#" class="logo">
+          <img src="/picture/logo.png" alt="Logo" height="40" />
+          <span>Việt Sang</span>
+        </a>
+        <button class="hamburger" id="hamburger-btn" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="index.html" class="nav-link">Trang chủ</a></li>
+          <li><a href="product.html" class="nav-link">Sản Phẩm</a></li>
+          <li><a href="#social" class="nav-link">Mạng xã hội</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <a href="tel:1234567890" class="call-btn">
+      <i class="fa-solid fa-phone-volume"></i> 1234567890</a
+    >
+
+    <section class="hero-product" id="hero-product">
+      <div class="container">
+        <div class="hero-title">
+          <h1>Đồng hành cùng bạn</h1>
+        </div>
+        <div class="hero-subtitle">
+          Bạn đang đau đầu về những bệnh của cây lúa. <br />
+          <br />
+          Chúng tôi phân phối, cung cấp những sản phẩm, giải pháp tối ưu cho vấn
+          đề của bạn. <br />
+          <br />
+          Liên hệ trực tiếp với chúng tôi hoặc xem những sản phẩm mà chúng tôi
+          cung cấp.
+        </div>
+        <div class="hero-btn">
+          <a href="#contact" class="btn2">Liên hệ ngay</a>
+        </div>
+      </div>
+    </section>
+    <p style="text-align: center; margin-top: 80px" class="contact-title">
+      Chi tiết sản phẩm
+    </p>
+    <section class="product-detail row row-cols-1 row-cols-md-2">
+      <div class="detail-img col"></div>
+      <div class="col">
+        <div class="detail-content"></div>
+        <div class="detail-instruction"></div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact" data-aos="fade-up">
+      <div class="container text-center">
+        <h2 class="contact-title">Liên hệ | Đặt câu hỏi</h2>
+        <div class="contact-form">
+          <div class="info-container">
+            <div class="info" data-aos="fade-up">
+              <span class="info-icon"
+                ><img src="/picture/location-pointer.png" alt="" /></span
+              ><span class="info-content">Địa chỉ</span>
+            </div>
+            <div class="info" data-aos="fade-up">
+              <span class="info-icon"
+                ><img src="/picture/email.png" alt="" /></span
+              ><span class="info-content">Email</span>
+            </div>
+            <div class="info" data-aos="fade-up">
+              <span class="info-icon"
+                ><img src="/picture/telephone.png" alt=""
+              /></span>
+              <span class="info-content">Số điện thoại</span>
+            </div>
+            <div class="info" data-aos="fade-up">
+              <span class="info-icon">
+                <img src="/picture/clock.png" alt="" />
+              </span>
+              <span class="info-content"
+                >Thời gian làm việc từ 9:00 AM 18:00 PM</span
+              >
+            </div>
+          </div>
+          <div class="form" data-aos="fade-up">
+            <div class="form-field" data-aos="fade-up">
+              <input type="text" placeholder=" " class="input-info-client" />
+              <label for="name" class="form-label">Tên của bạn</label>
+            </div>
+            <div class="form-field" data-aos="fade-up">
+              <input
+                type="phone-number"
+                placeholder=" "
+                class="input-info-client"
+              /><label for="name" class="form-label">Số điện thoại</label>
+            </div>
+            <div class="form-field" data-aos="fade-up">
+              <input
+                type="email"
+                placeholder=" "
+                class="input-info-client"
+              /><label for="name" class="form-label">Email của bạn</label>
+            </div>
+            <div class="form-field" data-aos="fade-up">
+              <input
+                type="text"
+                placeholder=" "
+                class="input-info-client"
+              /><label for="name" class="form-label"
+                >Câu hỏi dành cho chúng tui</label
+              >
+            </div>
+            <button
+              type="submit"
+              class="submit-form btn btn-success"
+              data-aos="fade-up"
+            >
+              Gửi!
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-top">
+          <div class="about-brand">
+            <h4 class="footer-title">Về Nông nghiệp Việt Sang</h4>
+            <p class="footer-content">
+              Chúng tôi hướng đến việc cung cấp sản phẩm chất lượng, dịch vụ tốt
+              nhất cho khác hàng. Nếu có vấn đề gì đừng ngại gửi câu hỏi về cho
+              chúng tôi hoặc gọi trực tiếp số điện thoại trên màn hình.
+            </p>
+            <div class="social" id="social">
+              <div class="facebook">
+                <i
+                  class="fa-brands fa-facebook"
+                  style="font-size: 30px; color: #0866ff"
+                ></i>
+              </div>
+              <div class="tiktok">
+                <i
+                  class="fa-brands fa-tiktok"
+                  style="font-size: 30px; color: #000"
+                ></i>
+              </div>
+              <div class="youtube">
+                <i
+                  class="fa-brands fa-youtube"
+                  style="font-size: 30px; color: red"
+                ></i>
+              </div>
+            </div>
+          </div>
+          <div class="quickLinks">
+            <h2 class="quickLinks-title">Lối tắt</h2>
+            <span class="quickLinks-list"
+              ><a href="index.html">Trang chủ</a></span
+            >
+            <span class="quickLinks-list"
+              ><a href="product.html">Sản phẩm</a></span
+            >
+            <span class="quickLinks-list"
+              ><a href="#feedback">Đánh giá</a></span
+            >
+            <span class="quickLinks-list"><a href="#contact">Liên hệ</a></span>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          © 2025 Nông nghiệp Việt Sang. All Rights Reserved.
+        </div>
+      </div>
+    </footer>
+    <script src="./config/config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
