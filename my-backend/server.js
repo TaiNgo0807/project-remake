@@ -102,6 +102,18 @@ try {
   console.warn("[INFO] Chưa có routes/upload.js hoặc không cần upload.");
 }
 
+app.get("/", (_req, res) => {
+  res.json({
+    ok: true,
+    message: "Backend server is running!",
+    endpoints: {
+      health: "/health",
+      products: "/api/v1/products",
+      contact: "/api/v1/contact",
+    },
+  });
+});
+
 // ---- 404 ----
 app.use((req, res) => {
   res.status(404).json({ error: "Not Found", path: req.originalUrl });
