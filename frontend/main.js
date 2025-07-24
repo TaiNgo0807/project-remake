@@ -159,7 +159,12 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(`${API_BASE}/contact`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, contact: contactVal, message }),
+      body: JSON.stringify({
+        name,
+        phone: phone || null,
+        mail: mail || null,
+        message,
+      }),
     })
       .then((res) => res.json())
       .then((res) => {
