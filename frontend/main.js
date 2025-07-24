@@ -168,7 +168,6 @@ document.addEventListener("DOMContentLoaded", () => {
           location.reload();
         } else {
           alert("Gửi thất bại: " + (res.error || ""));
-          location.reload();
         }
       })
       .catch((err) => {

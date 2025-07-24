@@ -74,11 +74,9 @@ app.post("/api/v1/contact", async (req, res, next) => {
   try {
     const { name, phone, mail, message } = req.body || {};
     if (!name || !message || (!phone && !mail)) {
-      return res
-        .status(400)
-        .json({
-          error: "name, message, and at least one of phone or mail required",
-        });
+      return res.status(400).json({
+        error: "name, message, and at least one of phone or mail required",
+      });
     }
 
     await contactController.submitContact({ name, phone, mail, message });
