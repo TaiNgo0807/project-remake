@@ -72,22 +72,16 @@ app.use("/api/v1/products", productsRouter);
 // ---- Contact ----
 app.post("/api/v1/contact", async (req, res, next) => {
   try {
-    const { name, contact, message } = req.body || {};
-    if (!name || !contact || !message) {
-      return res.status(400).json({ error: "name, contact, message required" });
+    const { name, phone, mail, message } = req.body || {};
+    if (!name || !message || (!phone && !mail)) {
+      return res
+        .status(400)
+        .json({
+          error: "name, message, and at least one of phone or mail required",
+        });
     }
 
-    const isPhone = /^[\d\s+()-]{7,}$/.test(contact);
-    const phone = isPhone ? contact : undefined;
-    const mail = !isPhone ? contact : undefined;
-
-    await contactController.submitContact({
-      name,
-      phone,
-      mail,
-      message,
-    });
-
+    await contactController.submitContact({ name, phone, mail, message });
     res.status(201).json({ ok: true });
   } catch (err) {
     next(err);
