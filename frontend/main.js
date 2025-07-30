@@ -149,10 +149,10 @@ document.addEventListener("DOMContentLoaded", () => {
       i.value.trim()
     );
     // Chọn contact ưu tiên email nếu có, ngược lại dùng phone
-    const contactVal = mail || phone;
+    const contactVal = phone;
     const API_BASE = `${apiUrl}/api/v1`;
     if (!name || !contactVal || !message) {
-      alert("Vui lòng điền đầy đủ tên, email/phone và nội dung.");
+      alert("Vui lòng điền đầy đủ tên và số điện thoại");
       return;
     }
 

@@ -669,15 +669,12 @@ p {
 .footer-top {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  max-width: 100%;
-  height: 260px;
+  padding-top: 20px;
   gap: 20px;
 }
 .about-brand {
   width: 50%;
   height: 100%;
-  margin-top: 20px;
 }
 .footer-title {
   font-size: 1.2rem;
@@ -696,7 +693,6 @@ p {
 }
 
 .quickLinks {
-  margin-top: 20px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -737,6 +733,9 @@ footer {
 .footer-bottom {
   text-align: center;
   padding: 20px 0;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  height: 100%;
 }
 .footer-bottom::before {
   content: "";
@@ -753,14 +752,6 @@ footer {
   gap: 50px;
 }
 
-.facebook:hover,
-.youtube:hover,
-.tiktok:hover {
-  transform: translateY(-6px);
-  transition: 0.3s ease-in-out;
-  box-shadow: 0 20px 20px rgba(0, 0, 0, 0.3);
-}
-
 .hero-product {
   display: flex;
   justify-content: center;
@@ -771,6 +762,7 @@ footer {
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url(https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1948&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
   background-size: cover;
+  margin-bottom: 80px;
 }
 .product-detail {
   margin: 80px 0;
@@ -786,4 +778,22 @@ footer {
   border-radius: 8px;
   text-decoration: none;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.196);
+}
+#searchBtn {
+  border-radius: 4px;
+  border: 1px solid;
+  background-color: #4caf50;
+  height: 25px;
+}
+.findProduct-container {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  margin: 0 20px;
+}
+@media (max-width: 500px) {
+  .findProduct-container {
+    display: flex;
+    flex-direction: column;
+  }
 }
