@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Chọn contact ưu tiên email nếu có, ngược lại dùng phone
     const contactVal = phone;
     const API_BASE = `${apiUrl}/api/v1`;
-    if (!name || !contactVal || !message) {
+    if (!name || !contactVal) {
       alert("Vui lòng điền đầy đủ tên và số điện thoại");
       return;
     }

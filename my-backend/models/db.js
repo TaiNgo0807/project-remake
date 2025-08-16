@@ -6,6 +6,10 @@ if (!process.env.MYSQL_URL) {
 }
 const dbUrl = new URL(process.env.MYSQL_URL);
 
+const ca = process.env.DB_SSL_CA_B64
+  ? Buffer.from(process.env.DB_SSL_CA_B64, "base64").toString("utf8")
+  : process.env.DB_SSL_CA || undefined;
+
 const pool = mysql.createPool({
   host: dbUrl.hostname,
   user: dbUrl.username,
@@ -15,6 +19,7 @@ const pool = mysql.createPool({
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
+  ssl: ca ? { ca, minVersion: "TLSv1.2" } : undefined,
 });
 
 module.exports = pool;
