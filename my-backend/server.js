@@ -48,18 +48,6 @@ app.use(morgan(IS_PROD ? "combined" : "dev"));
 
 // ---- Rate limit (contact + upload) ----
 app.use("/api/v1/contact", rateLimit({ windowMs: 5 * 60 * 1000, max: 30 }));
-app.use("/api/v1/upload", rateLimit({ windowMs: 10 * 60 * 1000, max: 120 }));
-
-// ---- Static uploads ----
-app.use(
-  "/uploads",
-  express.static(path.join(__dirname, "uploads"), {
-    maxAge: "6h",
-    setHeaders(res) {
-      res.setHeader("Access-Control-Allow-Origin", "*");
-    },
-  })
-);
 
 // ---- Health ----
 app.get("/health", (_req, res) =>
@@ -85,14 +73,6 @@ app.post("/api/v1/contact", async (req, res, next) => {
     next(err);
   }
 });
-
-// ---- (Optional) Upload routes nếu anh có ./routes/upload ----
-try {
-  const uploadRoutes = require("./routes/upload");
-  app.use("/api/v1/upload", uploadRoutes);
-} catch (e) {
-  console.warn("[INFO] Chưa có routes/upload.js hoặc không cần upload.");
-}
 
 app.get("/", (_req, res) => {
   res.json({
