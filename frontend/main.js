@@ -110,8 +110,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderProductCard(product) {
-    console.log("product =", product);
-
     const html = `
       <div class="product-card">
         <div class="product-img">
@@ -187,8 +185,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const productId = urlParams.get("id");
   const API_BASE = `${apiUrl}/api/v1`;
 
-  console.log("productId =", productId);
-
   if (!productId) {
     document.querySelector(".detail-content").innerHTML =
       "<p>Không tìm thấy sản phẩm.</p>";
@@ -197,13 +193,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   fetch(`${API_BASE}/products/${productId}`)
     .then((response) => {
-      console.log("API response status:", response.status);
       if (!response.ok) throw new Error("Product not found");
       return response.json();
     })
     .then((product) => {
-      console.log("Fetched product:", product);
-
       // Render ảnh sản phẩm
       document.querySelector(".detail-img").innerHTML = `
         <img src="${product.image_url}" alt="${product.name}" style="width:100%; max-width:600px; border-radius:8px;">
