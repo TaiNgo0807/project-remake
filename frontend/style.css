@@ -3,7 +3,7 @@
 }
 body,
 html {
-  font-family: "Poppins", sans-serif;
+  font-family: "Be Vietnam Pro", sans-serif;
   overflow-x: hidden;
   max-width: 100vw;
   margin: 0;
@@ -39,13 +39,11 @@ p {
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: red;
+  color: #4caf50;
   font-weight: 600;
   font-size: 1.2rem;
 }
-.header.scrolled .logo {
-  color: #4caf50;
-}
+
 .nav-menu {
   display: flex;
   gap: 20px;
@@ -66,14 +64,12 @@ p {
   color: #ffc107;
 }
 .nav-menu li:nth-child(1).active > a {
-  color: #e63946;
+  color: #4caf50;
   font-weight: bold;
-  border-bottom: 2px solid #e63946;
 }
 .nav-menu li:nth-child(2).active > a {
-  color: #e63946;
+  color: #4caf50;
   font-weight: bold;
-  border-bottom: 2px solid #e63946;
 }
 
 /* Hamburger */
@@ -165,7 +161,7 @@ p {
   height: 100vh;
   padding: 100px 0;
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+    url(./assets/picture/anh_bg.jpg);
   background-size: cover;
 }
 .hero-title {
@@ -768,8 +764,8 @@ footer {
   align-items: center;
   height: 100vh;
   padding: 100px 0;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1948&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url(./assets/picture/productBg.jpg);
   background-size: cover;
   margin-bottom: 80px;
 }
