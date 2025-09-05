@@ -161,7 +161,7 @@ p {
   height: 100vh;
   padding: 100px 0;
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(./assets/picture/anh_bg.jpg);
+    url(./assets/picture/iamge_bg2.jpg);
   background-size: cover;
 }
 .hero-title {
@@ -765,7 +765,7 @@ footer {
   height: 100vh;
   padding: 100px 0;
   background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url(./assets/picture/productBg.jpg);
+    url(./assets/picture/image_bg.jpg);
   background-size: cover;
   margin-bottom: 80px;
 }
