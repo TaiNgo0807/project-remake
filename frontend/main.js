@@ -210,7 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Render hướng dẫn sử dụng
       document.querySelector(".detail-instruction").innerHTML = `
-        <h3><strong>Hướng dẫn sử dụng</strong></h3>
+        <h3 style="font-size:2rem; font-weight:bold; margin:10px 0;">Hướng dẫn sử dụng</h3>
         <p>${product.instruction || "Đang cập nhật..."}</p>
       `;
     })
