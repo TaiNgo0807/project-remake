@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="product-card">
       <a href="detail.html?id=${
         product.id
-      }" class="product-btn" style="text-decoration:none; backgroundcolor:white;">
+      }" class="product-btn" style="text-decoration:none; background-color:white;">
         <div class="product-img">
           <img src="${product.image_url}" alt="${product.name}" />
         </div>
