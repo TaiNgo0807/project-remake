@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chi tiết sản phẩm</title>
+    <title>Nông nghiệp Việt Sang</title>
     <meta
       name="description"
       content="Công ty Nông nghiệp Việt Sang chuyên cung cấp phân bón, thuốc trừ sâu, thuốc trừ bệnh và giải pháp nông nghiệp bền vững."
@@ -71,7 +71,7 @@
   <body class="index-page">
     <div class="header" id="header">
       <div class="nav-container">
-        <a href="detail.html" class="logo">
+        <a href="index.html" class="logo">
           <img src="./assets/picture/logo.png" alt="Logo" height="40" />
           <h1>Công Ty TNHH MTV Nông nghiệp Việt Sang</h1>
         </a>
@@ -90,10 +90,10 @@
       <i class="fa-solid fa-phone-volume"></i> 0987711284</a
     >
 
-    <section class="hero-product" id="hero-product">
+    <section class="hero" id="hero">
       <div class="container">
         <div class="hero-title">
-          <h1>Đồng hành cùng bạn</h1>
+          <h1>Giải pháp toàn diện cho mọi vấn đề của cây trồng.</h1>
         </div>
         <div class="hero-subtitle">
           Bạn đang đau đầu về những bệnh của cây lúa. <br />
@@ -105,24 +105,15 @@
           cung cấp.
         </div>
         <div class="hero-btn">
+          <a href="#product" class="btn1">Sản phẩm</a>
           <a href="#contact" class="btn2">Liên hệ ngay</a>
         </div>
-      </div>
-    </section>
-    <p style="text-align: center; margin-top: 80px" class="title">
-      Chi tiết sản phẩm
-    </p>
-    <section class="product-detail row row-cols-1 row-cols-md-2">
-      <div class="detail-img col"></div>
-      <div class="col">
-        <div class="detail-content"></div>
-        <div class="detail-instruction"></div>
       </div>
     </section>
 
     <section class="contact" id="contact" data-aos="fade-up">
       <div class="container text-center">
-        <h2 class="title">Liên hệ | Đặt câu hỏi</h2>
+        <h2 class="contact-title">Liên hệ | Đặt câu hỏi</h2>
         <div class="contact-form">
           <div class="info-container">
             <div class="info" data-aos="fade-up">
@@ -156,7 +147,12 @@
           </div>
           <div class="form" data-aos="fade-up">
             <div class="form-field" data-aos="fade-up">
-              <input type="text" placeholder=" " class="input-info-client" />
+              <input
+                type="text"
+                placeholder=" "
+                class="input-info-client"
+                id="name"
+              />
               <label for="name" class="form-label">Tên của bạn</label>
             </div>
             <div class="form-field" data-aos="fade-up">
@@ -164,6 +160,7 @@
                 type="phone-number"
                 placeholder=" "
                 class="input-info-client"
+                id="phone"
               /><label for="name" class="form-label">Số điện thoại</label>
             </div>
             <div class="form-field" data-aos="fade-up">
@@ -171,6 +168,7 @@
                 type="email"
                 placeholder=" "
                 class="input-info-client"
+                id="email"
               /><label for="name" class="form-label">Email của bạn</label>
             </div>
             <div class="form-field" data-aos="fade-up">
@@ -178,17 +176,19 @@
                 type="text"
                 placeholder=" "
                 class="input-info-client"
+                id="message"
               /><label for="name" class="form-label"
                 >Câu hỏi dành cho chúng tôi</label
               >
             </div>
-            <button
+            <a
+              href="#"
               type="submit"
               class="submit-form btn btn-success"
               data-aos="fade-up"
             >
               Gửi!
-            </button>
+            </a>
           </div>
         </div>
       </div>

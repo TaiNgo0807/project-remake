@@ -97,8 +97,3 @@ app.use((err, req, res, _next) => {
   if (status >= 500) console.error("[Error]", err);
   res.status(status).json({ error: err.message || "Internal Server Error" });
 });
-
-// ---- Start ----
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT} (${ENV})`);
-});

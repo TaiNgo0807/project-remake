@@ -109,9 +109,27 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchAndRender(currentPage);
   }
 
+  const slides = document.querySelector(".event-container");
+  const slideItems = document.querySelectorAll(".event-card");
+  let index = 0;
+
+  function showSlide(i) {
+    index = (i + slideItems.length) % slideItems.length;
+    slides.style.transform = `translateX(-${index * 100}vw)`;
+  }
+
+  document.querySelector(".nextEvent").onclick = () => showSlide(index + 1);
+  document.querySelector(".preEvent").onclick = () => showSlide(index - 1);
+
+  // Auto-slide mỗi 4 giây
+  setInterval(() => {
+    showSlide(index + 1);
+  }, 4000);
+
   function renderProductCard(product) {
     const html = `
       <div class="product-card">
+      <a href="detail.html?id=${product.id}" class="product-btn">
         <div class="product-img">
           <img src="${product.image_url}" alt="${product.name}" />
         </div>
@@ -125,6 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
             product.id
           }" class="product-btn">Xem chi tiết</a>
         </div>
+        </a>
       </div>
     `;
     document
@@ -205,12 +224,12 @@ document.addEventListener("DOMContentLoaded", () => {
       // Render thông tin sản phẩm
       document.querySelector(".detail-content").innerHTML = `
         <h2 style="font-size:2rem; font-weight:bold; margin:10px 0;">${product.name}</h2>
-        <p style="font-size:1.2rem; margin:10px 0;">${product.description}</p>
+        <p style="font-size:1.2rem; margin:10px 0; white-space:pre-line;">${product.description}</p>
       `;
 
       // Render hướng dẫn sử dụng
       document.querySelector(".detail-instruction").innerHTML = `
-        <h3 style="font-size:2rem; font-weight:bold; margin:10px 0;">Hướng dẫn sử dụng</h3>
+        <h3 style="font-size:1.5rem; font-weight:bold; margin:10px 0;">Liều lượng</h3>
         <p>${product.instruction || "Đang cập nhật..."}</p>
       `;
     })
