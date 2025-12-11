@@ -129,7 +129,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderProductCard(product) {
     const html = `
       <div class="product-card">
-      <a href="detail.html?id=${product.id}" class="product-btn">
+      <a href="detail.html?id=${
+        product.id
+      }" class="product-btn" style="text-decoration:none; backgroundcolor:white;">
         <div class="product-img">
           <img src="${product.image_url}" alt="${product.name}" />
         </div>
