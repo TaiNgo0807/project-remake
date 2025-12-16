@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
 
     let sql = `
       SELECT SQL_CALC_FOUND_ROWS 
-        id, name, category, description, instruction, image_url 
+        id, name, category, description, summary, image_url 
       FROM products 
       WHERE 1=1
     `;
@@ -50,7 +50,7 @@ router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const [rows] = await db.query(
-      "SELECT id, name, category, description, instruction, image_url FROM products WHERE id = ?",
+      "SELECT id, name, category, description, summary, image_url FROM products WHERE id = ?",
       [id]
     );
     if (rows.length === 0) {

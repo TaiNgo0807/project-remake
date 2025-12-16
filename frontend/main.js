@@ -128,16 +128,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderProductCard(product) {
     const html = `
+    <h2 class="title">Sản phẩm VS</h2>
       <div class="product-card">
-      <a href="detail.html?id=${
-        product.id
-      }" class="product-btn" style="text-decoration:none; background-color:white;">
+      <a href="detail.html?id=${product.id}" class="product-btn">
         <div class="product-img">
           <img src="${product.image_url}" alt="${product.name}" />
         </div>
         <div class="product-information">
           <h3 class="product-name">${product.name}</h3>
-          <p class="product-description">${product.description}</p>
+          <p class="product-description">${product.summary}</p>
           <p class="product-category">Loại: ${
             product.category || "Chưa phân loại"
           }</p>
@@ -220,19 +219,15 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((product) => {
       // Render ảnh sản phẩm
       document.querySelector(".detail-img").innerHTML = `
-        <img src="${product.image_url}" alt="${product.name}" style="width:100%; max-width:600px; border-radius:8px;">
+        <img src="${product.image_url}" alt="${product.name}" />
       `;
 
-      // Render thông tin sản phẩm
-      document.querySelector(".detail-content").innerHTML = `
-        <h2 style="font-size:2rem; font-weight:bold; margin:10px 0;">${product.name}</h2>
-        <p style="font-size:1.2rem; margin:10px 0; white-space:pre-line;">${product.description}</p>
+      document.querySelector(".product-summary").innerHTML = `
+        <p style="font-size: 1.4rem">${product.summary}</p>
       `;
-
-      // Render hướng dẫn sử dụng
-      document.querySelector(".detail-instruction").innerHTML = `
-        <h3 style="font-size:1.5rem; font-weight:bold; margin:10px 0;">Liều lượng</h3>
-        <p>${product.instruction || "Đang cập nhật..."}</p>
+      document.querySelector(".detail-bottom").innerHTML = `
+        <h3 class="product-name">${product.name}</h3>
+        <p class="product-info">${product.description}</p>
       `;
     })
     .catch((err) => {
