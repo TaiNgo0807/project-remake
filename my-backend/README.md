@@ -39,8 +39,8 @@ Xây dựng website giới thiệu sản phẩm và doanh nghiệp **Việt Sang
 
 ### **Table: products**
 
-| id  | name | description | instruction | image_url | created_at | updated_at |
-| --- | ---- | ----------- | ----------- | --------- | ---------- | ---------- |
+| id  | name | description | summary | image_url | created_at | updated_at |
+| --- | ---- | ----------- | ------- | --------- | ---------- | ---------- |
 
 ### **Table: contacts**
 
