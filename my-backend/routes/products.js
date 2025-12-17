@@ -1,15 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../models/db"); // module exporting your configured DB pool/connection
+const db = require("../models/db");
 
-/**
- * GET /api/v1/products
- * Query params:
- *  - page (default 1)
- *  - limit (default 21)
- *  - search (optional)
- *  - category (optional, "all" to ignore)
- */
 router.get("/", async (req, res) => {
   try {
     const page = parseInt(req.query.page, 10) || 1;
@@ -28,6 +20,7 @@ router.get("/", async (req, res) => {
       sql += " AND (name LIKE ? OR description LIKE ?)";
       params.push(`%${req.query.search}%`, `%${req.query.search}%`);
     }
+
     if (req.query.category && req.query.category !== "all") {
       sql += " AND category = ?";
       params.push(req.query.category);
@@ -37,7 +30,7 @@ router.get("/", async (req, res) => {
     params.push(limit, offset);
 
     const [rows] = await db.query(sql, params);
-    const [[{ "FOUND_ROWS()": total }]] = await db.query("SELECT FOUND_ROWS()");
+    const [[{ total }]] = await db.query("SELECT FOUND_ROWS() AS total");
 
     res.json({ data: rows, total, page, limit });
   } catch (err) {
@@ -53,9 +46,11 @@ router.get("/:id", async (req, res) => {
       "SELECT id, name, category, description, summary, image_url FROM products WHERE id = ?",
       [id]
     );
+
     if (rows.length === 0) {
       return res.status(404).json({ error: "Product not found" });
     }
+
     res.json(rows[0]);
   } catch (err) {
     console.error("[getProductById]", err);

@@ -61,9 +61,11 @@ app.use("/api/v1/products", productsRouter);
 app.post("/api/v1/contact", async (req, res, next) => {
   try {
     const { name, phone, mail, message } = req.body || {};
-    if (!name || !message || (!phone && !mail)) {
+
+    // 🔧 sửa tối thiểu: không ép message
+    if (!name || (!phone && !mail)) {
       return res.status(400).json({
-        error: "name, message, and at least one of phone or mail required",
+        error: "name and at least one of phone or mail required",
       });
     }
 
@@ -96,4 +98,8 @@ app.use((err, req, res, _next) => {
   const status = err.status || 500;
   if (status >= 500) console.error("[Error]", err);
   res.status(status).json({ error: err.message || "Internal Server Error" });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT} (${ENV})`);
 });

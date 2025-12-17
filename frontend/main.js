@@ -8,13 +8,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const menu = document.getElementById("nav-menu");
 
   window.addEventListener("scroll", () => {
-    header.classList.toggle("scrolled", window.scrollY > 50);
+    header && header.classList.toggle("scrolled", window.scrollY > 50);
   });
 
-  btn.addEventListener("click", () => {
-    btn.classList.toggle("open");
-    menu.classList.toggle("show");
-  });
+  btn &&
+    btn.addEventListener("click", () => {
+      btn.classList.toggle("open");
+      menu && menu.classList.toggle("show");
+    });
 
   // Highlight menu active
   const links = document.querySelectorAll("#nav-menu a");
@@ -44,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   // Nếu product page thì render full và paging
   else {
-    // Paging controls
     let currentPage = 1;
     const limit = 21;
     const pageInfo = document.getElementById("pageInfo");
@@ -105,46 +105,49 @@ document.addEventListener("DOMContentLoaded", () => {
       fetchAndRender(currentPage);
     });
 
-    // Lần đầu load
     fetchAndRender(currentPage);
   }
 
+  // ===== EVENT SLIDER (sửa lỗi crash + vw) =====
   const slides = document.querySelector(".event-container");
   const slideItems = document.querySelectorAll(".event-card");
-  let index = 0;
+  const nextBtn = document.querySelector(".nextEvent");
+  const prevBtn = document.querySelector(".preEvent");
 
-  function showSlide(i) {
-    index = (i + slideItems.length) % slideItems.length;
-    slides.style.transform = `translateX(-${index * 100}vw)`;
+  if (slides && slideItems.length && nextBtn && prevBtn) {
+    let index = 0;
+
+    function showSlide(i) {
+      index = (i + slideItems.length) % slideItems.length;
+      slides.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    nextBtn.onclick = () => showSlide(index + 1);
+    prevBtn.onclick = () => showSlide(index - 1);
+
+    setInterval(() => {
+      showSlide(index + 1);
+    }, 4000);
   }
-
-  document.querySelector(".nextEvent").onclick = () => showSlide(index + 1);
-  document.querySelector(".preEvent").onclick = () => showSlide(index - 1);
-
-  // Auto-slide mỗi 4 giây
-  setInterval(() => {
-    showSlide(index + 1);
-  }, 4000);
 
   function renderProductCard(product) {
     const html = `
-    <h2 class="title">Sản phẩm VS</h2>
       <div class="product-card">
-      <a href="detail.html?id=${product.id}" class="product-btn">
-        <div class="product-img">
-          <img src="${product.image_url}" alt="${product.name}" />
-        </div>
-        <div class="product-information">
-          <h3 class="product-name">${product.name}</h3>
-          <p class="product-description">${product.summary}</p>
-          <p class="product-category">Loại: ${
-            product.category || "Chưa phân loại"
-          }</p>
-          <a href="detail.html?id=${
-            product.id
-          }" class="product-btn">Xem chi tiết</a>
-        </div>
+        <a href="detail.html?id=${product.id}" class="product-link">
+          <div class="product-img">
+            <img src="${product.image_url}" alt="${product.name}" />
+          </div>
+          <div class="product-information">
+            <h3 class="product-name">${product.name}</h3>
+            <p class="product-description">${product.summary}</p>
+            <p class="product-category">Loại: ${
+              product.category || "Chưa phân loại"
+            }</p>
+          </div>
         </a>
+        <a href="detail.html?id=${
+          product.id
+        }" class="product-btn">Xem chi tiết</a>
       </div>
     `;
     document
@@ -166,10 +169,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const [name, phone, mail, message] = Array.from(inputs).map((i) =>
       i.value.trim()
     );
-    // Chọn contact ưu tiên email nếu có, ngược lại dùng phone
-    const contactVal = phone;
-    const API_BASE = `${apiUrl}/api/v1`;
-    if (!name || !contactVal) {
+
+    if (!name || !phone) {
       alert("Vui lòng điền đầy đủ tên và số điện thoại");
       return;
     }
@@ -190,11 +191,10 @@ document.addEventListener("DOMContentLoaded", () => {
           alert("Gửi thành công!");
           location.reload();
         } else {
-          alert("Gửi thất bại: " + (res.error || ""));
+          alert("Gửi thất bại");
         }
       })
-      .catch((err) => {
-        console.error("Error submitting contact:", err);
+      .catch(() => {
         alert("Gửi thất bại. Vui lòng thử lại.");
       });
   });
@@ -217,7 +217,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return response.json();
     })
     .then((product) => {
-      // Render ảnh sản phẩm
       document.querySelector(".detail-img").innerHTML = `
         <img src="${product.image_url}" alt="${product.name}" />
       `;
@@ -230,8 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <p class="product-info">${product.description}</p>
       `;
     })
-    .catch((err) => {
-      console.error("Error fetching product:", err);
+    .catch(() => {
       document.querySelector(".detail-content").innerHTML =
         "<p>Không tìm thấy sản phẩm.</p>";
     });
