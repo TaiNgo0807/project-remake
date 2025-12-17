@@ -42,6 +42,7 @@ exports.getAllProducts = async (req, res, next) => {
     `;
     const [[{ total }]] = await db.query(countSql, params);
 
+    res.set("Cache-Control", "no-store");
     res.json({ data: rows, total, page, limit });
   } catch (err) {
     console.error("[getAllProducts]", err);
@@ -70,6 +71,7 @@ exports.getProductById = async (req, res, next) => {
       return res.status(404).json({ error: "Product not found" });
     }
 
+    res.set("Cache-Control", "no-store");
     res.json(rows[0]);
   } catch (err) {
     console.error("[getProductById]", err);
