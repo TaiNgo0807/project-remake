@@ -1,7 +1,4 @@
-// controllers/productController.js
-// Stateless controller for public product endpoints
-
-const db = require("../models/db"); // Your configured MySQL/Postgres pool
+const db = require("../models/db");
 
 /**
  * GET /api/v1/products
@@ -9,27 +6,41 @@ const db = require("../models/db"); // Your configured MySQL/Postgres pool
  */
 exports.getAllProducts = async (req, res, next) => {
   try {
-    const page = parseInt(req.query.page, 10) || 1;
-    const limit = parseInt(req.query.limit, 10) || 21;
+    const page = Math.max(parseInt(req.query.page, 10) || 1, 1);
+    const limit = Math.max(parseInt(req.query.limit, 10) || 21, 1);
     const offset = (page - 1) * limit;
 
-    let sql = "SELECT SQL_CALC_FOUND_ROWS * FROM products WHERE is_active = 1";
+    let whereSql = "WHERE is_active = 1";
     const params = [];
 
     if (req.query.search) {
-      sql += " AND (name LIKE ? OR description LIKE ?)";
+      whereSql += " AND (name LIKE ? OR description LIKE ?)";
       params.push(`%${req.query.search}%`, `%${req.query.search}%`);
     }
+
     if (req.query.category && req.query.category !== "all") {
-      sql += " AND category = ?";
+      whereSql += " AND category = ?";
       params.push(req.query.category);
     }
 
-    sql += " ORDER BY created_at DESC LIMIT ? OFFSET ?";
-    params.push(limit, offset);
+    // 1️⃣ Lấy danh sách sản phẩm
+    const dataSql = `
+      SELECT id, name, category, description, summary, image_url, created_at
+      FROM products
+      ${whereSql}
+      ORDER BY created_at DESC
+      LIMIT ? OFFSET ?
+    `;
+    const dataParams = [...params, limit, offset];
+    const [rows] = await db.query(dataSql, dataParams);
 
-    const [rows] = await db.query(sql, params);
-    const [[{ "FOUND_ROWS()": total }]] = await db.query("SELECT FOUND_ROWS()");
+    // 2️⃣ Lấy tổng số sản phẩm
+    const countSql = `
+      SELECT COUNT(*) AS total
+      FROM products
+      ${whereSql}
+    `;
+    const [[{ total }]] = await db.query(countSql, params);
 
     res.json({ data: rows, total, page, limit });
   } catch (err) {
@@ -45,13 +56,20 @@ exports.getAllProducts = async (req, res, next) => {
 exports.getProductById = async (req, res, next) => {
   try {
     const { id } = req.params;
+
     const [rows] = await db.query(
-      "SELECT * FROM products WHERE id = ? AND is_active = 1",
+      `
+      SELECT id, name, category, description, summary,  image_url, created_at
+      FROM products
+      WHERE id = ? AND is_active = 1
+      `,
       [id]
     );
+
     if (rows.length === 0) {
       return res.status(404).json({ error: "Product not found" });
     }
+
     res.json(rows[0]);
   } catch (err) {
     console.error("[getProductById]", err);
