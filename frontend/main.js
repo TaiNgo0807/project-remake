@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
     document
-      .querySelector(".productcontainer")
+      .querySelector(".product-container")
       .insertAdjacentHTML("beforeend", html);
   }
 });
