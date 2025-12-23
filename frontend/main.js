@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch((err) => console.error("Error fetching products:", err));
   }
   // Nếu product page thì render full và paging
-  else {
+  else if (document.body.classList.contains("product-page")) {
     let currentPage = 1;
     const limit = 21;
     const pageInfo = document.getElementById("pageInfo");
