@@ -1,0 +1,16 @@
+name: Render Keep Alive
+
+on:
+  schedule:
+    # Chạy mỗi 10 phút một lần
+    - cron: '*/10 * * * *'
+  workflow_dispatch: # Cho phép nhấn nút chạy thủ công để test
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send keep-alive request
+        run: |
+          curl -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" \
+          -L https://ten-app-cua-ban.onrender.com
