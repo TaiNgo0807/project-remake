@@ -423,7 +423,7 @@ section {
   word-break: break-word;
   width: 100%;
   line-height: 1.2rem;
-  height: calc(4 * 1.1rem);
+  height: calc(4 * 1.05rem);
 }
 .product-category {
   font-size: 0.9rem;
@@ -742,7 +742,7 @@ footer {
 }
 .product-detail {
   background-color: white;
-  padding: 0 10vw;
+  padding: 40px 10vw;
 }
 .detail-top {
   height: 340px;
