@@ -368,7 +368,7 @@ section {
 .product-container {
   display: grid;
   grid-template-columns: 1fr;
-  padding: 40px 0;
+  padding: 40px 5vw;
   gap: 40px;
 }
 @media (min-width: 1200px) {
@@ -388,7 +388,7 @@ section {
   transform: translateY(-10px);
 }
 .product-img {
-  height: 250px;
+  height: 400px;
   overflow: hidden;
   position: relative;
 }
@@ -742,14 +742,19 @@ footer {
 }
 .product-detail {
   background-color: white;
-  padding: 40px 10vw;
+  padding: 80px 10vw;
 }
 .detail-top {
   height: 340px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 20px;
   border-bottom: 1px solid #ccc;
+}
+@media (min-width: 1200px) {
+  .feedback-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 .detail-img {
   width: 100%;
@@ -769,6 +774,7 @@ footer {
 .product-info {
   white-space: pre-line;
   font-size: 1.2rem;
+  border: #1b2e1d;
 }
 
 .call-btn {
@@ -783,23 +789,176 @@ footer {
   text-decoration: none;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
 }
-#searchBtn {
-  border-radius: 4px;
-  border: 1px solid;
-  background-color: #4caf50;
-  height: 25px;
+.call-btn {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: none;
+  background: #25d366;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+
+  box-shadow: 0 0 0 rgba(37, 211, 102, 0.7);
+
+  animation: shake 1.2s infinite, glow 1.2s infinite;
 }
+
+@keyframes shake {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(8deg);
+  }
+  20% {
+    transform: rotate(-8deg);
+  }
+  30% {
+    transform: rotate(8deg);
+  }
+  40% {
+    transform: rotate(-8deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 18px rgba(37, 211, 102, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+  }
+}
+
+/* Container tìm kiếm */
 .findProduct-container {
   display: flex;
-  gap: 20px;
-  justify-content: space-between;
-  margin: 0 20px;
+  gap: 16px;
+  align-items: center;
+  margin: 20px;
 }
+
+/* Ô input tìm kiếm */
+.findProduct-container input {
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid #c8e6c9;
+  outline: none;
+  font-size: 14px;
+}
+
+.findProduct-container input:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+/* Select chọn loại sản phẩm */
+.findProduct-container select {
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid #c8e6c9;
+  background-color: #f9fff9;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.findProduct-container select:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+/* Nút tìm kiếm */
+#searchBtn {
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#searchBtn:hover {
+  background: linear-gradient(135deg, #43a047, #1b5e20);
+  transform: translateY(-1px);
+}
+
+#searchBtn:active {
+  transform: scale(0.98);
+}
+
+/* Responsive mobile */
 @media (max-width: 500px) {
   .findProduct-container {
-    display: flex;
     flex-direction: column;
+    gap: 12px;
   }
+
+  .findProduct-container input,
+  .findProduct-container select,
+  #searchBtn {
+    width: 100%;
+  }
+}
+/* Container phân trang */
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+/* Nút trang */
+.page-btn {
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* Hover */
+.page-btn:hover {
+  background: linear-gradient(135deg, #43a047, #1b5e20);
+  transform: translateY(-1px);
+}
+
+/* Click */
+.page-btn:active {
+  transform: scale(0.97);
+}
+
+/* Disabled (khi ở trang đầu/cuối) */
+.page-btn:disabled {
+  background: #c8e6c9;
+  color: #666;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Thông tin trang */
+#pageInfo {
+  font-weight: 600;
+  color: #2e7d32;
 }
 
 .event-slider {
