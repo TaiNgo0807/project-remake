@@ -746,6 +746,7 @@ footer {
   padding: 80px 10vw;
 }
 .detail-top {
+  margin-top: 40px;
   height: 480px;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -760,8 +761,10 @@ footer {
   width: 100%;
 }
 .detail-bottom {
+  margin-top: 10px;
   padding: 20px 0;
   border: 1px solid #ccc;
+  border-radius: 10px;
 }
 .product-name {
   font-size: 24px;
