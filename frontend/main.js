@@ -27,6 +27,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  alert(
+    "Website đang trong quá trình chạy thử nghiệm. Mọi thông tin chỉ là tham khảo vui lòng không ứng dụng vào thực tế."
+  );
+});
+
 // === Fetch products cho index.html / product.html ===
 document.addEventListener("DOMContentLoaded", () => {
   const productListContainer = document.querySelector(".product-container");
