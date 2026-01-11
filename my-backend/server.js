@@ -57,6 +57,9 @@ app.get("/health", (_req, res) =>
 const productsRouter = require("./routes/products");
 app.use("/api/v1/products", productsRouter);
 
+//blog routes
+const blogRouter = require("./routes/blog");
+app.use("/api/v1", blogRouter);
 // ---- Contact ----
 app.post("/api/v1/contact", async (req, res, next) => {
   try {

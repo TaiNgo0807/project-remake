@@ -33,6 +33,63 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  async function loadBlogs() {
+    const search = document.getElementById("search").value;
+
+    const res = await fetch(`/api/v1/blogs?search=${search}`);
+    const result = await res.json();
+    const blogs = result.data;
+
+    const container = document.getElementById("blog-container");
+    container.innerHTML = "";
+    if (blogs.length === 0) {
+      container.innerHTML = "<p>Không tìm thấy bài viết phù hợp.</p>";
+      return;
+    }
+
+    blogs.forEach((blog) => {
+      container.innerHTML += `
+            <div class="blog-card">
+                <img src="${blog.image_url}" />
+                <h3>${blog.title}</h3>
+                <p>${blog.short_description}</p>
+                <a href="/blog-detail.html?id=${blog.id}">Xem chi tiết</a>
+            </div>
+        `;
+    });
+  }
+  async function loadBlogDetail() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    if (!id) {
+      document.getElementById("content").innerHTML =
+        "<p>Không tìm thấy bài viết.</p>";
+      return;
+    }
+    const res = await fetch(`/api/v1/blogs/${id}`);
+    const blog = await res.json();
+
+    document.getElementById("title").innerText = blog.title;
+    document.getElementById("author").innerText = blog.author;
+    document.getElementById("date").innerText = new Date(
+      blog.created_at
+    ).toLocaleDateString("vi-VN");
+
+    document.getElementById("content").innerHTML = blog.content;
+  }
+  if (window.location.pathname === "/blog.html") {
+    loadBlogs();
+    let timeout;
+    document.getElementById("search").addEventListener("input", () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(loadBlogs, 300);
+    });
+  } else if (window.location.pathname === "/blog-detail.html") {
+    loadBlogDetail();
+  }
+});
 // === Fetch products cho index.html / product.html ===
 document.addEventListener("DOMContentLoaded", () => {
   const productListContainer = document.querySelector(".product-container");
