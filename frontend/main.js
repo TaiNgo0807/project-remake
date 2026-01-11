@@ -1,5 +1,3 @@
-const { search } = require("../my-backend/routes/blog");
-
 document.addEventListener("DOMContentLoaded", () => {
   // Khởi chạy AOS
   AOS.init();
