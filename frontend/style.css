@@ -1095,3 +1095,62 @@ footer {
   outline: none;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
+.searchBlog {
+  display: flex;
+  align-items: stretch; /* Giúp nút và ô input cao bằng nhau */
+  max-width: 500px;
+  margin: 20px auto;
+  position: relative;
+  /* SỬA: Đổi nền sang màu sáng (trắng kem) để dễ đọc chữ */
+  background: #f9fff9;
+  border: 2px solid #6a9c20; /* Màu viền xanh lá đậm hơn, sang hơn */
+  border-radius: 30px; /* Bo tròn mềm mại */
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Thêm bóng nhẹ */
+}
+
+/* Hiệu ứng khi click vào */
+.searchBlog:focus-within {
+  border-color: #4a7016; /* Viền đậm hơn khi gõ */
+  box-shadow: 0 4px 10px rgba(106, 156, 32, 0.2);
+}
+
+#search {
+  flex-grow: 1; /* Chiếm hết không gian còn lại */
+  border: none;
+  padding: 12px 20px;
+  outline: none;
+  font-size: 16px;
+  /* SỬA: Màu chữ chính khi gõ */
+  color: #333;
+  background: transparent;
+}
+
+#search::placeholder {
+  /* SỬA: Màu placeholder rõ ràng hơn trên nền sáng */
+  color: #7a997a;
+  font-style: italic;
+}
+
+.search-btn {
+  /* SỬA: Màu nút đồng bộ với viền */
+  background: #4caf50;
+  border: none;
+  color: white;
+  padding: 0 25px; /* Padding rộng hơn chút */
+  cursor: pointer;
+  transition: background 0.3s;
+  /* SỬA: Dùng flex để căn giữa icon hoàn hảo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-btn:hover {
+  background: #4caf50; /* Màu tối hơn khi di chuột */
+}
+
+.search-btn i {
+  font-size: 18px; /* Kích thước icon vừa phải */
+}

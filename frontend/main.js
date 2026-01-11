@@ -35,7 +35,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   async function loadBlogs() {
-    const search = document.getElementById("search").value;
+    const searchInput = document.getElementById("search");
+    const search = searchInput ? searchInput.value : "";
 
     const res = await fetch(`/api/v1/blogs?search=${search}`);
     const result = await res.json();
@@ -79,14 +80,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("content").innerHTML = blog.content;
   }
-  if (window.location.pathname === "/blog.html") {
+  if (window.location.pathname.includes("/blog.html")) {
     loadBlogs();
     let timeout;
     document.getElementById("search").addEventListener("input", () => {
       clearTimeout(timeout);
       timeout = setTimeout(loadBlogs, 300);
     });
-  } else if (window.location.pathname === "/blog-detail.html") {
+  } else if (window.location.pathname.includes("/blog-detail.html")) {
     loadBlogDetail();
   }
 });
@@ -95,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const productListContainer = document.querySelector(".product-container");
   if (!productListContainer) return;
 
-  const API_BASE = `${apiUrl}/api/v1`;
+  const API_BASE = `/api/v1`;
 
   // Nếu index page, chỉ show 3 sp đầu
   if (document.body.classList.contains("index-page")) {
@@ -224,7 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const submitBtn = document.querySelector(".submit-form");
   if (!submitBtn) return;
 
-  const API_BASE = `${apiUrl}/api/v1`;
+  const API_BASE = `/api/v1`;
 
   submitBtn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -266,7 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
   const urlParams = new URLSearchParams(window.location.search);
   const productId = urlParams.get("id");
-  const API_BASE = `${apiUrl}/api/v1`;
+  const API_BASE = `/api/v1`;
 
   if (!productId) {
     document.querySelector(".detail-content").innerHTML =
