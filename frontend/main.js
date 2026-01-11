@@ -76,13 +76,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const res = await fetch(`${API_BASE}/blogs/${id}`);
     const blog = await res.json();
 
-    document.getElementById("title").innerText = blog.title;
-    document.getElementById("author").innerText = blog.author;
-    document.getElementById("date").innerText = new Date(
+    document.getElementsByClassName("blog-title")[0].innerText = blog.title;
+    document.getElementsByClassName("author")[0].innerText = blog.author;
+    document.getElementsByClassName("date")[0].innerText = new Date(
       blog.created_at
     ).toLocaleDateString("vi-VN");
 
-    document.getElementById("content").innerHTML = blog.content;
+    document.getElementsByClassName("content")[0].innerHTML = blog.content;
   }
   if (document.getElementById("blog-container")) {
     loadBlogs();

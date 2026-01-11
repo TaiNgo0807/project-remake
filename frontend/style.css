@@ -18,6 +18,12 @@ p {
 section {
   padding: 60px 0;
 }
+:root {
+  --leaf-green: #2d5a27; /* Xanh lá đậm chất nông nghiệp */
+  --sprout-green: #4caf50; /* Xanh mầm non */
+  --earth-brown: #5d4037; /* Màu đất mộc mạc */
+  --field-bg: #f9fbf7; /* Màu nền trắng xanh nhạt */
+}
 .header {
   position: fixed;
   top: 0;
@@ -1039,61 +1045,72 @@ footer {
 }
 .blog-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  /* Tự động điều chỉnh số cột, tối thiểu 250px/cột để không bị quá chật */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   padding: 40px 5vw;
-  gap: 40px;
+  gap: 30px;
+  background-color: var(--field-bg);
 }
+
 .blog-card {
-  display: block;
-  border-radius: 4px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.182);
+  background: #ffffff;
+  border-radius: 12px; /* Bo góc tròn hơn cho thân thiện */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* Đổ bóng nhẹ nhàng hơn */
   overflow: hidden;
-  border: none;
-  transition: transform 0.3s ease-in-out;
-  justify-content: center;
+  transition: all 0.3s ease;
+  border: 1px solid #e0eadd; /* Viền nhẹ màu lá */
 }
+
+.blog-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(45, 90, 39, 0.2); /* Đổ bóng màu xanh lá */
+  border-color: var(--sprout-green);
+}
+
 .blog-card img {
   width: 100%;
-  height: 200px;
+  height: 220px;
   object-fit: cover;
+  transition: transform 0.5s ease;
 }
-.blog-card:hover {
-  transform: translateY(-10px);
+
+.blog-card:hover img {
+  transform: scale(1.05); /* Zoom nhẹ ảnh khi hover */
 }
+
 .blog-title {
-  font-size: 1.2rem;
-  color: #388e3c;
-  font-weight: bold;
-  margin: 10px 10px;
+  font-size: 1.25rem;
+  color: var(--leaf-green);
+  margin: 15px;
+  line-height: 1.4;
 }
+
 .blog-excerpt {
-  color: #333333;
-  padding: 0 10px 10px 10px;
+  color: #555;
+  padding: 0 15px;
+  margin-bottom: 15px;
+  /* Giữ nguyên cái line-clamp của ông vì nó quá chuẩn rồi */
   display: -webkit-box;
   -webkit-line-clamp: 3;
-  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  word-break: break-word;
-  width: 100%;
-  line-height: 1.2rem;
-  height: calc(3 * 1.2rem);
+  line-height: 1.5;
 }
+
 .read-more {
   display: inline-block;
+  margin: 0 15px 20px;
+  padding: 10px 20px;
+  color: #fff;
+  background-color: var(--leaf-green);
+  border-radius: 25px; /* Nút hình viên thuốc cho hiện đại */
   text-decoration: none;
-  font-size: 1rem;
-  font-weight: 400;
-  padding: 8px 16px;
-  color: #ffffff;
-  background-color: #4caf50;
-  border-style: solid;
-  border-color: #4caf50;
-  border-radius: 4px;
-  margin: 10px;
-  outline: none;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.read-more:hover {
+  background-color: var(--earth-brown); /* Đổi sang màu đất khi hover */
 }
 .searchBlog {
   display: flex;
@@ -1153,4 +1170,70 @@ footer {
 
 .search-btn i {
   font-size: 18px; /* Kích thước icon vừa phải */
+}
+/* Tổng thể khu vực bài viết */
+.blog-detail {
+  background-color: #fdfdfd;
+  padding: 60px 0;
+  line-height: 1.8; /* Giãn dòng rộng cho dễ đọc */
+}
+
+.blog-detail .container {
+  max-width: 800px; /* Độ rộng tối ưu để mắt không bị mỏi khi đọc */
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Tiêu đề bài viết */
+.blog-detail .blog-title {
+  font-size: 2.5rem;
+  color: #2d5a27; /* Xanh lá đậm */
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+/* Thông tin tác giả và ngày tháng */
+.blog-detail .author,
+.blog-detail .date {
+  display: inline-block;
+  font-size: 0.95rem;
+  color: #777;
+  margin-right: 20px;
+  margin-bottom: 30px;
+  font-style: italic;
+}
+
+.blog-detail .author::before {
+  content: "✍️ "; /* Thêm icon cho sinh động */
+}
+
+.blog-detail .date::before {
+  content: "📅 ";
+}
+
+/* Nội dung chính bài viết */
+.blog-detail .content {
+  font-size: 1.15rem;
+  color: #333;
+  text-align: justify; /* Căn đều hai bên cho chuyên nghiệp */
+}
+
+/* Style cho các thẻ con bên trong .content (nếu có) */
+.blog-detail .content p {
+  margin-bottom: 20px;
+}
+
+.blog-detail .content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 20px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.blog-detail .content h3 {
+  color: #4caf50;
+  margin-top: 40px;
+  border-left: 4px solid #4caf50;
+  padding-left: 15px;
 }
