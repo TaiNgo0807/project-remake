@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("content").innerHTML = blog.content;
   }
-  if (searchInput) {
+  if (document.getElementById("blog-container")) {
     loadBlogs();
     let timeout;
     document.getElementById("search").addEventListener("input", () => {
