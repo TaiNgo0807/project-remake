@@ -1,3 +1,5 @@
+const { search } = require("../my-backend/routes/blog");
+
 document.addEventListener("DOMContentLoaded", () => {
   // Khởi chạy AOS
   AOS.init();
@@ -37,8 +39,11 @@ document.addEventListener("DOMContentLoaded", () => {
   async function loadBlogs() {
     const searchInput = document.getElementById("search");
     const search = searchInput ? searchInput.value : "";
+    const API_BASE = `${apiUrl}/api/v1`;
 
-    const res = await fetch(`${apiUrl}/api/v1/blogs?search=${search}`);
+    const res = await fetch(
+      `${API_BASE}/blogs?search=${encodeURIComponent(search)}&page=1&limit=21`
+    );
     const result = await res.json();
     const blogs = result.data;
 
@@ -63,13 +68,14 @@ document.addEventListener("DOMContentLoaded", () => {
   async function loadBlogDetail() {
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id");
+    const API_BASE = `${apiUrl}/api/v1`;
 
     if (!id) {
       document.getElementById("content").innerHTML =
         "<p>Không tìm thấy bài viết.</p>";
       return;
     }
-    const res = await fetch(`${apiUrl}/api/v1/blogs/${id}`);
+    const res = await fetch(`${API_BASE}/blogs/${id}`);
     const blog = await res.json();
 
     document.getElementById("title").innerText = blog.title;
@@ -80,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("content").innerHTML = blog.content;
   }
-  if (window.location.pathname.includes("/blog.html")) {
+  if (searchInput) {
     loadBlogs();
     let timeout;
     document.getElementById("search").addEventListener("input", () => {
