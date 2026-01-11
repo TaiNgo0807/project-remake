@@ -56,9 +56,9 @@ document.addEventListener("DOMContentLoaded", () => {
       container.innerHTML += `
             <div class="blog-card">
                 <img src="${blog.image_url}" />
-                <h3>${blog.title}</h3>
-                <p>${blog.short_description}</p>
-                <a href="/blog-detail.html?id=${blog.id}">Xem chi tiết</a>
+                <h3 class="blog-title">${blog.title}</h3>
+                <p class="short-description">${blog.short_description}</p>
+                <a href="/blog-detail.html?id=${blog.id}" class="read-more">Xem chi tiết</a>
             </div>
         `;
     });

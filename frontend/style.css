@@ -1043,13 +1043,37 @@ footer {
   font-weight: bold;
   padding-bottom: 10px;
 }
+/* --- LAYOUT TỔNG THỂ --- */
 .blog-container {
   display: grid;
-  /* Tự động điều chỉnh số cột, tối thiểu 250px/cột để không bị quá chật */
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px; /* Khoảng cách giữa các card */
   padding: 40px 5vw;
-  gap: 30px;
-  background-color: var(--field-bg);
+
+  /* Mặc định cho Laptop/Desktop: 3 cột */
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* --- CHO MÀN HÌNH TABLET (Tầm dưới 1024px) --- */
+/* Nếu ông muốn chuyên nghiệp hơn, ở Tablet để 2 cột nhìn sẽ đẹp hơn 1 cột */
+@media (max-width: 1024px) {
+  .blog-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+/* --- CHO MÀN HÌNH ĐIỆN THOẠI (Dưới 768px) --- */
+@media (max-width: 768px) {
+  .blog-container {
+    /* Chuyển về 1 cột duy nhất */
+    grid-template-columns: 1fr;
+    padding: 20px 15px; /* Giảm padding cho đỡ tốn diện tích */
+    gap: 25px;
+  }
+
+  .blog-title {
+    font-size: 1.1rem; /* Thu nhỏ tiêu đề một chút trên mobile cho cân đối */
+  }
 }
 
 .blog-card {
