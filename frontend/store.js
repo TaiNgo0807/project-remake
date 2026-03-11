@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const API_BASE = `${apiUrl}/api/v1`;
+
   const dealerList = document.getElementById("dealerList");
   const searchBtn = document.getElementById("searchBtn");
 
@@ -13,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const queryParams = new URLSearchParams({ name, province, district });
 
       // Gọi API (nhớ sửa lại cho khớp đường dẫn server của ông)
-      const response = await fetch(`/api/v1/stores/search?${queryParams}`);
+      const response = await fetch(`${API_BASE}/stores/search?${queryParams}`);
       const stores = await response.json();
 
       // Xóa sạch cái cũ trước khi in cái mới
