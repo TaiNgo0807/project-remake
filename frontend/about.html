@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chi tiết sản phẩm</title>
+    <title>Nông nghiệp Việt Sang</title>
     <meta
       name="description"
       content="Công ty Nông nghiệp Việt Sang chuyên cung cấp phân bón, thuốc trừ sâu, thuốc trừ bệnh và giải pháp nông nghiệp bền vững."
@@ -68,7 +68,7 @@
     <link rel="manifest" href="./assets/picture/favicon_io/site.webmanifest" />
   </head>
 
-  <body>
+  <body class="index-page">
     <div class="header" id="header">
       <div class="nav-container">
         <a href="index.html" class="logo">
@@ -89,16 +89,72 @@
     </div>
 
     <a href="tel:0987711284" class="call-btn">
-      <i class="fa-solid fa-phone-volume"></i
-    ></a>
-
-    <section class="product-detail">
-      <p class="title">Chi tiết sản phẩm</p>
-      <div class="detail-top">
-        <div class="detail-img"></div>
-        <div class="product-summary"></div>
+      <i class="fa-solid fa-phone-volume"></i>
+    </a>
+    <section class="about-pesticide">
+      <div class="company-story">
+        <h2 class="title">Về Nông Dược Vệ Khang</h2>
+        <p class="tagline">"Sâu khóc thét - Lúa cười tươi"</p>
+        <div class="story-content">
+          <p>
+            Bắt đầu từ một căn sạp nhỏ năm 2010, chứng kiến bà con nông dân mất
+            trắng mùa màng vì giặc sâu rầy, chúng tôi quyết tâm bào chế ra những
+            dòng nông dược "đánh đâu thắng đó". Vệ Khang không chỉ bán thuốc
+            sâu, chúng tôi bán sự an tâm cho mỗi vụ mùa.
+          </p>
+        </div>
       </div>
-      <div class="detail-bottom"></div>
+
+      <div class="vision-mission">
+        <div class="card mission">
+          <h3>🎯 Sứ Mệnh</h3>
+          <p>
+            Bảo vệ cây trồng tận gốc. Cung cấp giải pháp phòng trừ sâu bệnh hiệu
+            quả, tối ưu chi phí và hạn chế tối đa dư lượng hóa chất trên nông
+            sản.
+          </p>
+        </div>
+        <div class="card vision">
+          <h3>👁️ Tầm Nhìn</h3>
+          <p>
+            Trở thành "khắc tinh" số 1 của sâu bệnh tại Việt Nam và vươn tầm
+            Đông Nam Á. Nơi nào có cây, nơi đó không có bóng dáng sâu hại.
+          </p>
+        </div>
+      </div>
+
+      <div class="development-timeline">
+        <h3>Lịch Sử "Diệt Sâu"</h3>
+        <div class="timeline-grid">
+          <div class="milestone">
+            <h4>2010</h4>
+            <p>Thành lập. Ra mắt chai thuốc rầy huyền thoại "Rầy Đi Xa".</p>
+          </div>
+          <div class="milestone">
+            <h4>2015</h4>
+            <p>
+              Mở rộng xưởng sản xuất, đạt chuẩn ISO 9001. Thêm dòng phân bón lá.
+            </p>
+          </div>
+          <div class="milestone">
+            <h4>2020</h4>
+            <p>
+              Tiên phong ra mắt thuốc trừ sâu sinh học, sâu chết nhưng đất vẫn
+              sạch.
+            </p>
+          </div>
+          <div class="milestone">
+            <h4>2026</h4>
+            <p>Top 3 thương hiệu nông dược tin dùng toàn quốc.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-btn">
+        <a href="#" class="about-btn1">Mua Thuốc Ngay</a>
+        <a href="#" class="about-btn2">Xem Bảng Giá</a>
+        <a href="#" class="about-btn3">Đăng Ký Làm Đại Lý Cấp 1</a>
+      </div>
     </section>
 
     <section class="contact" id="contact" data-aos="fade-up">
@@ -142,6 +198,7 @@
                 type="text"
                 placeholder=" "
                 class="input-info-client"
+                id="name"
               />
               <label for="name" class="form-label">Tên của bạn</label>
             </div>
@@ -151,6 +208,7 @@
                 type="tel"
                 placeholder=" "
                 class="input-info-client"
+                id="phone"
               /><label for="phone" class="form-label">Số điện thoại</label>
             </div>
             <div class="form-field" data-aos="fade-up">
@@ -159,6 +217,7 @@
                 type="email"
                 placeholder=" "
                 class="input-info-client"
+                id="email"
               /><label for="email" class="form-label">Email của bạn</label>
             </div>
             <div class="form-field" data-aos="fade-up">
@@ -167,17 +226,19 @@
                 type="text"
                 placeholder=" "
                 class="input-info-client"
+                id="message"
               /><label for="message" class="form-label"
                 >Câu hỏi dành cho chúng tôi</label
               >
             </div>
-            <button
+            <a
+              href="#"
               type="submit"
               class="submit-form btn btn-success"
               data-aos="fade-up"
             >
               Gửi!
-            </button>
+            </a>
           </div>
         </div>
       </div>

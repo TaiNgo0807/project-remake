@@ -1,9 +1,5 @@
 const db = require("../models/db");
 
-/**
- * GET /api/v1/products
- * Public: list products with pagination, optional search and category filter
- */
 exports.getAllProducts = async (req, res, next) => {
   try {
     const page = Math.max(parseInt(req.query.page, 10) || 1, 1);
@@ -64,7 +60,7 @@ exports.getProductById = async (req, res, next) => {
       FROM products
       WHERE id = ? AND is_active = 1
       `,
-      [id]
+      [id],
     );
 
     if (rows.length === 0) {

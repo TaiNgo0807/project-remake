@@ -28,7 +28,7 @@ app.use(
       if (ALLOWED_ORIGINS.includes(origin)) return cb(null, true);
       return cb(new Error("CORS blocked: " + origin));
     },
-  })
+  }),
 );
 
 // ---- Security ----
@@ -36,7 +36,7 @@ app.use(
   helmet({
     crossOriginResourcePolicy: { policy: "cross-origin" },
     crossOriginEmbedderPolicy: false,
-  })
+  }),
 );
 
 // ---- Body parsing ----
@@ -51,7 +51,7 @@ app.use("/api/v1/contact", rateLimit({ windowMs: 5 * 60 * 1000, max: 30 }));
 
 // ---- Health ----
 app.get("/health", (_req, res) =>
-  res.json({ ok: true, uptime: process.uptime() })
+  res.json({ ok: true, uptime: process.uptime() }),
 );
 
 const productsRouter = require("./routes/products");
@@ -60,6 +60,10 @@ app.use("/api/v1/products", productsRouter);
 //blog routes
 const blogRouter = require("./routes/blog");
 app.use("/api/v1", blogRouter);
+
+//store routes
+const storeRouter = require("./routes/storeRouter");
+app.use("/api/v1/stores", storeRouter);
 // ---- Contact ----
 app.post("/api/v1/contact", async (req, res, next) => {
   try {

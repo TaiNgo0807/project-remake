@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chi tiết sản phẩm</title>
+    <title>Nông nghiệp Việt Sang</title>
     <meta
       name="description"
       content="Công ty Nông nghiệp Việt Sang chuyên cung cấp phân bón, thuốc trừ sâu, thuốc trừ bệnh và giải pháp nông nghiệp bền vững."
@@ -68,7 +68,7 @@
     <link rel="manifest" href="./assets/picture/favicon_io/site.webmanifest" />
   </head>
 
-  <body>
+  <body class="index-page">
     <div class="header" id="header">
       <div class="nav-container">
         <a href="index.html" class="logo">
@@ -89,16 +89,33 @@
     </div>
 
     <a href="tel:0987711284" class="call-btn">
-      <i class="fa-solid fa-phone-volume"></i
-    ></a>
+      <i class="fa-solid fa-phone-volume"></i>
+    </a>
 
-    <section class="product-detail">
-      <p class="title">Chi tiết sản phẩm</p>
-      <div class="detail-top">
-        <div class="detail-img"></div>
-        <div class="product-summary"></div>
+    <section class="dealer-locator">
+      <div class="locator-header">
+        <h2>Hệ Thống Phân Phối</h2>
+        <p>Tìm đại lý gần ruộng nhà bạn nhất!</p>
       </div>
-      <div class="detail-bottom"></div>
+
+      <div class="search-box">
+        <input type="text" id="nameSearch" placeholder="Nhập tên đại lý..." />
+        <select id="provinceSearch">
+          <option value="">-- Chọn Tỉnh/Thành --</option>
+          <option value="Hà Nội">Hà Nội</option>
+          <option value="Cần Thơ">Cần Thơ</option>
+          <option value="Đồng Tháp">Đồng Tháp</option>
+        </select>
+        <select id="districtSearch">
+          <option value="">-- Chọn Quận/Huyện --</option>
+          <option value="Gia Lâm">Gia Lâm</option>
+          <option value="Ninh Kiều">Ninh Kiều</option>
+          <option value="Tháp Mười">Tháp Mười</option>
+        </select>
+        <button id="searchBtn">🔍 Tìm Kiếm</button>
+      </div>
+
+      <div class="dealer-grid" id="dealerList"></div>
     </section>
 
     <section class="contact" id="contact" data-aos="fade-up">
@@ -142,6 +159,7 @@
                 type="text"
                 placeholder=" "
                 class="input-info-client"
+                id="name"
               />
               <label for="name" class="form-label">Tên của bạn</label>
             </div>
@@ -151,6 +169,7 @@
                 type="tel"
                 placeholder=" "
                 class="input-info-client"
+                id="phone"
               /><label for="phone" class="form-label">Số điện thoại</label>
             </div>
             <div class="form-field" data-aos="fade-up">
@@ -159,6 +178,7 @@
                 type="email"
                 placeholder=" "
                 class="input-info-client"
+                id="email"
               /><label for="email" class="form-label">Email của bạn</label>
             </div>
             <div class="form-field" data-aos="fade-up">
@@ -167,17 +187,19 @@
                 type="text"
                 placeholder=" "
                 class="input-info-client"
+                id="message"
               /><label for="message" class="form-label"
                 >Câu hỏi dành cho chúng tôi</label
               >
             </div>
-            <button
+            <a
+              href="#"
               type="submit"
               class="submit-form btn btn-success"
               data-aos="fade-up"
             >
               Gửi!
-            </button>
+            </a>
           </div>
         </div>
       </div>
@@ -251,5 +273,6 @@
     <script src="./config/config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script src="main.js"></script>
+    <script src="store.js"></script>
   </body>
 </html>
