@@ -124,12 +124,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // In từng đại lý ra màn hình
       stores.forEach((store) => {
-        // Class dealer-card ông tự viết CSS để nó thành dạng lưới (grid) cho đẹp nghen
         dealerList.innerHTML += `
                     <div class="dealer-card">
                         <h3>${store.name}</h3>
-                        <p>📍 ${store.address}, ${store.district}, ${store.province}</p>
-                        <p>📞 ${store.phone}</p>
+                        <p>📍 ${store.address}</p>
                     </div>
                 `;
       });
