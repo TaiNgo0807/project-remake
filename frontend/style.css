@@ -369,7 +369,6 @@ section {
 }
 
 .product-list-section {
-  background-color: var(--field-bg);
   display: flex;
   justify-content: center;
 }
@@ -495,6 +494,7 @@ section {
 @media (min-width: 1200px) {
   .contact-form {
     grid-template-columns: repeat(2, 1fr);
+    padding: 40px 10vw;
   }
 }
 .form {
