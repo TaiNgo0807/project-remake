@@ -1,4 +1,100 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const locationData = {
+    "An Giang": [
+      "Châu Đốc",
+      "Tân Châu",
+      "Long Xuyên",
+      "An Phú",
+      "Châu Phú",
+      "Châu Thành",
+      "Chợ Mới",
+      "Phú Tân",
+      "Thoại Sơn",
+      "Tri Tôn",
+      "Tịnh Biên",
+    ],
+    "Đồng Tháp": [
+      "Cao Lãnh",
+      "Hồng Ngự",
+      "Châu Thành",
+      "Lai Vung",
+      "Lấp Vò",
+      "Tam Nông",
+      "Tân Hồng",
+      "Thanh Bình",
+      "Tháp Mười",
+    ],
+    "Kiên Giang": [
+      "Rạch Giá",
+      "Giang Thành",
+      "Giồng Riềng",
+      "Gò Quao",
+      "Hòn Đất",
+      "Kiên Lương",
+      "Tân Hiệp",
+    ],
+    "Sóc Trăng": [
+      "Sóc Trăng",
+      "Châu Thành",
+      "Kế Sách",
+      "Long Phú",
+      "Mỹ Tú",
+      "Mỹ Xuyên",
+      "Ngã Năm",
+      "Thạnh Trị",
+    ],
+    "Long An": [
+      "Bến Lức",
+      "Đức Hòa",
+      "Đức Huệ",
+      "Kiến Tường",
+      "Mộc Hóa",
+      "Tân Hưng",
+      "Tân Thạnh",
+      "Tân Trụ",
+      "Thạnh Hóa",
+      "Thủ Thừa",
+      "Vĩnh Hưng",
+    ],
+    "Tiền Giang": ["Cái Bè", "Gò Công Tây", "Tân Phước"],
+    "Cần Thơ": ["Cờ Đỏ", "Vĩnh Thạnh"],
+    "Hậu Giang": ["Vị Thanh", "Long Mỹ", "Phụng Hiệp"],
+    "Trà Vinh": ["Càng Long", "Cầu Kè", "Châu Thành", "Tiểu Cần"],
+    "Hồ Chí Minh": ["Bình Chánh"],
+    "Các tỉnh khác": [
+      "Bà Rịa - Vũng Tàu",
+      "Bình Dương",
+      "Cà Mau",
+      "Đắk Nông",
+      "Vĩnh Long",
+    ],
+  };
+
+  const provinceSelect = document.getElementById("provinceSearch");
+  const districtSelect = document.getElementById("districtSearch");
+
+  // Lắng nghe sự kiện mỗi khi người dùng đổi Tỉnh
+  provinceSelect.addEventListener("change", function () {
+    const selectedProvince = this.value; // Lấy tên tỉnh vừa chọn
+
+    // Reset lại ô Huyện cho sạch sẽ trước khi đổ data mới
+    districtSelect.innerHTML =
+      '<option value="">-- Chọn Quận/Huyện --</option>';
+
+    // Nếu có chọn Tỉnh và Tỉnh đó có trong từ điển của mình
+    if (selectedProvince && locationData[selectedProvince]) {
+      const districts = locationData[selectedProvince];
+
+      // Vòng lặp đẻ ra các thẻ <option> cho Huyện
+      districts.forEach((district) => {
+        const option = document.createElement("option");
+        option.value = district;
+        option.textContent = district;
+        districtSelect.appendChild(option);
+      });
+    }
+  });
+
   const API_BASE = `${apiUrl}/api/v1`;
 
   const dealerList = document.getElementById("dealerList");
@@ -22,8 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
       dealerList.innerHTML = "";
 
       if (stores.length === 0) {
-        dealerList.innerHTML =
-          "<p>Không tìm thấy đại lý nào phù hợp. Chắc ổng đi nhậu rồi!</p>";
+        dealerList.innerHTML = "<p>Không tìm thấy đại lý nào phù hợp.</p>";
         return;
       }
 

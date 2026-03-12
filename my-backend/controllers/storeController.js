@@ -1,4 +1,4 @@
-const db = require("../models/db.js"); // File kết nối mysql2 của ông
+const db = require("../models/db.js"); // File kết nối mysql2
 
 exports.searchStores = async (req, res) => {
   try {
