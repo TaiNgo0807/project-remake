@@ -368,9 +368,12 @@ section {
   transform: translateX(-50%);
 }
 
-.product {
-  background-color: #f9f9f9;
+.product-list-section {
+  background-color: var(--field-bg);
+  display: flex;
+  justify-content: center;
 }
+
 .product-container {
   display: grid;
   grid-template-columns: 1fr;
@@ -823,31 +826,6 @@ footer {
   }
 }
 
-.findProduct-container {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  margin: 20px;
-}
-.findProduct-container input,
-.findProduct-container select {
-  height: 40px;
-  padding: 0 12px;
-  border-radius: 8px;
-  border: 1px solid #c8e6c9;
-  outline: none;
-  font-size: 14px;
-}
-.findProduct-container select {
-  background-color: #f9fff9;
-  cursor: pointer;
-}
-.findProduct-container input:focus,
-.findProduct-container select:focus {
-  border-color: var(--sprout-green);
-  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
-}
-
 #searchBtn {
   height: 40px;
   padding: 0 20px;
@@ -1225,7 +1203,6 @@ footer {
 .dealer-locator {
   max-width: 1000px;
   margin: 50px auto;
-  font-family: Arial, sans-serif;
 }
 .locator-header {
   text-align: center;
