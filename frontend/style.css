@@ -754,7 +754,7 @@ footer {
   gap: 10px;
 }
 .detail-img {
-  height: 480px;
+  height: 100%;
 }
 .detail-img img {
   border-radius: 12px;
