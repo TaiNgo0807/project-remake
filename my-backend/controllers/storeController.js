@@ -1,15 +1,14 @@
-const db = require("../models/db.js"); // File kết nối mysql2
+const db = require("../models/db.js");
 
 exports.searchStores = async (req, res) => {
   try {
-    // SỬA CHỖ NÀY: Lụm thêm thằng page ra, cho nó mặc định là 1
     const { name, province, district, page = 1 } = req.query;
 
     let query = "SELECT * FROM stores WHERE 1=1";
 
+    // Ép kiểu đàng hoàng cho chắc cú
     const limit = 21;
-    // Bây giờ thì nó mới biết page là cái gì để tính toán nè
-    const offset = (Number(page) - 1) * limit;
+    const offset = (parseInt(page) - 1) * limit;
     let params = [];
 
     if (name) {
@@ -25,13 +24,14 @@ exports.searchStores = async (req, res) => {
       params.push(district);
     }
 
-    query += " LIMIT ? OFFSET ?";
-    params.push(limit, offset);
+    // ĐIỂM ĂN TIỀN LÀ ĐÂY: Nhét thẳng số vào chuỗi SQL, bỏ 2 cái params ở Limit đi
+    query += ` LIMIT ${limit} OFFSET ${offset}`;
 
-    const [rows] = await db.execute(query, params);
+    // Dùng db.query thay vì db.execute cho nó hiền hòa
+    const [rows] = await db.query(query, params);
     res.json(rows);
   } catch (error) {
-    console.error(error);
+    console.error("Lỗi cmnr:", error);
     res.status(500).json({ message: "Lỗi server rùi bà con ơi!" });
   }
 };
