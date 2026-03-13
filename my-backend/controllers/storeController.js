@@ -2,10 +2,14 @@ const db = require("../models/db.js"); // File kết nối mysql2
 
 exports.searchStores = async (req, res) => {
   try {
-    // Lấy thông tin từ query URL
-    const { name, province, district } = req.query;
+    // SỬA CHỖ NÀY: Lụm thêm thằng page ra, cho nó mặc định là 1
+    const { name, province, district, page = 1 } = req.query;
 
     let query = "SELECT * FROM stores WHERE 1=1";
+
+    const limit = 21;
+    // Bây giờ thì nó mới biết page là cái gì để tính toán nè
+    const offset = (Number(page) - 1) * limit;
     let params = [];
 
     if (name) {
@@ -21,8 +25,11 @@ exports.searchStores = async (req, res) => {
       params.push(district);
     }
 
+    query += " LIMIT ? OFFSET ?";
+    params.push(limit, offset);
+
     const [rows] = await db.execute(query, params);
-    res.json(rows); // Trả data về cho frontend dạng JSON
+    res.json(rows);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Lỗi server rùi bà con ơi!" });

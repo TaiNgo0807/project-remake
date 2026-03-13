@@ -1,3 +1,5 @@
+// frontend/store.js
+
 document.addEventListener("DOMContentLoaded", () => {
   const locationData = {
     "An Giang": [
@@ -99,48 +101,94 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const dealerList = document.getElementById("dealerList");
   const searchBtn = document.getElementById("searchBtn");
+  const cucMoiNhu = document.getElementById("cuc-moi-nhu");
 
-  // Hàm gọi API và render HTML
-  const fetchStores = async () => {
+  // Các biến kiểm soát việc cuộn trang
+  let currentPage = 1;
+  let isLastPage = false;
+  let isLoading = false; // Chống spam API khi đang tải
+
+  // Hàm gọi API (có thêm cờ isLoadMore để biết là cuộn thêm hay tìm mới)
+  const fetchStores = async (isLoadMore = false) => {
+    if (isLoading || (isLastPage && isLoadMore)) return;
+
+    isLoading = true;
+    if (isLoadMore) cucMoiNhu.style.display = "block"; // Hiện chữ đang tải
+
     const name = document.getElementById("nameSearch").value;
     const province = document.getElementById("provinceSearch").value;
     const district = document.getElementById("districtSearch").value;
 
     try {
-      // Gom các tham số thành query string
-      const queryParams = new URLSearchParams({ name, province, district });
+      const queryParams = new URLSearchParams({
+        name,
+        province,
+        district,
+        page: currentPage, // Ném thêm số trang lên API
+      });
 
-      // Gọi API (nhớ sửa lại cho khớp đường dẫn server của ông)
       const response = await fetch(`${API_BASE}/stores/search?${queryParams}`);
       const stores = await response.json();
 
-      // Xóa sạch cái cũ trước khi in cái mới
-      dealerList.innerHTML = "";
+      // Nếu là bấm tìm kiếm mới -> xóa sạch list cũ
+      if (!isLoadMore) {
+        dealerList.innerHTML = "";
+        isLastPage = false;
+      }
 
       if (stores.length === 0) {
-        dealerList.innerHTML = "<p>Không tìm thấy đại lý nào phù hợp.</p>";
+        if (!isLoadMore)
+          dealerList.innerHTML = "<p>Không tìm thấy đại lý nào phù hợp.</p>";
+        isLastPage = true; // Hết data rồi, nghỉ cuộn
+        cucMoiNhu.style.display = "none";
+        isLoading = false;
         return;
       }
 
-      // In từng đại lý ra màn hình
+      // In data ra màn hình
       stores.forEach((store) => {
         dealerList.innerHTML += `
-                    <div class="dealer-card">
-                        <h3>${store.name}</h3>
-                        <p>📍 ${store.address}</p>
-                    </div>
-                `;
+          <div class="dealer-card">
+              <h3>${store.name}</h3>
+              <p>📍 ${store.address}</p>
+          </div>
+        `;
       });
+
+      // Kiểm tra xem đã hết data chưa (nếu trả về ít hơn 21 cái nghĩa là cạn kho)
+      if (stores.length < 21) {
+        isLastPage = true;
+        cucMoiNhu.style.display = "none"; // Ẩn mồi nhử
+      } else {
+        cucMoiNhu.style.display = "block"; // Hiện mồi nhử cho lần cuộn sau
+      }
     } catch (error) {
       console.error("Lỗi lấy dữ liệu:", error);
-      dealerList.innerHTML =
-        "<p>Đường truyền đang kẹt xe, vui lòng thử lại sau!</p>";
+      if (!isLoadMore)
+        dealerList.innerHTML =
+          "<p>Đường truyền đang kẹt xe, vui lòng thử lại sau!</p>";
+    } finally {
+      isLoading = false; // Xong việc, mở khóa cho lần tải tiếp
     }
   };
 
-  // Load tất cả đại lý ngay khi vừa vào web
+  // === THUÊ BẢO VỆ CANH ME CUỘN CHUỘT ===
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting && !isLoading && !isLastPage) {
+      currentPage++; // Tăng số trang lên
+      fetchStores(true); // Gọi hàm với cờ báo là đang cuộn thêm (Load More)
+    }
+  });
+
+  // Bắt đầu canh cái thẻ mồi nhử
+  if (cucMoiNhu) observer.observe(cucMoiNhu);
+
+  // Load trang đầu tiên ngay khi vào web
   fetchStores();
 
-  // Bắt sự kiện click nút tìm kiếm
-  searchBtn.addEventListener("click", fetchStores);
+  // Bấm nút tìm kiếm -> Reset lại từ trang 1
+  searchBtn.addEventListener("click", () => {
+    currentPage = 1;
+    fetchStores(false);
+  });
 });
