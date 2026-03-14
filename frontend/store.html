@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nông nghiệp Việt Sang</title>
+    <title>Đại lý Nông nghiệp Việt Sang</title>
     <meta
       name="description"
       content="Công ty Nông nghiệp Việt Sang chuyên cung cấp phân bón, thuốc trừ sâu, thuốc trừ bệnh và giải pháp nông nghiệp bền vững."
@@ -68,7 +68,7 @@
     <link rel="manifest" href="./assets/picture/favicon_io/site.webmanifest" />
   </head>
 
-  <body>
+  <body class="index-page">
     <div class="header" id="header">
       <div class="nav-container">
         <a href="index.html" class="logo">
@@ -79,9 +79,9 @@
           <span></span><span></span><span></span>
         </button>
         <ul class="nav-menu" id="nav-menu">
-          <li><a href="trangchu.html" class="nav-link">Trang chủ</a></li>
+          <li><a href="index.html" class="nav-link">Trang chủ</a></li>
           <li><a href="product.html" class="nav-link">Sản Phẩm</a></li>
-          <li><a href="index.html" class="nav-link">Các đại lý</a></li>
+          <li><a href="store.html" class="nav-link">Các đại lý</a></li>
           <li><a href="blog.html" class="nav-link">Blog</a></li>
           <li><a href="about.html" class="nav-link">Về chúng tôi</a></li>
         </ul>
@@ -89,33 +89,52 @@
     </div>
 
     <a href="tel:0987711284" class="call-btn">
-      <i class="fa-solid fa-phone-volume"></i
-    ></a>
+      <i class="fa-solid fa-phone-volume"></i>
+    </a>
 
-    <section class="hero" id="hero">
-      <div class="container">
-        <div class="hero-title">
-          <h1>Giải pháp toàn diện cho mọi vấn đề của cây trồng.</h1>
-        </div>
-        <div class="hero-subtitle">
-          Bạn đang đau đầu về những bệnh của cây lúa. <br />
-          <br />
-          Chúng tôi phân phối, cung cấp những sản phẩm, giải pháp tối ưu cho vấn
-          đề của bạn. <br />
-          <br />
-          Liên hệ trực tiếp với chúng tôi hoặc xem những sản phẩm mà chúng tôi
-          cung cấp.
-        </div>
-        <div class="hero-btn">
-          <a href="#product" class="btn1">Sản phẩm</a>
-          <a href="#contact" class="btn2">Liên hệ ngay</a>
-        </div>
+    <section class="dealer-locator">
+      <div class="locator-header">
+        <h2>Hệ Thống Phân Phối</h2>
+        <p>Tìm đại lý gần ruộng nhà bạn nhất!</p>
+      </div>
+
+      <div class="search-box">
+        <input type="text" id="nameSearch" placeholder="Nhập tên đại lý..." />
+        <select id="provinceSearch">
+          <option value="">-- Chọn Tỉnh/Thành --</option>
+          <option value="An Giang">An Giang</option>
+          <option value="Kiên Giang">Kiên Giang</option>
+          <option value="Sóc Trăng">Sóc Trăng</option>
+          <option value="Long An">Long An</option>
+          <option value="Tiền Giang">Tiền Giang</option>
+          <option value="Cần Thơ">Cần Thơ</option>
+          <option value="Hậu Giang">Hậu Giang</option>
+          <option value="Trà Vinh">Trà Vinh</option>
+          <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+          <option value="Các tỉnh khác">Các tỉnh khác</option>
+        </select>
+
+        <select id="districtSearch">
+          <option value="">-- Chọn Quận/Huyện --</option>
+        </select>
+
+        <button id="searchBtn">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </div>
+
+      <div class="dealer-grid" id="dealerList"></div>
+      <div
+        id="cuc-moi-nhu"
+        style="text-align: center; padding: 20px; display: none"
+      >
+        ⏳ Đang tải thêm đại lý...
       </div>
     </section>
 
     <section class="contact" id="contact" data-aos="fade-up">
       <div class="container text-center">
-        <h2 class="contact-title">Liên hệ | Đặt câu hỏi</h2>
+        <h2 class="title">Liên hệ | Đặt câu hỏi</h2>
         <div class="contact-form">
           <div class="info-container">
             <div class="info" data-aos="fade-up">
@@ -150,6 +169,7 @@
           <div class="form" data-aos="fade-up">
             <div class="form-field" data-aos="fade-up">
               <input
+                id="name"
                 type="text"
                 placeholder=" "
                 class="input-info-client"
@@ -159,27 +179,30 @@
             </div>
             <div class="form-field" data-aos="fade-up">
               <input
-                type="phone-number"
+                id="phone"
+                type="tel"
                 placeholder=" "
                 class="input-info-client"
                 id="phone"
-              /><label for="name" class="form-label">Số điện thoại</label>
+              /><label for="phone" class="form-label">Số điện thoại</label>
             </div>
             <div class="form-field" data-aos="fade-up">
               <input
+                id="email"
                 type="email"
                 placeholder=" "
                 class="input-info-client"
                 id="email"
-              /><label for="name" class="form-label">Email của bạn</label>
+              /><label for="email" class="form-label">Email của bạn</label>
             </div>
             <div class="form-field" data-aos="fade-up">
               <input
+                id="message"
                 type="text"
                 placeholder=" "
                 class="input-info-client"
                 id="message"
-              /><label for="name" class="form-label"
+              /><label for="message" class="form-label"
                 >Câu hỏi dành cho chúng tôi</label
               >
             </div>
@@ -209,7 +232,7 @@
             <div class="social" id="social">
               <div class="facebook">
                 <a
-                  href="hhttps://www.facebook.com/NongNghiepVietSang2023"
+                  href="https://www.facebook.com/NongNghiepVietSang2023"
                   target="_blank"
                 >
                   <i
@@ -264,5 +287,6 @@
     <script src="./config/config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script src="main.js"></script>
+    <script src="store.js"></script>
   </body>
 </html>

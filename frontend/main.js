@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   alert(
-    "Website đang trong quá trình chạy thử nghiệm. Mọi thông tin chỉ là tham khảo vui lòng không ứng dụng vào thực tế."
+    "Website đang trong quá trình chạy thử nghiệm. Mọi thông tin chỉ là tham khảo vui lòng không ứng dụng vào thực tế.",
   );
 });
 
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const API_BASE = `${apiUrl}/api/v1`;
 
     const res = await fetch(
-      `${API_BASE}/blogs?search=${encodeURIComponent(search)}&page=1&limit=21`
+      `${API_BASE}/blogs?search=${encodeURIComponent(search)}&page=1&limit=21`,
     );
     const result = await res.json();
     const blogs = result.data;
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementsByClassName("blog-title")[0].innerText = blog.title;
     document.getElementsByClassName("author")[0].innerText = blog.author;
     document.getElementsByClassName("date")[0].innerText = new Date(
-      blog.created_at
+      blog.created_at,
     ).toLocaleDateString("vi-VN");
 
     document.getElementsByClassName("content")[0].innerHTML = blog.content;
@@ -177,25 +177,21 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ===== EVENT SLIDER (sửa lỗi crash + vw) =====
-  const slides = document.querySelector(".event-container");
-  const slideItems = document.querySelectorAll(".event-card");
-  const nextBtn = document.querySelector(".nextEvent");
-  const prevBtn = document.querySelector(".preEvent");
+  const slideItems = document.querySelectorAll(".slide-item");
 
-  if (slides && slideItems.length && nextBtn && prevBtn) {
+  if (slideItems.length) {
     let index = 0;
 
-    function showSlide(i) {
-      index = (i + slideItems.length) % slideItems.length;
-      slides.style.transform = `translateX(-${index * 100}%)`;
-    }
-
-    nextBtn.onclick = () => showSlide(index + 1);
-    prevBtn.onclick = () => showSlide(index - 1);
-
     setInterval(() => {
-      showSlide(index + 1);
-    }, 4000);
+      // Tắt ảnh cũ
+      slideItems[index].classList.remove("active");
+
+      // Chuyển sang ảnh mới
+      index = (index + 1) % slideItems.length;
+
+      // Bật ảnh mới
+      slideItems[index].classList.add("active");
+    }, 4000); // Đổi 4000 thành số khác nếu muốn nhanh/chậm hơn (1000 = 1 giây)
   }
 
   function renderProductCard(product) {
@@ -235,7 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     const inputs = document.querySelectorAll(".input-info-client");
     const [name, phone, mail, message] = Array.from(inputs).map((i) =>
-      i.value.trim()
+      i.value.trim(),
     );
 
     if (!name || !phone) {

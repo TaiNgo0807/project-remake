@@ -64,15 +64,14 @@ section {
   display: flex;
   gap: 20px;
 }
+
 .nav-link {
-  color: white;
+  color: var(--sprout-green);
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.1rem;
   transition: color 0.3s ease;
 }
-.header.scrolled .nav-link {
-  color: #333;
-}
+
 .header.scrolled .nav-link:hover,
 .nav-link:hover {
   color: var(--accent-orange);
@@ -80,11 +79,23 @@ section {
 
 /* --- TRẢ LẠI ĐÚNG LOGIC ACTIVE CỦA BẠN ĐỂ KHÔNG BỊ NHÁY 2 MENU --- */
 .nav-menu li:nth-child(1).active > a {
-  color: var(--sprout-green);
+  color: var(--accent-orange);
   font-weight: bold;
 }
 .nav-menu li:nth-child(2).active > a {
-  color: var(--sprout-green);
+  color: var(--accent-orange);
+  font-weight: bold;
+}
+.nav-menu li:nth-child(3).active > a {
+  color: var(--accent-orange);
+  font-weight: bold;
+}
+.nav-menu li:nth-child(4).active > a {
+  color: var(--accent-orange);
+  font-weight: bold;
+}
+.nav-menu li:nth-child(5).active > a {
+  color: var(--accent-orange);
   font-weight: bold;
 }
 
@@ -175,81 +186,10 @@ section {
   }
 }
 
-.hero {
-  display: flex;
-  justify-content: center;
-  color: white;
-  align-items: center;
-  height: 100vh;
-  padding: 100px 0;
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(./assets/picture/iamge_bg2.jpg);
-  background-size: cover;
-}
-.hero-title {
-  font-size: 3.5rem;
-  flex: 1;
-}
-.hero-subtitle {
-  margin-top: 30px;
-  font-size: 1.2rem;
-  margin-bottom: 30px;
-}
-.hero-btn {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-.btn1,
-.btn2 {
-  border-radius: 4px;
-  text-align: center;
-  min-width: 200px;
-  font-weight: 600;
-  border: 2px solid var(--sprout-green);
-  text-transform: uppercase;
-  outline: none;
-  padding: 12px 30px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  transition: 0.3s ease;
-  text-decoration: none;
-}
-.btn1 {
-  background-color: var(--sprout-green);
-  color: white;
-}
-.btn2 {
-  background-color: transparent;
-  color: var(--sprout-green);
-}
-.btn1:hover {
-  transform: translateY(-3px);
-}
-.btn2:hover {
-  background-color: var(--sprout-green);
-  transform: translateY(-3px);
-  color: white;
+.about {
+  background-color: var(--field-bg);
 }
 
-.about {
-  background-color: #f9f9f9;
-}
-.about-title {
-  font-size: 2.5rem;
-  color: var(--sprout-hover);
-  font-weight: 650;
-  position: relative;
-}
-.about-title::after {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: 0px;
-  width: 60px;
-  height: 4px;
-  background-color: var(--sprout-green);
-}
 .about-container {
   display: grid;
   grid-template-columns: 1fr;
@@ -881,73 +821,32 @@ footer {
   color: #2e7d32;
 }
 
-.event-slider {
+.slider {
+  margin-top: 70px;
   position: relative;
+  width: 100vw;
+  height: 100vh; /* Chiếm 100% chiều cao màn hình */
   overflow: hidden;
-  padding-top: 40px;
 }
-.event-container {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-}
-.event-card {
-  min-width: 100vw;
-  box-sizing: border-box;
-  padding: 0 35px 0px 20px;
-  position: relative;
-}
-.event-img {
+
+.slide-item {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 400px;
-  object-fit: cover;
-  border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-.event-content {
-  position: absolute;
-  left: 20px;
-  bottom: 30px;
-  max-width: 90%;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.45);
-  padding: 15px 20px;
-  border-radius: 8px;
+  height: 100%;
   opacity: 0;
-  transform: translateY(10px);
-  transition: 0.3s ease;
+  transition: opacity 1s ease-in-out; /* Mờ dần trong 1s */
 }
-.event-card:hover .event-content {
+
+.slide-item.active {
   opacity: 1;
-  transform: translateY(0);
 }
-.preEvent,
-.nextEvent {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.3);
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-  font-size: 20px;
-  border-radius: 5px;
-}
-.preEvent {
-  left: 20px;
-}
-.nextEvent {
-  right: 20px;
-}
-.dateOfEvent {
-  font-size: 0.7rem;
-  margin-top: 10px;
-  display: block;
-}
-.event-name {
-  font-size: 1.5rem;
-  font-weight: bold;
-  padding-bottom: 10px;
+
+.slide-img {
+  width: 100%;
+  height: 90%;
+  object-fit: contain;
 }
 
 .blog-container {
