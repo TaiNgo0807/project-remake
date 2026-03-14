@@ -176,22 +176,43 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchAndRender(currentPage);
   }
 
-  // ===== EVENT SLIDER (sửa lỗi crash + vw) =====
+  // ===== SLIDER =====
   const slideItems = document.querySelectorAll(".slide-item");
+  const dots = document.querySelectorAll(".dot");
 
-  if (slideItems.length) {
+  if (slideItems.length && dots.length) {
     let index = 0;
+    let timer;
 
-    setInterval(() => {
-      // Tắt ảnh cũ
+    // Hàm đổi slide và đổi màu chấm
+    function switchSlide(newIndex) {
       slideItems[index].classList.remove("active");
+      dots[index].classList.remove("active");
 
-      // Chuyển sang ảnh mới
-      index = (index + 1) % slideItems.length;
+      index = newIndex;
 
-      // Bật ảnh mới
       slideItems[index].classList.add("active");
-    }, 4000); // Đổi 4000 thành số khác nếu muốn nhanh/chậm hơn (1000 = 1 giây)
+      dots[index].classList.add("active");
+    }
+
+    // Hàm chạy tự động
+    function startAutoPlay() {
+      timer = setInterval(() => {
+        let nextIndex = (index + 1) % slideItems.length;
+        switchSlide(nextIndex);
+      }, 4000);
+    }
+
+    // Bấm vào chấm nào là nhảy tới ảnh đó
+    dots.forEach((dot, i) => {
+      dot.onclick = () => {
+        clearInterval(timer); // Đang bấm thì ngưng tự động chạy
+        switchSlide(i);
+        startAutoPlay(); // Bấm xong cho tự chạy lại
+      };
+    });
+
+    startAutoPlay();
   }
 
   function renderProductCard(product) {

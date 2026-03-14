@@ -848,6 +848,28 @@ footer {
   height: 90%;
   object-fit: contain;
 }
+.slider-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  background-color: #666; /* Màu xám */
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.dot.active {
+  background-color: #2b8a3e; /* Màu xanh lá lúc được chọn */
+}
 
 .blog-container {
   display: grid;
