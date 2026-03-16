@@ -5,7 +5,7 @@ const db = require("../models/db");
 router.get("/", async (req, res) => {
   try {
     const page = parseInt(req.query.page, 10) || 1;
-    const limit = parseInt(req.query.limit, 10) || 21;
+    const limit = parseInt(req.query.limit, 10) || 14;
     const offset = (page - 1) * limit;
 
     let sql = `
@@ -44,7 +44,7 @@ router.get("/:id", async (req, res) => {
     const { id } = req.params;
     const [rows] = await db.query(
       "SELECT id, name, category, description, summary, image_url FROM products WHERE id = ?",
-      [id]
+      [id],
     );
 
     if (rows.length === 0) {

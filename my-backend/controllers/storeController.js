@@ -6,7 +6,6 @@ exports.searchStores = async (req, res) => {
 
     let query = "SELECT * FROM stores WHERE 1=1";
 
-    // Ép kiểu đàng hoàng cho chắc cú
     const limit = 21;
     const offset = (parseInt(page) - 1) * limit;
     let params = [];
