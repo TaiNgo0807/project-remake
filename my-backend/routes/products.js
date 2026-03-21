@@ -5,7 +5,7 @@ const db = require("../models/db");
 router.get("/", async (req, res) => {
   try {
     const page = parseInt(req.query.page, 10) || 1;
-    const limit = parseInt(req.query.limit, 10) || 14;
+    const limit = parseInt(req.query.limit, 10) || 15;
     const offset = (page - 1) * limit;
 
     let sql = `

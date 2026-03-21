@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const API_BASE = `${apiUrl}/api/v1`;
 
     const res = await fetch(
-      `${API_BASE}/blogs?search=${encodeURIComponent(search)}&page=1&limit=14`,
+      `${API_BASE}/blogs?search=${encodeURIComponent(search)}&page=1&limit=15`,
     );
     const result = await res.json();
     const blogs = result.data;
@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Nếu product page thì render full và paging
   else if (document.body.classList.contains("product-page")) {
     let currentPage = 1;
-    const limit = 14;
+    const limit = 15;
     const pageInfo = document.getElementById("pageInfo");
     const prevPageBtn = document.getElementById("prevPage");
     const nextPageBtn = document.getElementById("nextPage");
@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
       timer = setInterval(() => {
         let nextIndex = (index + 1) % slideItems.length;
         switchSlide(nextIndex);
-      }, 4000);
+      }, 10000);
     }
 
     // Bấm vào chấm nào là nhảy tới ảnh đó

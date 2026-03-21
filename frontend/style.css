@@ -9,6 +9,7 @@
   --field-bg: #f9fbf7; /* Màu nền trắng xanh nhạt */
   --accent-orange: #ff9800; /* Màu cam điểm nhấn */
   --dark-green: #1b5e20; /* Xanh siêu đậm cho tiêu đề lớn */
+  --dark-red: #c62828; /* Đỏ đậm cho cảnh báo hoặc điểm nhấn quan trọng */
 }
 
 body,
@@ -47,15 +48,15 @@ section {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
   margin: 0 auto;
+  padding: 0 20px 0 20px;
   width: 100%;
 }
 .logo {
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: var(--sprout-green);
+  color: var(--dark-red);
   font-weight: 600;
   font-size: 1.2rem;
 }
@@ -1058,7 +1059,7 @@ footer {
   margin-bottom: 5px;
 }
 .tagline {
-  color: #ff5722;
+  color: rgb(6, 6, 203);
   font-style: italic;
   font-weight: bold;
   font-size: 1.2rem;
@@ -1309,4 +1310,22 @@ footer {
   .about-btn3 {
     grid-column: span 1;
   }
+}
+
+.title-about {
+  margin-bottom: 20px;
+  color: #d32f2f;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.title-about::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: #d32f2f;
+  margin: 10px auto 0;
 }
