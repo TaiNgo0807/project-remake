@@ -64,6 +64,11 @@ app.use("/api/v1", blogRouter);
 //store routes
 const storeRouter = require("./routes/storeRouter");
 app.use("/api/v1/stores", storeRouter);
+
+//banner routes
+const bannerRouter = require("./routes/bannerRouter");
+app.use("/api/v1/banners", bannerRouter);
+
 // ---- Contact ----
 app.post("/api/v1/contact", async (req, res, next) => {
   try {
