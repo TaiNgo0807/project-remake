@@ -8,34 +8,33 @@ fetch(`${API_BASE}/banners`)
   })
   .then((banners) => {
     if (!Array.isArray(banners) || banners.length === 0) {
-      slider.innerHTML = "<p>No banners available.</p>";
+      slider.innerHTML = "<p>Không có banner nào cả!</p>";
       return;
     }
 
-    let html = "";
+    let slidesHtml = "";
+    let dotsHtml = ""; // <--- Thêm biến này để chứa các dấu chấm
+
     banners.forEach((banner, index) => {
       const activeClass = index === 0 ? "active" : "";
-      html += `
-        <div class="slide-item ${activeClass}">
-          <img class="slide-img" src="${banner.image}" alt="${banner.alt}" style="width:100%; object-fit: cover;" />
-        </div>
-      `;
+
+      slidesHtml += `
+            <div class="slide-item ${activeClass}">
+                <img class="slide-img" src="${banner.image}" alt="${banner.alt}" />
+            </div>
+        `;
+
+      dotsHtml += `<span class="dot ${activeClass}" data-index="${index}"></span>`;
     });
 
-    slider.innerHTML = html;
+    slider.innerHTML = slidesHtml;
 
-    const slides = document.querySelectorAll(".slide-item");
-    let currentIndex = 0;
+    const dotsContainer = document.querySelector(".slider-dots");
+    if (dotsContainer) {
+      dotsContainer.innerHTML = dotsHtml;
+    }
 
-    if (slides.length <= 1) return;
-
-    setInterval(() => {
-      slides[currentIndex].classList.remove("active");
-
-      currentIndex = (currentIndex + 1) % slides.length;
-
-      slides[currentIndex].classList.add("active");
-    }, 3000);
+    initSlider();
   })
   .catch((error) => {
     console.error("Error loading banners:", error);
