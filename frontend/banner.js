@@ -22,7 +22,7 @@ fetch(`${API_BASE}/banners`)
 
       slidesHtml += `
         <div class="slide-item ${activeClass}">
-          <img class="slide-img" src="${banner.image}" alt="${banner.alt}" style="width:100%; object-fit: cover;"/>
+          <img class="slide-img" src="${banner.image}" alt="${banner.alt}"/>
         </div>
       `;
 
