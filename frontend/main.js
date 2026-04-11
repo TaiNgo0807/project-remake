@@ -175,46 +175,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     fetchAndRender(currentPage);
   }
-
-  // ===== SLIDER =====
-  const slideItems = document.querySelectorAll(".slide-item");
-  const dots = document.querySelectorAll(".dot");
-
-  if (slideItems.length && dots.length) {
-    let index = 0;
-    let timer;
-
-    // Hàm đổi slide và đổi màu chấm
-    function switchSlide(newIndex) {
-      slideItems[index].classList.remove("active");
-      dots[index].classList.remove("active");
-
-      index = newIndex;
-
-      slideItems[index].classList.add("active");
-      dots[index].classList.add("active");
-    }
-
-    // Hàm chạy tự động
-    function startAutoPlay() {
-      timer = setInterval(() => {
-        let nextIndex = (index + 1) % slideItems.length;
-        switchSlide(nextIndex);
-      }, 10000);
-    }
-
-    // Bấm vào chấm nào là nhảy tới ảnh đó
-    dots.forEach((dot, i) => {
-      dot.onclick = () => {
-        clearInterval(timer); // Đang bấm thì ngưng tự động chạy
-        switchSlide(i);
-        startAutoPlay(); // Bấm xong cho tự chạy lại
-      };
-    });
-
-    startAutoPlay();
-  }
-
   function renderProductCard(product) {
     const html = `
       <div class="product-card">
