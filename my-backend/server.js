@@ -65,7 +65,7 @@ app.use("/api/v1", blogRouter);
 const storeRouter = require("./routes/storeRouter");
 app.use("/api/v1/stores", storeRouter);
 
-//banner routes
+// banner routes
 const bannerRouter = require("./routes/bannerRouter");
 app.use("/api/v1/banners", bannerRouter);
 

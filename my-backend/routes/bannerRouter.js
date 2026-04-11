@@ -2,6 +2,6 @@ const express = require("express");
 const router = express.Router();
 const bannerController = require("../controllers/bannerController.js");
 
-router.get("/banners", bannerController.getBanners);
+router.get("/", bannerController.getBanners);
 
 module.exports = router;
