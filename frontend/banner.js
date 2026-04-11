@@ -11,10 +11,9 @@ fetch(`${API_BASE}/banners`)
       slider.innerHTML = "<p>No banners available.</p>";
       return;
     }
-
     let html = "";
     banners.forEach((banner) => {
-      html += `
+      slider.innerHTML += `
         <div class="slide-item">
           <img class="slide-img" src="${banner.image}" alt="${banner.alt}" />
         </div>
