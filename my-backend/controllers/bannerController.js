@@ -3,9 +3,7 @@ const db = require("../models/db.js"); // Đường dẫn tới file cấu hình
 exports.getBanners = async (req, res) => {
   try {
     // Dùng mysql2/promise để lấy dữ liệu
-    const [rows] = await db.query(
-      "SELECT id, image, alt FROM banners ORDER BY id DESC",
-    );
+    const [rows] = await db.query("SELECT id, image, alt FROM banners");
 
     // Trả thẳng cái mảng rows về cho Frontend
     res.status(200).json(rows);

@@ -25,5 +25,5 @@ fetch(`${API_BASE}/banners`)
   })
   .catch((error) => {
     console.error("Error loading banners:", error);
-    slider.innerHTML = "<p>Error loading banners.</p>";
+    slider.innerHTML = "<p>Error load banners.</p>";
   });
