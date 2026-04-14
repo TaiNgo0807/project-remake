@@ -1,0 +1,83 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f5f7fa;
+  color: #333;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+/* Hook */
+.hook {
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+  color: white;
+  padding: 30px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
+.hook h1 {
+  margin-bottom: 10px;
+}
+
+/* Section chung */
+.section {
+  background: white;
+  padding: 25px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.section h2 {
+  margin-bottom: 15px;
+  color: #2e7d32;
+}
+
+.section h3 {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  color: #444;
+}
+
+.section ul {
+  padding-left: 20px;
+}
+
+.section ul li {
+  margin-bottom: 8px;
+}
+
+/* Danger */
+.danger {
+  border-left: 5px solid #e53935;
+}
+
+/* Solution */
+.solution {
+  border-left: 5px solid #2196f3;
+}
+
+/* Highlight */
+.highlight {
+  background: #fff8e1;
+  border-left: 5px solid #ff9800;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-style: italic;
+}

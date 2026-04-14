@@ -28,12 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  alert(
-    "Website đang trong quá trình chạy thử nghiệm. Mọi thông tin chỉ là tham khảo vui lòng không ứng dụng vào thực tế.",
-  );
-});
-
-document.addEventListener("DOMContentLoaded", () => {
   async function loadBlogs() {
     const searchInput = document.getElementById("search");
     const search = searchInput ? searchInput.value : "";
