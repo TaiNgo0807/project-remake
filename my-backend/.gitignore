@@ -4,5 +4,4 @@
 .idea/
 .env
 package-lock.json
-.vscode
-event.html
+.vscode/

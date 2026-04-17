@@ -1,3 +1,5 @@
+//confi.js
+
 const apiUrl =
   window.location.hostname === "localhost"
     ? "http://localhost:6969"
