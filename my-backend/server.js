@@ -71,7 +71,7 @@ app.use("/api/v1/banners", bannerRouter);
 
 // recruitment routes
 const recruitmentRouter = require("./routes/recruitmentRouter");
-app.use("/api/v1/recruitment", recruitmentRouter);
+app.use("/api/v1/jobs", recruitmentRouter);
 
 // ---- Contact ----
 app.post("/api/v1/contact", async (req, res, next) => {
