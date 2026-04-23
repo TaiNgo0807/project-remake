@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tuyển dụng - Nông nghiệp Việt Sang</title>
+
+    <!-- giống index -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="header">
+      <div class="nav-container">
+        <a href="index.html" class="logo">
+          <img src="./assets/picture/logo.png" height="40" />
+          <h1>Công Ty Nông nghiệp Việt Sang</h1>
+        </a>
+
+        <button class="hamburger" id="hamburger-btn">
+          <span></span><span></span><span></span>
+        </button>
+
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="index.html" class="nav-link">Trang chủ</a></li>
+          <li><a href="product.html" class="nav-link">Sản phẩm</a></li>
+          <li><a href="store.html" class="nav-link">Đại lý</a></li>
+          <li><a href="blog.html" class="nav-link">Thông tin</a></li>
+          <li><a href="about.html" class="nav-link">Về chúng tôi</a></li>
+          <li class="active">
+            <a href="recruitment.html" class="nav-link">Tuyển dụng</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <section class="hero-product">
+      <div class="text-center">
+        <h1 class="hero-title">Tuyển dụng</h1>
+        <p class="hero-subtitle">
+          Gia nhập đội ngũ Nông nghiệp Việt Sang ngay hôm nay
+        </p>
+      </div>
+    </section>
+
+    <section class="product">
+      <h2 class="title">Vị trí đang tuyển</h2>
+      <div class="product-container" id="jobContainer"></div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="container text-center">
+        <h2 class="title">Liên hệ ứng tuyển</h2>
+        <p>Gọi trực tiếp: 0987711284</p>
+        <p>Email: nongnghiepvietsang@gmail.com</p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-top">
+          <div class="about-brand">
+            <h4 class="footer-title">Nông nghiệp Việt Sang</h4>
+            <p>Cung cấp giải pháp nông nghiệp bền vững cho bà con.</p>
+          </div>
+        </div>
+        <div class="footer-bottom">© 2025 Nông nghiệp Việt Sang</div>
+      </div>
+    </footer>
+
+    <script src="./config/config.js"></script>
+    <script src="main.js"></script>
+
+    <!-- SCRIPT LOAD JOB -->
+    <script>
+      const API = `${apiUrl}/api/jobs`;
+
+      async function loadJobs() {
+        const res = await fetch(API);
+        const jobs = await res.json();
+
+        const container = document.getElementById("jobContainer");
+
+        container.innerHTML = jobs
+          .map(
+            (job) => `
+    <div class="job-card">
+                <h3 class="job-title">${job.title}</h3>
+                <p class="job-description">${job.description}</p>
+                <span>Lương: ${job.salary}</span><br>
+                <span>Địa điểm: ${job.location}</span><br>
+                <p>Yêu cầu: ${job.requirements}</p>
+                <p>Quyền lợi: ${job.benefits}</p>
+                </div>
+    </div>
+  `,
+          )
+          .join("");
+      }
+
+      loadJobs();
+    </script>
+  </body>
+</html>

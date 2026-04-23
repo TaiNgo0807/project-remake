@@ -12,11 +12,12 @@ const contactController = require("./controllers/contactController");
 const app = express();
 const ENV = process.env.NODE_ENV || "development";
 const IS_PROD = ENV === "production";
-const PORT = process.env.PORT || 6969;
+const PORT = process.env.PORT || 8080;
 
 // ---- CORS ----
 const ALLOWED_ORIGINS = (
-  process.env.CORS_ORIGINS || "http://localhost:5500,http://127.0.0.1:5500"
+  process.env.CORS_ORIGINS ||
+  "http://localhost:5500,http://127.0.0.1:5501,http://localhost:5173,http://127.0.0.1:5173"
 )
   .split(",")
   .map((o) => o.trim());
@@ -69,6 +70,10 @@ app.use("/api/v1/stores", storeRouter);
 const bannerRouter = require("./routes/bannerRouter");
 app.use("/api/v1/banners", bannerRouter);
 
+// recruitment routes
+const recruitmentRouter = require("./routes/recruitmentRouter");
+app.use("/api/v1/recruitment", recruitmentRouter);
+
 // ---- Contact ----
 app.post("/api/v1/contact", async (req, res, next) => {
   try {
@@ -96,6 +101,10 @@ app.get("/", (_req, res) => {
       health: "/health",
       products: "/api/v1/products",
       contact: "/api/v1/contact",
+      recruitment: "/api/v1/recruitment",
+      banners: "/api/v1/banners",
+      blogs: "/api/v1/blogs",
+      stores: "/api/v1/stores",
     },
   });
 });
