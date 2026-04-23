@@ -12,12 +12,11 @@ const contactController = require("./controllers/contactController");
 const app = express();
 const ENV = process.env.NODE_ENV || "development";
 const IS_PROD = ENV === "production";
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 6969;
 
 // ---- CORS ----
 const ALLOWED_ORIGINS = (
-  process.env.CORS_ORIGINS ||
-  "http://localhost:5500,http://127.0.0.1:5501,http://localhost:5173,http://127.0.0.1:5173"
+  process.env.CORS_ORIGINS || "http://localhost:5500,http://127.0.0.1:5500"
 )
   .split(",")
   .map((o) => o.trim());
