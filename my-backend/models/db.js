@@ -1,3 +1,6 @@
+// db.js - MySQL connection pool setup using mysql2/promise
+
+require("dotenv").config();
 const mysql = require("mysql2/promise");
 const { URL } = require("url");
 

@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 6969;
 
 // ---- CORS ----
 const ALLOWED_ORIGINS = (
-  process.env.CORS_ORIGINS || "http://localhost:5500,http://127.0.0.1:5500"
+  process.env.CORS_ORIGINS || "http://localhost:5500,http://127.0.0.1:5501"
 )
   .split(",")
   .map((o) => o.trim());
@@ -98,8 +98,6 @@ app.get("/", (_req, res) => {
     message: "Backend server is running!",
     endpoints: {
       health: "/health",
-      products: "/api/v1/products",
-      contact: "/api/v1/contact",
       recruitment: "/api/v1/recruitment",
       banners: "/api/v1/banners",
       blogs: "/api/v1/blogs",

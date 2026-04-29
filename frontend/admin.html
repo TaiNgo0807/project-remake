@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Nông nghiệp Việt Sang</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Bổ sung style riêng cho trang Admin */
+      body.admin-page {
+        background-color: var(--field-bg);
+        padding-top: 80px; /* Tránh bị header đè */
+      }
+
+      .admin-header {
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .admin-dashboard {
+        padding: 60px 5vw;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .admin-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+      }
+
+      .admin-card {
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        padding: 40px 20px;
+        text-align: center;
+        border: 1px solid #e0eadd;
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .admin-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 25px rgba(45, 90, 39, 0.15);
+        border-color: var(--sprout-green);
+      }
+
+      .admin-icon {
+        width: 70px;
+        height: 70px;
+        background: #e8f5e9;
+        color: var(--sprout-green);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        margin-bottom: 20px;
+        transition: 0.3s ease;
+      }
+
+      .admin-card:hover .admin-icon {
+        background: var(--sprout-green);
+        color: white;
+      }
+
+      .admin-title {
+        font-size: 1.3rem;
+        color: var(--leaf-green);
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      .admin-desc {
+        color: #666;
+        font-size: 0.95rem;
+        margin-bottom: 25px;
+        line-height: 1.5;
+        flex-grow: 1;
+      }
+
+      .admin-btn {
+        display: inline-block;
+        padding: 10px 25px;
+        background: var(--sprout-green);
+        color: white;
+        border-radius: 25px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: 0.3s;
+        border: 2px solid var(--sprout-green);
+      }
+
+      .admin-btn:hover {
+        background: transparent;
+        color: var(--sprout-green);
+      }
+
+      .admin-logout {
+        color: var(--dark-red);
+        font-weight: 600;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+
+  <body class="admin-page">
+    <div class="header admin-header" id="header">
+      <div class="nav-container">
+        <a href="admin.html" class="logo">
+          <img src="./assets/picture/logo.png" alt="Logo" height="40" />
+          <h1>Admin Portal</h1>
+        </a>
+        <ul class="nav-menu" id="nav-menu">
+          <li>
+            <a href="index.html" class="nav-link" target="_blank"
+              >Xem trang Web</a
+            >
+          </li>
+          <li>
+            <a href="#" class="admin-logout"
+              ><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <section class="admin-dashboard">
+      <h2 class="title">Bảng Điều Khiển Tùy Chỉnh</h2>
+      <p style="text-align: center; color: #555; margin-top: 15px">
+        Chọn một mục bên dưới để bắt đầu cập nhật dữ liệu hệ thống.
+      </p>
+
+      <div class="admin-grid">
+        <div class="admin-card">
+          <div class="admin-icon"><i class="fa-solid fa-box-open"></i></div>
+          <h3 class="admin-title">Chỉnh Sửa Sản Phẩm</h3>
+          <p class="admin-desc">
+            Thêm mới, cập nhật giá, hình ảnh và thông tin các loại phân bón,
+            thuốc bảo vệ thực vật.
+          </p>
+          <a href="#" class="admin-btn">Quản lý ngay</a>
+        </div>
+
+        <div class="admin-card">
+          <div class="admin-icon">
+            <i class="fa-solid fa-book-open-reader"></i>
+          </div>
+          <h3 class="admin-title">Thông Tin Kỹ Thuật</h3>
+          <p class="admin-desc">
+            Viết bài chia sẻ kinh nghiệm, phòng trừ sâu bệnh, hướng dẫn kỹ thuật
+            cho bà con nông dân.
+          </p>
+          <a href="#" class="admin-btn">Quản lý ngay</a>
+        </div>
+
+        <div class="admin-card">
+          <div class="admin-icon"><i class="fa-solid fa-camera-retro"></i></div>
+          <h3 class="admin-title">Hoạt Động Thực Tế</h3>
+          <p class="admin-desc">
+            Đăng tải hình ảnh, video xuống giống, thăm đồng và các sự kiện thực
+            tế của công ty.
+          </p>
+          <a href="#" class="admin-btn">Quản lý ngay</a>
+        </div>
+
+        <div class="admin-card">
+          <div class="admin-icon"><i class="fa-solid fa-users-gear"></i></div>
+          <h3 class="admin-title">Nhân Sự & Tuyển Dụng</h3>
+          <p class="admin-desc">
+            Xem danh sách nhân viên, đại lý, quản lý hồ sơ ứng viên và đăng tin
+            tuyển dụng mới.
+          </p>
+          <a href="#" class="admin-btn">Quản lý ngay</a>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
