@@ -1,4 +1,4 @@
-config.js;
+//config.js;
 
 const apiUrl =
   window.location.hostname === "localhost"
