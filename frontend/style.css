@@ -63,14 +63,18 @@ section {
 
 .nav-menu {
   display: flex;
-  gap: 20px;
 }
 
 .nav-link {
   color: var(--sprout-green);
   text-decoration: none;
-  font-size: 1.1rem;
+  border-right: 3px solid var(--sprout-green);
+  padding-right: 5px;
+  padding-left: 5px;
   transition: color 0.3s ease;
+}
+.nav-menu li:last-child .nav-link {
+  border-right: none;
 }
 
 .header.scrolled .nav-link:hover,
@@ -99,6 +103,10 @@ section {
   color: var(--accent-orange);
   font-weight: bold;
 }
+.nav-menu li:nth-child(6).active > a {
+  color: var(--accent-orange);
+  font-weight: bold;
+}
 
 /* Hamburger */
 .hamburger {
@@ -114,7 +122,7 @@ section {
 .hamburger span {
   display: block;
   height: 3px;
-  background: white;
+  background: #333;
   border-radius: 2px;
   transition:
     transform 0.3s ease,
