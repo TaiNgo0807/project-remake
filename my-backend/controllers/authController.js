@@ -83,7 +83,9 @@ exports.login = async (req, res) => {
       .json({ message: "Đăng nhập thành công!", accessToken });
   } catch (err) {
     console.error("Lỗi đăng nhập:", err);
-    res.status(500).json({ message: "Lỗi máy chủ!" }, err);
+    res.status(500).json({
+      error: err.message,
+    });
   }
 };
 
