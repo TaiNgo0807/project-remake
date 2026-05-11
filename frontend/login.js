@@ -1,5 +1,5 @@
 const apiUrl = "https://project-remake.onrender.com/api/v1";
-const API_URL = `${apiUrl}auth/login`;
+const API_URL = `${apiUrl}/auth/login`;
 
 const loginForm = document.getElementById("login-form");
 
