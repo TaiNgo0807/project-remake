@@ -20,7 +20,6 @@ const {
 } = require("../controllers/adminController");
 
 const { protectedRoutes } = require("../middlewares/authMiddleware");
-const { route } = require("./adminRouter");
 
 //img
 router.post("/upload", protectedRoutes, upload.array("image", 5), uploadImage);
