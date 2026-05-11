@@ -29,6 +29,7 @@ loginForm.addEventListener("submit", async (e) => {
     localStorage.setItem("token", data.accessToken);
     location.href = "admin.html";
   } catch (error) {
+    console.error(error);
     if (window.showError) window.showError(error.message);
     else alert(error.message);
   }
