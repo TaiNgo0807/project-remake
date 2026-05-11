@@ -6,6 +6,7 @@ const path = require("path");
 const cors = require("cors");
 const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
+const cookerParser = require("cookie-parser");
 
 const contactController = require("./controllers/contactController");
 
@@ -16,13 +17,14 @@ const PORT = process.env.PORT || 6969;
 
 // ---- CORS ----
 const ALLOWED_ORIGINS = (
-  process.env.CORS_ORIGINS || "http://localhost:5500,http://127.0.0.1:5501"
+  process.env.CORS_ORIGINS || "http://localhost:5501,http://127.0.0.1:5501"
 )
   .split(",")
   .map((o) => o.trim());
 
 app.use(
   cors({
+    credentials: true,
     origin(origin, cb) {
       if (!origin) return cb(null, true);
       if (ALLOWED_ORIGINS.includes(origin)) return cb(null, true);
@@ -30,6 +32,9 @@ app.use(
     },
   }),
 );
+
+// ---- Cookie parser ----
+app.use(cookerParser());
 
 // ---- Security ----
 app.use(
@@ -71,21 +76,29 @@ app.use("/api/v1/banners", bannerRouter);
 
 // recruitment routes
 const recruitmentRouter = require("./routes/recruitmentRouter");
-app.use("/api/v1/jobs", recruitmentRouter);
+app.use("/api/v1", recruitmentRouter);
+
+// auth routes
+const authRouter = require("./routes/authRouter");
+app.use("/api/v1/auth", authRouter);
+
+// admin routes
+const adminRouter = require("./routes/adminRouter");
+app.use("/api/v1/admin", adminRouter);
 
 // ---- Contact ----
 app.post("/api/v1/contact", async (req, res, next) => {
   try {
-    const { name, phone, mail, message } = req.body || {};
+    const { name, phone, message } = req.body || {};
 
     // 🔧 sửa tối thiểu: không ép message
-    if (!name || (!phone && !mail)) {
+    if (!name || !phone) {
       return res.status(400).json({
         error: "name and at least one of phone or mail required",
       });
     }
 
-    await contactController.submitContact({ name, phone, mail, message });
+    await contactController.submitContact({ name, phone, message });
     res.status(201).json({ ok: true });
   } catch (err) {
     next(err);

@@ -3,193 +3,421 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin - Nông nghiệp Việt Sang</title>
+    <title>Super Admin - Nông nghiệp Việt Sang</title>
+    <!-- Icon & Font -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="reset.css" />
     <link rel="stylesheet" href="style.css" />
-    <style>
-      /* Bổ sung style riêng cho trang Admin */
-      body.admin-page {
-        background-color: var(--field-bg);
-        padding-top: 80px; /* Tránh bị header đè */
-      }
-
-      .admin-header {
-        background: white;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      }
-
-      .admin-dashboard {
-        padding: 60px 5vw;
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-
-      .admin-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 30px;
-        margin-top: 40px;
-      }
-
-      .admin-card {
-        background: #ffffff;
-        border-radius: 12px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-        padding: 40px 20px;
-        text-align: center;
-        border: 1px solid #e0eadd;
-        transition: all 0.3s ease;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .admin-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 12px 25px rgba(45, 90, 39, 0.15);
-        border-color: var(--sprout-green);
-      }
-
-      .admin-icon {
-        width: 70px;
-        height: 70px;
-        background: #e8f5e9;
-        color: var(--sprout-green);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 30px;
-        margin-bottom: 20px;
-        transition: 0.3s ease;
-      }
-
-      .admin-card:hover .admin-icon {
-        background: var(--sprout-green);
-        color: white;
-      }
-
-      .admin-title {
-        font-size: 1.3rem;
-        color: var(--leaf-green);
-        font-weight: 600;
-        margin-bottom: 10px;
-      }
-
-      .admin-desc {
-        color: #666;
-        font-size: 0.95rem;
-        margin-bottom: 25px;
-        line-height: 1.5;
-        flex-grow: 1;
-      }
-
-      .admin-btn {
-        display: inline-block;
-        padding: 10px 25px;
-        background: var(--sprout-green);
-        color: white;
-        border-radius: 25px;
-        font-weight: 600;
-        text-decoration: none;
-        transition: 0.3s;
-        border: 2px solid var(--sprout-green);
-      }
-
-      .admin-btn:hover {
-        background: transparent;
-        color: var(--sprout-green);
-      }
-
-      .admin-logout {
-        color: var(--dark-red);
-        font-weight: 600;
-        text-decoration: none;
-      }
-    </style>
+    <link rel="stylesheet" href="admin.css" />
+    <!-- AOS CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+      rel="stylesheet"
+    />
   </head>
 
   <body class="admin-page">
-    <div class="header admin-header" id="header">
+    <div class="header admin-header">
       <div class="nav-container">
         <a href="admin.html" class="logo">
           <img src="./assets/picture/logo.png" alt="Logo" height="40" />
-          <h1>Admin Portal</h1>
+          <h1>Admin Tối Cao</h1>
         </a>
-        <ul class="nav-menu" id="nav-menu">
+        <ul class="nav-menu">
           <li>
-            <a href="index.html" class="nav-link" target="_blank"
-              >Xem trang Web</a
-            >
-          </li>
-          <li>
-            <a href="#" class="admin-logout"
-              ><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a
-            >
+            <a id="logout" class="nav-link">
+              <i class="fa-solid fa-sign-out-alt"></i> Xem Website và đăng xuất
+            </a>
           </li>
         </ul>
       </div>
     </div>
 
-    <section class="admin-dashboard">
-      <h2 class="title">Bảng Điều Khiển Tùy Chỉnh</h2>
-      <p style="text-align: center; color: #555; margin-top: 15px">
-        Chọn một mục bên dưới để bắt đầu cập nhật dữ liệu hệ thống.
-      </p>
+    <div class="admin-layout">
+      <!-- CỘT TRÁI: ĐIỀU HƯỚNG -->
+      <div class="admin-sidebar">
+        <button class="tab-btn active" onclick="openTab('history')">
+          <i class="fa-solid fa-clock-rotate-left"></i> Lịch sử chỉnh sửa
+        </button>
+        <button class="tab-btn" onclick="openTab('manage-products')">
+          <i class="fa-solid fa-box"></i> Quản lý Sản phẩm
+        </button>
+        <button class="tab-btn" onclick="openTab('manage-posts')">
+          <i class="fa-solid fa-list-check"></i> Quản lý Bài viết
+        </button>
+        <button class="tab-btn" onclick="openTab('manage-jobs')">
+          <i class="fa-solid fa-users-viewfinder"></i> Quản lý Tuyển dụng
+        </button>
+        <button class="tab-btn" onclick="openTab('add-post')">
+          <i class="fa-solid fa-pen-nib"></i> Thêm Bài viết kỹ thuật
+        </button>
+        <button class="tab-btn" onclick="openTab('add-job')">
+          <i class="fa-solid fa-briefcase"></i> Đăng Tin Tuyển Dụng
+        </button>
+        <button class="tab-btn" onclick="openTab('customer-messages')">
+          <i class="fa-solid fa-envelope-open-text"></i> Tin nhắn khách hàng
+        </button>
+      </div>
 
-      <div class="admin-grid">
-        <div class="admin-card">
-          <div class="admin-icon"><i class="fa-solid fa-box-open"></i></div>
-          <h3 class="admin-title">Chỉnh Sửa Sản Phẩm</h3>
-          <p class="admin-desc">
-            Thêm mới, cập nhật giá, hình ảnh và thông tin các loại phân bón,
-            thuốc bảo vệ thực vật.
-          </p>
-          <a href="#" class="admin-btn">Quản lý ngay</a>
+      <!-- CỘT PHẢI: NỘI DUNG -->
+      <div class="admin-content">
+        <!-- Tab 1: Lịch sử -->
+        <div id="history" class="tab-pane active">
+          <h2 class="section-title">Nhật Ký Hoạt Động Của Nhân Viên</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Thời gian</th>
+                <th>Nhân viên</th>
+                <th>Hành động</th>
+                <th>Chi tiết</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- user activity will be injected here by admin.js -->
+            </tbody>
+          </table>
+          <h3 class="section-subtitle">Hoạt động gần đây</h3>
+          <ul id="activity-list"></ul>
         </div>
 
-        <div class="admin-card">
-          <div class="admin-icon">
-            <i class="fa-solid fa-book-open-reader"></i>
+        <!-- Tab 2: Quản lý sản phẩm -->
+        <div id="manage-products" class="tab-pane">
+          <h2 class="section-title">Danh Sách Sản Phẩm Nông Nghiệp</h2>
+          <button class="btn-sm btn-add" onclick="openAddModal()">
+            <i class="fa-solid fa-plus"></i> Thêm Sản Phẩm Mới
+          </button>
+          <table>
+            <thead>
+              <tr>
+                <th>Tên sản phẩm</th>
+                <th>Loại sản phẩm</th>
+                <th>Mô tả ngắn</th>
+                <th>Mô tả chi tiết</th>
+                <th>Ảnh</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="products-list">
+              <!-- products list will be injected here by admin.js -->
+            </tbody>
+            <div id="loading" style="text-align: center; display: none">
+              Đang tải thêm... ⏳
+            </div>
+            <div
+              id="end-message"
+              style="text-align: center; display: none; color: red"
+            >
+              Hết hàng rồi nha! 🛑
+            </div>
+          </table>
+          <!-- Modal chỉnh sửa sản phẩm -->
+          <div class="modal" id="editModal">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2>Chỉnh sửa sản phẩm</h2>
+
+                <button class="close-btn" onclick="closeEditModal()">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </div>
+
+              <form id="edit-product-form">
+                <input type="hidden" id="edit-id" />
+
+                <div class="form-group">
+                  <label>Tên sản phẩm</label>
+                  <input type="text" id="edit-name" class="block-input" />
+                </div>
+
+                <div class="form-group">
+                  <label>Danh mục</label>
+                  <input type="text" id="edit-category" class="block-input" />
+                </div>
+
+                <div class="form-group">
+                  <label>Tóm tắt</label>
+                  <textarea
+                    id="edit-summary"
+                    class="block-input short-desc"
+                  ></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label>Mô tả</label>
+                  <textarea
+                    id="edit-description"
+                    class="block-input block-para"
+                  ></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label>Ảnh sản phẩm</label>
+
+                  <img id="edit-preview" src="" alt="" class="preview-image" />
+
+                  <input type="file" id="edit-image" class="block-input" />
+                </div>
+
+                <button type="submit" class="btn-save">
+                  <i class="fa-solid fa-floppy-disk"></i>
+                  Lưu thay đổi
+                </button>
+              </form>
+            </div>
           </div>
-          <h3 class="admin-title">Thông Tin Kỹ Thuật</h3>
-          <p class="admin-desc">
-            Viết bài chia sẻ kinh nghiệm, phòng trừ sâu bệnh, hướng dẫn kỹ thuật
-            cho bà con nông dân.
-          </p>
-          <a href="#" class="admin-btn">Quản lý ngay</a>
         </div>
 
-        <div class="admin-card">
-          <div class="admin-icon"><i class="fa-solid fa-camera-retro"></i></div>
-          <h3 class="admin-title">Hoạt Động Thực Tế</h3>
-          <p class="admin-desc">
-            Đăng tải hình ảnh, video xuống giống, thăm đồng và các sự kiện thực
-            tế của công ty.
-          </p>
-          <a href="#" class="admin-btn">Quản lý ngay</a>
+        <!-- Tab 3: Quản lý bài viết -->
+        <div id="manage-posts" class="tab-pane">
+          <h2 class="section-title">
+            Danh Sách Bài Viết (Kỹ thuật & Hoạt động)
+          </h2>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Tiêu đề bài viết</th>
+                <th>Chủ đề</th>
+                <th>Người đăng</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="posts-list">
+              <!-- blog posts will be injected here by admin.js -->
+            </tbody>
+          </table>
         </div>
 
-        <div class="admin-card">
-          <div class="admin-icon"><i class="fa-solid fa-users-gear"></i></div>
-          <h3 class="admin-title">Nhân Sự & Tuyển Dụng</h3>
-          <p class="admin-desc">
-            Xem danh sách nhân viên, đại lý, quản lý hồ sơ ứng viên và đăng tin
-            tuyển dụng mới.
+        <!-- Tab 4: Quản lý tuyển dụng -->
+        <div id="manage-jobs" class="tab-pane">
+          <h2 class="section-title">Danh Sách Tin Tuyển Dụng</h2>
+          <button class="btn-sm btn-add" onclick="openTab('add-job')">
+            <i class="fa-solid fa-plus"></i> Thêm Tin Mới
+          </button>
+          <table>
+            <thead>
+              <tr>
+                <th>Vị trí tuyển dụng</th>
+                <th>Địa điểm</th>
+                <th>Ngày hết hạn</th>
+                <th>Mức lương</th>
+                <th>Số lượng cần tuyển</th>
+                <th>Mô tả công việc</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="jobs-list">
+              <!-- jobs will be injected here by admin.js -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Tab 5: Thêm bài viết Kỹ thuật -->
+        <div id="add-post" class="tab-pane">
+          <h2 class="section-title">Soạn Thảo Bài Viết Kỹ Thuật Mới</h2>
+
+          <!-- PHẦN 1: THÔNG TIN CƠ BẢN ĐỂ LƯU DATABASE -->
+          <div class="card">
+            <h3 class="card-title">
+              <i class="fa-solid fa-circle-info"></i> Thông Tin Cơ Bản (Meta
+              Data)
+            </h3>
+
+            <div class="form-group">
+              <label>Tiêu đề bài viết (Title)</label>
+              <input
+                type="text"
+                class="block-input"
+                id="blog-title"
+                placeholder="VD: Kỹ thuật phòng trừ rầy phấn trắng vụ Hè Thu..."
+              />
+            </div>
+
+            <div class="grid-2-cols">
+              <div class="form-group">
+                <label>Chuyên mục (Topic)</label>
+                <input
+                  type="text"
+                  class="block-input"
+                  id="topic"
+                  placeholder="VD: Sâu bệnh thường gặp, Kỹ thuật trồng trọt..."
+                />
+              </div>
+              <div class="form-group">
+                <label>Tác giả (Author)</label>
+                <!-- Điền sẵn tên người đang đăng nhập luôn cho tiện -->
+                <input
+                  type="text"
+                  class="block-input"
+                  id="author"
+                  placeholder="VD: Nguyễn Văn A"
+                />
+              </div>
+            </div>
+
+            <div class="form-group no-bottom">
+              <label>Mô tả ngắn (Short Description)</label>
+              <textarea
+                class="block-input short-desc"
+                id="short-description"
+                placeholder="Viết 1-2 câu tóm tắt nội dung bài viết để hiển thị ngoài trang chủ..."
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- PHẦN 2: NỘI DUNG CHI TIẾT (BLOCK EDITOR) -->
+          <h3 class="subsection-title">
+            <i class="fa-solid fa-layer-group"></i> Nội Dung Chi Tiết (Nội dung
+            chính)
+          </h3>
+          <div class="editor-container">
+            <!-- Cột trái: Thanh công cụ -->
+            <div class="toolbox">
+              <p>Bấm để thêm khối nội dung:</p>
+              <button
+                class="tool-btn"
+                onclick="addBlock('title')"
+                type="button"
+              >
+                <i class="fa-solid fa-heading"></i> Tiêu đề phụ (H2)
+              </button>
+              <button
+                class="tool-btn"
+                onclick="addBlock('heading')"
+                type="button"
+              >
+                <i class="fa-solid fa-text-height"></i> Tiêu đề nhỏ (H3)
+              </button>
+              <button class="tool-btn" onclick="addBlock('para')" type="button">
+                <i class="fa-solid fa-paragraph"></i> Đoạn văn bản
+              </button>
+              <button class="tool-btn" onclick="addBlock('list')" type="button">
+                <i class="fa-solid fa-list-ul"></i> Danh sách (List)
+              </button>
+              <button
+                class="tool-btn"
+                onclick="addBlock('image')"
+                type="button"
+              >
+                <i class="fa-regular fa-image"></i> Hình ảnh minh họa
+              </button>
+
+              <!-- Nút lưu toàn bộ -->
+              <button class="btn-sm btn-save" type="button" id="save-post-btn">
+                <i class="fa-solid fa-floppy-disk"></i> XUẤT BẢN BÀI VIẾT
+              </button>
+            </div>
+
+            <!-- Cột phải: Khung hiển thị (Tờ giấy A4) -->
+            <div class="editor-canvas" id="editor-canvas">
+              <p id="placeholder-text">
+                Khung soạn thảo đang trống. Chọn công cụ bên trái để bắt đầu
+                viết...
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 6: Thêm tin Tuyển dụng -->
+        <div id="add-job" class="tab-pane">
+          <h2 class="section-title">Đăng Tin Tuyển Dụng Mới</h2>
+          <form class="job-form">
+            <div class="form-group">
+              <label>Tiêu đề công việc</label>
+              <input
+                id="job-title"
+                type="text"
+                class="block-input"
+                placeholder="VD: Kỹ sư Nông nghiệp mảng giống lúa"
+              />
+            </div>
+
+            <div class="grid-2-cols">
+              <div class="form-group">
+                <label>Mức lương dự kiến</label>
+                <input
+                  id="job-salary"
+                  type="text"
+                  class="block-input"
+                  placeholder="VD: 10.000.000 - 15.000.000 VNĐ"
+                />
+              </div>
+              <div class="form-group">
+                <label>Hạn nộp hồ sơ</label>
+                <input id="job-deadline" type="date" class="block-input" />
+              </div>
+            </div>
+
+            <div class="grid-2-cols">
+              <div class="form-group">
+                <label>Địa điểm làm việc</label>
+                <input
+                  id="job-location"
+                  type="text"
+                  class="block-input"
+                  placeholder="VD: An Giang, Đồng Tháp..."
+                />
+              </div>
+              <div class="form-group">
+                <label>Số lượng cần tuyển</label>
+                <input
+                  id="job-number"
+                  type="number"
+                  class="block-input"
+                  placeholder="VD: 5"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Mô tả chi tiết & Yêu cầu công việc</label>
+              <textarea
+                id="job-description"
+                class="block-input block-para"
+                placeholder="- Nhập mô tả công việc cụ thể...&#10;- Nhập yêu cầu bằng cấp/kinh nghiệm...&#10;- Nhập quyền lợi được hưởng..."
+              ></textarea>
+            </div>
+
+            <button type="button" class="btn-sm btn-postjob" id="post-job-btn">
+              <i class="fa-solid fa-paper-plane"></i> ĐĂNG TIN NGAY
+            </button>
+          </form>
+        </div>
+
+        <!-- Tab 7: Tin nhắn khách hàng -->
+        <div id="customer-messages" class="tab-pane">
+          <h2 class="section-title">Câu Hỏi & Liên Hệ Từ Khách Hàng</h2>
+          <p style="margin-bottom: 20px; color: #666">
+            Danh sách khách hàng để lại thông tin cần tư vấn từ form trang chủ.
           </p>
-          <a href="#" class="admin-btn">Quản lý ngay</a>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Tên khách hàng</th>
+                <th>SĐT liên hệ</th>
+                <th style="width: 40%">Nội dung câu hỏi</th>
+                <th>Ngày gửi</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="contact-list">
+              <tr></tr>
+            </tbody>
+          </table>
         </div>
       </div>
-    </section>
+    </div>
+    <script src="toast.js"></script>
+    <script src="admin.js"></script>
   </body>
 </html>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Thông tin kỹ thuật - Nông nghiệp Việt Sang</title>
+    <title>Nông nghiệp Việt Sang</title>
     <meta
       name="description"
       content="Công ty Nông nghiệp Việt Sang chuyên cung cấp phân bón, thuốc trừ sâu, thuốc trừ bệnh và giải pháp nông nghiệp bền vững."
@@ -68,7 +68,7 @@
     <link rel="manifest" href="./assets/picture/favicon_io/site.webmanifest" />
   </head>
 
-  <body>
+  <body class="index-page">
     <div class="header" id="header">
       <div class="nav-container">
         <a href="index.html" class="logo">
@@ -95,29 +95,129 @@
     </div>
 
     <a href="tel:0987711284" class="call-btn">
-      <i class="fa-solid fa-phone-volume"></i
-    ></a>
+      <i class="fa-solid fa-phone-volume"></i>
+    </a>
 
-    <section>
-      <h1 class="title">Thông tin kỹ thuật</h1>
-      <div class="searchBlog">
-        <input
-          type="text"
-          id="search"
-          placeholder="Tìm kiếm blog nông nghiệp..."
-        />
-        <button type="submit" class="search-btn">
-          <i class="fas fa-search"></i>
-        </button>
+    <div class="slider-dots"></div>
+    <div class="slider"></div>
+
+    <section class="about" id="about" data-aos="fade-up">
+      <div class="container">
+        <h2 class="title">Về chúng tôi</h2>
+        <div class="about-container">
+          <div class="about-img" data-aos="fade-up">
+            <img src="./assets/picture/cty.jpg" alt="Nông nghiệp Việt Sang" />
+            <div class="about-ex">
+              <span style="font-size: 2rem; font-weight: 700">3</span>
+              <span> years</span>
+            </div>
+          </div>
+          <div class="about-content">
+            <div class="about-description">
+              <p>
+                Công Ty TNHH MTV Nông nghiệp Việt Sang được thành lập vào ngày
+                29 tháng 3 năm 2023.
+              </p>
+              <p>
+                Với mong muốn cùng nhà nông tạo nên một vụ mùa bội thu, mang đến
+                lợi nhuận tối đa cho bà con nhà nông.
+              </p>
+              <p>
+                Luôn cố gắng nâng cao chất lượng sản phẩm qua từng giai đoạn,
+                tích góp kinh nghiệm từ những trải nghiệm là việc với bà con
+                nông dân để đưa ra những giải pháp, chiến lược tối ưu đảm bảo
+                năng suất tối đa.
+              </p>
+            </div>
+            <div class="about-btn">
+              <a href="#contact" class="about-btn1" data-aos="fade-up">
+                Liên hệ tư vấn
+              </a>
+              <a href="#product" class="about-btn2" data-aos="fade-up"
+                >Xem sản phẩm</a
+              >
+              <a href="about.html" class="about-btn3" data-aos="fade-up"
+                >Tìm hiểu về thêm Việt Sang</a
+              >
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="blog-container" id="blog-container"></div>
     </section>
 
-    <div class="pagination d-flex justify-content-center gap-3">
-      <button id="prevPage" class="page-btn">Trang trước</button>
-      <span id="pageInfo"></span>
-      <button id="nextPage" class="page-btn">Trang sau</button>
-    </div>
+    <section class="product-highlight-section product" id="product">
+      <h2 style="text-align: center" class="title">Sản phẩm nổi bật</h2>
+      <div class="product-container"></div>
+      <div class="more-btn">
+        <a href="product.html" class="product-more"
+          >Xem thêm các sản phẩm khác</a
+        >
+      </div>
+    </section>
+
+    <section class="feedback" id="feedback">
+      <div class="container text-center" data-aos="fade-up">
+        <h2 class="title" style="color: white">Phản hồi của khách hàng</h2>
+
+        <div class="feedback-container">
+          <div class="aos-wrapper" data-aos="fade-right">
+            <div class="feedback-card">
+              <div class="feedback-information">
+                <p class="feedback-description">
+                  Tôi mua sản phẩm của Việt Sang tính tới nay là được 1 năm rồi.
+                  Từ lúc dùng sản phẩm của Việt Sang thì tôi không thể dùng sản
+                  phẩm ở nơi khác nữa, vì quá tốt. Việt Sang luôn đồng hành cùng
+                  tôi.
+                </p>
+                <div class="feedback-name">
+                  <h3>Anh Tuấn</h3>
+                  <h5 style="font-size: 1rem; margin: 5px 0; font-weight: 100">
+                    An Giang, tham gia ngày 21 tháng 08 năm 2024
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="aos-wrapper" data-aos="fade-up">
+            <div class="feedback-card">
+              <div class="feedback-information">
+                <p class="feedback-description">
+                  Từ ngày dùng sản phẩm của Việt Sang, cây trồng ít bị sâu bệnh,
+                  chi phí giảm mà lợi nhuận tăng. Nhân viên kỹ thuật còn đến tận
+                  nơi để hướng dẫn cách phòng bệnh cho cây. Rất đáng tin cậy.
+                </p>
+                <div class="feedback-name">
+                  <h3>Gia đình anh Hùng</h3>
+                  <h5 style="font-size: 1rem; margin: 5px 0; font-weight: 100">
+                    An Giang, tham gia ngày 18 tháng 06 năm 2024
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="aos-wrapper" data-aos="fade-left">
+            <div class="feedback-card">
+              <div class="feedback-information">
+                <p class="feedback-description">
+                  Tôi đã sử dụng phân bón của Việt Sang hơn 2 vụ mùa, thấy cây
+                  lúa phát triển tốt, ít sâu bệnh, năng suất ổn định. Đặc biệt,
+                  đội ngũ kỹ thuật thường xuyên tư vấn cách bón phân hợp lý nên
+                  tôi rất yên tâm.
+                </p>
+                <div class="feedback-name">
+                  <h3>Anh Hưng</h3>
+                  <h5 style="font-size: 1rem; margin: 5px 0; font-weight: 100">
+                    An Giang, tham gia ngày 29 tháng 03 năm 2025
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <section class="contact" id="contact" data-aos="fade-up">
       <div class="container text-center">
@@ -264,8 +364,9 @@
         </div>
       </div>
     </footer>
-
     <script src="./config/config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script src="main.js"></script>
+    <script src="banner.js"></script>
   </body>
 </html>

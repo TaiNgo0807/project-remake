@@ -1,4 +1,31 @@
 document.addEventListener("DOMContentLoaded", () => {
+  function createToast(type, title, message) {
+    const container = document.getElementById("toast-container");
+    const toast = document.createElement("div");
+    toast.className = `toast ${type}`;
+
+    const icon =
+      type === "success" ? "fa-circle-check" : "fa-circle-exclamation";
+
+    toast.innerHTML = `
+    <i class="fa-solid ${icon} toast-icon"></i>
+    <div>
+      <div class="toast-title">${title}</div>
+      <div class="toast-msg">${message}</div>
+    </div>
+  `;
+    container.appendChild(toast);
+
+    setTimeout(() => toast.classList.add("show"), 10);
+
+    setTimeout(() => {
+      toast.classList.remove("show");
+      setTimeout(() => toast.remove(), 400);
+    }, 2500); // Rút ngắn còn 2.5s vì ở giữa màn hình xem xong nhanh lắm
+  }
+
+  const showSuccess = (msg) => createToast("success", "Thành công!", msg);
+  const showError = (msg) => createToast("error", "Thất bại!", msg);
   // Khởi chạy AOS
   AOS.init();
 
@@ -204,13 +231,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   submitBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    const inputs = document.querySelectorAll(".input-info-client");
-    const [name, phone, mail, message] = Array.from(inputs).map((i) =>
-      i.value.trim(),
-    );
+    const name = document.getElementById("name")?.value.trim() || "";
+    const phone = document.getElementById("phone")?.value.trim() || "";
+    const message = document.getElementById("message")?.value.trim() || "";
 
     if (!name || !phone) {
-      alert("Vui lòng điền đầy đủ tên và số điện thoại");
+      showError("Vui lòng điền đầy đủ tên và số điện thoại");
       return;
     }
 
@@ -220,21 +246,20 @@ document.addEventListener("DOMContentLoaded", () => {
       body: JSON.stringify({
         name,
         phone: phone || null,
-        mail: mail || null,
         message,
       }),
     })
       .then((res) => res.json())
       .then((res) => {
         if (res.ok) {
-          alert("Gửi thành công!");
+          showSuccess("Gửi thành công!");
           location.reload();
         } else {
-          alert("Gửi thất bại");
+          showError("Gửi thất bại");
         }
       })
       .catch(() => {
-        alert("Gửi thất bại. Vui lòng thử lại.");
+        showError("Gửi thất bại. Vui lòng thử lại.");
       });
   });
 });

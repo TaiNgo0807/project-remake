@@ -82,7 +82,6 @@ section {
   color: var(--accent-orange);
 }
 
-/* --- TRẢ LẠI ĐÚNG LOGIC ACTIVE CỦA BẠN ĐỂ KHÔNG BỊ NHÁY 2 MENU --- */
 .nav-menu li:nth-child(1).active > a {
   color: var(--accent-orange);
   font-weight: bold;
@@ -104,6 +103,10 @@ section {
   font-weight: bold;
 }
 .nav-menu li:nth-child(6).active > a {
+  color: var(--accent-orange);
+  font-weight: bold;
+}
+.nav-menu li:nth-child(7).active > a {
   color: var(--accent-orange);
   font-weight: bold;
 }
@@ -1405,4 +1408,72 @@ footer {
 .job-btn:hover {
   background: var(--sprout-hover);
   transform: translateY(-2px);
+}
+
+/* Container nằm chính giữa màn hình */
+#toast-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Bí kíp căn giữa tuyệt đối */
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  pointer-events: none; /* Xuyên click để không bị kẹt màn hình */
+}
+
+/* Khung thông báo giữa màn hình */
+.toast {
+  min-width: 320px;
+  padding: 20px 25px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2); /* Đổ bóng sâu hơn cho nổi bật */
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-left: 6px solid;
+  pointer-events: auto; /* Cho phép click vào thông báo */
+
+  /* Hiệu ứng thu nhỏ và mờ (trước khi hiện) */
+  opacity: 0;
+  transform: scale(0.8) translateY(20px);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Đường cong nảy tưng tưng */
+}
+
+/* Khi có class .show thì nảy to lên chuẩn size */
+.toast.show {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* Màu cho từng loại */
+.toast.success {
+  border-left-color: var(--sprout-green);
+}
+.toast.success .toast-icon {
+  color: var(--sprout-green);
+}
+
+.toast.error {
+  border-left-color: var(--dark-red);
+}
+.toast.error .toast-icon {
+  color: var(--dark-red);
+}
+
+.toast-icon {
+  font-size: 2rem;
+}
+.toast-title {
+  font-weight: bold;
+  color: #333;
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+.toast-msg {
+  color: #666;
+  font-size: 1rem;
 }

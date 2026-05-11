@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng Nhập Hệ Thống - Nông nghiệp Việt Sang</title>
+    <!-- Icon & Font -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      body.login-page {
+        background: linear-gradient(
+          135deg,
+          var(--sprout-green),
+          var(--leaf-green)
+        );
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .login-card {
+        background: #ffffff;
+        width: 100%;
+        max-width: 400px;
+        padding: 40px 30px;
+        border-radius: 12px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        animation: popUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      @keyframes popUp {
+        0% {
+          transform: scale(0.9);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .login-logo img {
+        height: 60px;
+        margin-bottom: 10px;
+      }
+
+      .login-title {
+        color: var(--leaf-green);
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 30px;
+      }
+
+      /* Style form input xịn xò */
+      .form-field {
+        position: relative;
+        margin-bottom: 25px;
+        text-align: left;
+      }
+
+      .input-login {
+        width: 100%;
+        height: 50px;
+        background: #f9f9f9;
+        border: 2px solid #eee;
+        border-radius: 8px;
+        padding: 0 15px;
+        font-family: inherit;
+        font-size: 1rem;
+        outline: none;
+        transition: 0.3s;
+      }
+
+      .input-login:focus {
+        border-color: var(--sprout-green);
+        background: #fff;
+        box-shadow: 0 0 8px rgba(76, 175, 80, 0.2);
+      }
+
+      .label-login {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+        background: transparent;
+        padding: 0 5px;
+        transition: 0.3s ease;
+        pointer-events: none;
+      }
+
+      /* Hiệu ứng nhấc chữ lên khi click hoặc có chữ */
+      .input-login:focus + .label-login,
+      .input-login:not(:placeholder-shown) + .label-login {
+        top: 0;
+        background: #fff;
+        color: var(--sprout-green);
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .btn-login {
+        width: 100%;
+        height: 50px;
+        background: var(--sprout-green);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+        margin-top: 10px;
+      }
+
+      .btn-login:hover {
+        background: var(--leaf-green);
+        transform: translateY(-2px);
+      }
+
+      .btn-login:active {
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+
+  <body class="login-page">
+    <div class="login-card">
+      <div class="login-logo">
+        <img src="./assets/picture/logo.png" alt="Logo Việt Sang" />
+      </div>
+      <h2 class="login-title">Đăng Nhập Hệ Thống</h2>
+
+      <form id="login-form">
+        <div class="form-field">
+          <input
+            type="text"
+            id="username"
+            class="input-login"
+            placeholder=" "
+            required
+          />
+          <label for="username" class="label-login"
+            ><i class="fa-regular fa-user"></i> Tên đăng nhập</label
+          >
+        </div>
+
+        <div class="form-field">
+          <input
+            type="password"
+            id="password"
+            class="input-login"
+            placeholder=" "
+            required
+          />
+          <label for="password" class="label-login"
+            ><i class="fa-solid fa-lock"></i> Mật khẩu</label
+          >
+        </div>
+
+        <button type="submit" class="btn-login">
+          Đăng Nhập <i class="fa-solid fa-right-to-bracket"></i>
+        </button>
+      </form>
+    </div>
+    <script src="toast.js"></script>
+    <script src="login.js"></script>
+  </body>
+</html>

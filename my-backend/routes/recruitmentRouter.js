@@ -1,6 +1,6 @@
-const recruitmentRouter = require("express").Router();
+const router = require("express").Router();
 const recruitmentController = require("../controllers/recruitmentController.js");
 
-recruitmentRouter.get("/", recruitmentController.getAllJobs);
+router.get("/jobs", recruitmentController.getAllJobs);
 
-module.exports = recruitmentRouter;
+module.exports = router;

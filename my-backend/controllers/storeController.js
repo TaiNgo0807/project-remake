@@ -4,7 +4,7 @@ exports.searchStores = async (req, res) => {
   try {
     const { name, province, district, page = 1 } = req.query;
 
-    let query = "SELECT * FROM stores WHERE 1=1";
+    let query = "SELECT * FROM stores WHERE is_published = 1";
 
     const limit = 21;
     const offset = (parseInt(page) - 1) * limit;
@@ -23,14 +23,12 @@ exports.searchStores = async (req, res) => {
       params.push(district);
     }
 
-    // ĐIỂM ĂN TIỀN LÀ ĐÂY: Nhét thẳng số vào chuỗi SQL, bỏ 2 cái params ở Limit đi
     query += ` LIMIT ${limit} OFFSET ${offset}`;
 
-    // Dùng db.query thay vì db.execute cho nó hiền hòa
     const [rows] = await db.query(query, params);
     res.json(rows);
   } catch (error) {
     console.error("Lỗi cmnr:", error);
-    res.status(500).json({ message: "Lỗi server rùi bà con ơi!" });
+    res.status(500).json({ message: "Lỗi server!" });
   }
 };

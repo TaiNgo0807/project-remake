@@ -6,7 +6,7 @@ exports.getAllProducts = async (req, res, next) => {
     const limit = Math.max(parseInt(req.query.limit, 10) || 15, 1);
     const offset = (page - 1) * limit;
 
-    let whereSql = "WHERE is_active = 1";
+    let whereSql = "WHERE is_published = 1";
     const params = [];
 
     if (req.query.search) {
