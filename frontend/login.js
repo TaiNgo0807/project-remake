@@ -1,4 +1,4 @@
-const apiUrl = "https://project-remake.onrender.com";
+const apiUrl = "https://project-remake.onrender.com/";
 const API_URL = `${apiUrl}auth/login`;
 
 const loginForm = document.getElementById("login-form");
