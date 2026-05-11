@@ -33,18 +33,18 @@ function addBlock(type) {
 
   let el;
 
-  if (type === "title") {
+  if (type === "heading") {
     el = document.createElement("input");
     el.placeholder = "Nhập tiêu đề chính...";
-  } else if (type === "heading") {
+  } else if (type === "decs") {
     el = document.createElement("input");
-    el.placeholder = "Nhập tiêu đề phụ...";
+    el.placeholder = "Nhập chú thích cho hình ảnh...";
   } else if (type === "para") {
     el = document.createElement("textarea");
-    el.placeholder = "Nhập nội dung...";
+    el.placeholder = "Nhập nội dung văn bản...";
   } else if (type === "list") {
     el = document.createElement("textarea");
-    el.placeholder = "Mỗi dòng là 1 item...";
+    el.placeholder = "Mỗi dòng là 1 dấu chấm...";
   } else if (type === "image") {
     el = document.createElement("input");
     el.type = "file";
@@ -60,14 +60,44 @@ function addBlock(type) {
 function buildContent() {
   let content = "";
 
-  canvas.querySelectorAll(".block-input").forEach((input) => {
-    if (input.type !== "file") {
-      content += input.value + "\n";
+  canvas.querySelectorAll(".content-block").forEach((block) => {
+    const type = block.dataset.type;
+    const input = block.querySelector(".block-input");
+
+    if (!input) return;
+
+    const value = escapeHtml(input.value.trim());
+
+    if (!value && input.type !== "file") return;
+
+    switch (type) {
+      case "heading":
+        content += `<h2 class="blog-heading">${value}</h2>`;
+        break;
+
+      case "decs":
+        content += `<p class="blog-decs">${value}</p>`;
+        break;
+
+      case "para":
+        content += `<p class="blog-para">${value}</p>`;
+        break;
+
+      case "list":
+        const items = value
+          .split("\n")
+          .filter((item) => item.trim() !== "")
+          .map((item) => `<li>${item}</li>`)
+          .join("");
+
+        content += `<ul class="blog-list">${items}</ul>`;
+        break;
     }
   });
 
-  return escapeHtml(content);
+  return content;
 }
+
 async function uploadImages(container = document) {
   try {
     const formData = new FormData();
