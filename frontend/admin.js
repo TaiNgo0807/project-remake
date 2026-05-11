@@ -1,4 +1,4 @@
-const apiUrl = "http://localhost:6969";
+const apiUrl = "https://project-remake.onrender.com";
 const API_BASE = `${apiUrl}/api/v1`;
 
 // Use global toast helpers (toast.js). Fallback to window.alert
