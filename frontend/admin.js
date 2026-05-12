@@ -228,6 +228,8 @@ document
       });
 
       showSuccess("Đăng bài thành công!");
+      // reload to reflect new post
+      location.reload();
       return;
     } catch (error) {
       console.error("Lỗi:", error);
@@ -371,7 +373,8 @@ async function postJob() {
       throw new Error(data.message || "Thêm công việc thất bại");
     }
     showSuccess("Thêm công việc thành công!");
-    setActivity(`Đã thêm công việc mới: ${title}`);
+    // reload to show new job in list
+    location.reload();
   } catch (error) {
     console.error("Lỗi khi thêm công việc:", error);
     showError(error.message);
@@ -561,7 +564,7 @@ function formatDescription(rawText) {
         inList = false;
       }
 
-      html += `<span class="desc-title">${line}</span><br>`;
+      html += `<span class="desc-title" style="color: red; font-weight: bold;">${line}</span><br>`;
     }
 
     // bullet
@@ -719,6 +722,8 @@ document
       productList.innerHTML = "";
       currentPage = 1;
       fetchProducts(currentPage);
+      // reload to reflect changes
+      location.reload();
     } catch (error) {
       console.error(error);
       alert(error.message);
@@ -810,6 +815,8 @@ async function deletePost(id) {
     }
     const data = await res.json();
     showSuccess("Xóa bài viết thành công!");
+    // reload to reflect deletion
+    location.reload();
     return data;
   } catch (error) {
     showError("Xảy ra lỗi khi xóa bài viết");
@@ -827,9 +834,13 @@ async function getContacts() {
       console.error("Lỗi khi lấy contact!");
     }
     const data = await res.json();
+
     console.log(data);
     const contactList = document.getElementById("contact-list");
     contactList.innerHTML = "";
+    if (data.data.length === 0) {
+      return (contactList.innerHTML = `<td colspan="6" style = "text-align:center;">Chưa có câu hỏi nào!</td>`);
+    }
 
     data.forEach((contact) => {
       const tr = document.createElement("tr");

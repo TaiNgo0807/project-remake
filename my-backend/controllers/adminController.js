@@ -415,8 +415,9 @@ const getContact = async (req, res) => {
     );
 
     if (!rows.length) {
-      return res.status(404).json({
+      return res.status(200).json({
         message: "Không có câu hỏi nào",
+        data: [],
       });
     }
 
