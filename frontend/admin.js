@@ -205,8 +205,6 @@ document
     e.preventDefault();
     e.stopPropagation();
     try {
-      const content = buildContent();
-
       const blogTitle = document.getElementById("blog-title").value;
       const topic = document.getElementById("topic").value;
       const author = document.getElementById("author").value;
@@ -214,6 +212,7 @@ document
 
       // upload ảnh trước
       const imageUrls = await uploadImages();
+      const content = buildContent(imageUrls);
 
       // gửi bài
       await submitBlog({

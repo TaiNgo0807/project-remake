@@ -58,7 +58,7 @@ exports.getProductById = async (req, res, next) => {
       `
       SELECT id, name, category, description, summary,  image_url, created_at
       FROM products
-      WHERE id = ? AND is_active = 1
+      WHERE id = ? AND is_published = 1
       `,
       [id],
     );
