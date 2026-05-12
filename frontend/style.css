@@ -1477,3 +1477,98 @@ footer {
   color: #666;
   font-size: 1rem;
 }
+
+/* Lớp mờ đen che lại nền phía sau */
+.confirm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(3px); /* Làm mờ cảnh vật phía sau */
+}
+
+.confirm-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Hộp thoại xác nhận */
+.confirm-box {
+  background: #fff;
+  width: 90%;
+  max-width: 400px;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transform: scale(0.8) translateY(20px);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.confirm-overlay.show .confirm-box {
+  transform: scale(1) translateY(0);
+}
+
+.confirm-icon {
+  font-size: 3.5rem;
+  color: var(--accent-orange);
+  margin-bottom: 15px;
+}
+
+.confirm-title {
+  font-size: 1.4rem;
+  color: var(--leaf-green);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.confirm-message {
+  color: #555;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  margin-bottom: 25px;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.btn-confirm-action {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.2s;
+  flex: 1;
+}
+
+.btn-confirm-cancel {
+  background: #f1f1f1;
+  color: #555;
+}
+
+.btn-confirm-cancel:hover {
+  background: #e4e4e4;
+}
+
+.btn-confirm-yes {
+  background: var(--dark-red); /* Dùng màu đỏ cho các hành động xóa/nguy hiểm */
+  color: white;
+}
+
+.btn-confirm-yes:hover {
+  background: #a01d1d;
+}

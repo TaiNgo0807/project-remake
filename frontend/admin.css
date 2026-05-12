@@ -1,3 +1,14 @@
+:root {
+  --leaf-green: #2d5a27; /* Xanh lá đậm chất nông nghiệp */
+  --sprout-green: #4caf50; /* Xanh mầm non / Nút chính */
+  --sprout-hover: #388e3c; /* Xanh lá đậm khi hover */
+  --earth-brown: #5d4037; /* Màu đất mộc mạc */
+  --field-bg: #f9fbf7; /* Màu nền trắng xanh nhạt */
+  --accent-orange: #ff9800; /* Màu cam điểm nhấn */
+  --dark-green: #1b5e20; /* Xanh siêu đậm cho tiêu đề lớn */
+  --dark-red: #c62828; /* Đỏ đậm cho cảnh báo hoặc điểm nhấn quan trọng */
+}
+
 body.admin-page {
   background-color: var(--field-bg);
   padding-top: 80px;
@@ -388,4 +399,8 @@ tr:hover {
   border-radius: 10px;
   margin-bottom: 15px;
   border: 1px solid #ddd;
+}
+.btn-clear {
+  background-color: var(--dark-red);
+  width: 100%;
 }

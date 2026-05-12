@@ -1,5 +1,9 @@
-const apiUrl = "https://project-remake.onrender.com/api/v1";
-const API_URL = `${apiUrl}/auth/login`;
+const apiUrl =
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1"
+    ? "http://localhost:6969"
+    : "https://project-remake.onrender.com";
+const API_URL = `${apiUrl}/api/v1/auth/login`;
 
 const loginForm = document.getElementById("login-form");
 

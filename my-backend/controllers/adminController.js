@@ -27,7 +27,6 @@ const uploadImage = async (req, res) => {
       (file) => `https://project-remake.onrender.com/uploads/${file.filename}`,
     );
 
-    // Trả về mảng imageUrls cho Frontend xài
     res.status(200).json({ message: "Tải lên thành công!", imageUrls });
   } catch (err) {
     console.error("Lỗi up ảnh:", err);
@@ -103,7 +102,8 @@ const postBlog = async (req, res) => {
       [title, topic, author, image_url, short_description, content],
     );
 
-    await logUserActivity(userId, `Đã thêm bài viết mới: ${title}`);
+    // Log activity
+    if (userId) await logUserActivity(userId, `Đã thêm bài viết mới: ${title}`);
 
     return res.status(201).json({
       message: "Thêm bài viết thành công!",
@@ -129,6 +129,9 @@ const deleteBlog = async (req, res) => {
     );
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: "Bài viết không tồn tại!" });
+    }
+    if (req.user && req.user.id) {
+      await logUserActivity(req.user.id, `Đã xóa bài viết id=${id}`);
     }
     return res.status(200).json({ message: "Xóa bài viết thành công!" });
   } catch (error) {
@@ -163,11 +166,15 @@ const postJob = async (req, res) => {
       result.insertId,
     ]);
 
+    // Log activity then return
+    if (req.user && req.user.id) {
+      await logUserActivity(req.user.id, `Đã thêm công việc: ${title}`);
+    }
+
     return res.status(201).json({
       message: "Thêm công việc thành công!",
       job: rows[0],
     });
-    await logUserActivity(req.user.id, "Đã thêm công việc mới");
   } catch (error) {
     console.error("Xảy ra lỗi khi thêm công việc:", error);
     return res.status(500).json({ message: "Lỗi máy chủ nội bộ!" });
@@ -188,6 +195,9 @@ const deleteJob = async (req, res) => {
     );
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: "Bài tuyển dụng không tồn tại!" });
+    }
+    if (req.user && req.user.id) {
+      await logUserActivity(req.user.id, `Đã xóa job id=${id}`);
     }
     return res.status(200).json({ message: "Xóa thành công!" });
   } catch (error) {
@@ -351,6 +361,9 @@ const deleteProduct = async (req, res) => {
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: "Sản phẩm không tồn tại!" });
     }
+    if (req.user && req.user.id) {
+      await logUserActivity(req.user.id, `Đã xóa sản phẩm id=${id}`);
+    }
     return res.status(200).json({ message: "Xóa sản phẩm thành công!" });
   } catch (error) {
     console.error("Xảy ra lỗi khi xóa sản phẩm:", error);
@@ -428,6 +441,9 @@ const serviceContact = async (req, res) => {
     );
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: "Thông tin không tồn tại!" });
+    }
+    if (req.user && req.user.id) {
+      await logUserActivity(req.user.id, `Đã phục vụ contact id=${id}`);
     }
     return res.status(200).json({ message: "Đã phục vụ!" });
   } catch (error) {

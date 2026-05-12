@@ -1,4 +1,8 @@
-const apiUrl = "https://project-remake.onrender.com";
+const apiUrl =
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1"
+    ? "http://localhost:6969"
+    : "https://project-remake.onrender.com";
 const API_BASE = `${apiUrl}/api/v1`;
 
 // Use global toast helpers (toast.js). Fallback to window.alert
@@ -163,7 +167,6 @@ async function uploadImages(container = document) {
   }
 }
 
-// Hàm submitBlog giữ nguyên như cũ, tui viết lại cho ông dễ nhìn
 async function submitBlog({
   title,
   topic,
@@ -323,6 +326,12 @@ async function setActivity(activity) {
 }
 
 async function postJob() {
+  // confirm before posting
+  const okPost = await (window.showConfirm
+    ? window.showConfirm("Xác nhận", "Bạn có muốn thêm công việc này?")
+    : Promise.resolve(confirm("Bạn có muốn thêm công việc này?")));
+  if (!okPost) return;
+
   const title = document.getElementById("job-title").value;
   const salary = document.getElementById("job-salary").value;
   const deadline = document.getElementById("job-deadline").value;
@@ -392,7 +401,7 @@ async function fetchJobs() {
         <td>${job.number_of_members}</td>
         <td>${job.description}</td>
         <td>
-          <button class="btn-sm" style="background: var(--red);" onclick="deleteJob(${job.id})">
+          <button class="btn-sm btn-clear"  onclick="deleteJob(${job.id})">
             <i class="fa-solid fa-trash"></i> Xóa
           </button>
         </td>
@@ -406,6 +415,11 @@ async function fetchJobs() {
 }
 
 async function deleteJob(id) {
+  const ok = await (window.showConfirm
+    ? window.showConfirm("Xác nhận", "Bạn có chắc muốn xóa công việc này?")
+    : Promise.resolve(confirm("Bạn có chắc muốn xóa công việc này?")));
+  if (!ok) return;
+
   try {
     const res = await apiFetch(`${API_BASE}/admin/job/${id}`, {
       method: "PATCH",
@@ -460,13 +474,13 @@ async function fetchProducts(page) {
         <td>${product.name}</td>
         <td>${product.category}</td>
         <td>${product.summary}</td>
-        <td>${product.description}</td>
+        <td>${formatDescription(product.description)}</td>
         <td><img src="${product.image_url}" alt="${product.name}" style="width: 100px;"></td>
         <td>
-          <button class="btn-sm" onclick="editProduct(${product.id})">
+          <button class="btn-sm " onclick="editProduct(${product.id})">
             <i class="fa-solid fa-edit"></i> Sửa
           </button>
-          <button class="btn-sm" style="background: var(--red);" onclick="deleteProduct(${product.id})">
+          <button class="btn-sm btn-clear"   onclick="deleteProduct(${product.id})">
             <i class="fa-solid fa-trash"></i> Xóa
           </button>
         </td>
@@ -489,6 +503,11 @@ async function fetchProducts(page) {
 }
 
 async function deleteProduct(id) {
+  const ok = await (window.showConfirm
+    ? window.showConfirm("Xác nhận", "Bạn có chắc muốn xóa sản phẩm này?")
+    : Promise.resolve(confirm("Bạn có chắc muốn xóa sản phẩm này?")));
+  if (!ok) return;
+
   try {
     const res = await apiFetch(`${API_BASE}/admin/product/${id}`, {
       method: "PATCH",
@@ -635,23 +654,32 @@ document
   .getElementById("edit-product-form")
   .addEventListener("submit", async function (e) {
     e.preventDefault();
-
     try {
       const id = document.getElementById("edit-id").value;
+      // Ask confirmation for add or update
+      const actionText = id ? "cập nhật" : "thêm";
+      const ok = await (window.showConfirm
+        ? window.showConfirm(
+            "Xác nhận",
+            `Bạn có chắc muốn ${actionText} sản phẩm này?`,
+          )
+        : Promise.resolve(
+            confirm(`Bạn có chắc muốn ${actionText} sản phẩm này?`),
+          ));
+      if (!ok) return;
       const rawDescription = document.getElementById("edit-description").value;
 
       // Validate y hệt như cũ
       const error = validateDescription(rawDescription);
       if (error) return alert(error);
 
-      const formattedDescription = formatDescription(rawDescription);
       const imageUrls = await uploadImages(this);
 
       const payload = {
         name: document.getElementById("edit-name").value,
         category: document.getElementById("edit-category").value,
         summary: document.getElementById("edit-summary").value,
-        description: formattedDescription,
+        description: rawDescription,
       };
 
       // Xác định URL và Method dựa trên việc có ID hay không
@@ -749,10 +777,7 @@ async function fetchPosts() {
         <td>${post.topic}</td>
         <td>${post.author}</td>
         <td>
-          <button class="btn-sm" onclick="editPost(${post.id})">
-            <i class="fa-solid fa-edit"></i> Sửa
-          </button>
-          <button class="btn-sm" style="background: var(--red);" onclick="deletePost(${post.id})">
+          <button class="btn-sm btn-clear"   onclick="deletePost(${post.id})">
             <i class="fa-solid fa-trash"></i> Xóa
           </button>
         </td>
@@ -766,6 +791,11 @@ async function fetchPosts() {
 }
 
 async function deletePost(id) {
+  const ok = await (window.showConfirm
+    ? window.showConfirm("Xác nhận", "Bạn có chắc muốn xóa bài viết này?")
+    : Promise.resolve(confirm("Bạn có chắc muốn xóa bài viết này?")));
+  if (!ok) return;
+
   try {
     const res = await apiFetch(`${API_BASE}/admin/blog/${id}`, {
       method: "PATCH",
