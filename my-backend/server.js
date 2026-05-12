@@ -43,6 +43,8 @@ app.use(
     crossOriginEmbedderPolicy: false,
   }),
 );
+//upload
+app.use("/uploads", express.static("uploads"));
 
 // ---- Body parsing ----
 app.use(express.json({ limit: "1mb" }));
@@ -85,8 +87,6 @@ app.use("/api/v1/auth", authRouter);
 // admin routes
 const adminRouter = require("./routes/adminRouter");
 app.use("/api/v1/admin", adminRouter);
-
-//uploads
 
 // ---- Contact ----
 app.post("/api/v1/contact", async (req, res, next) => {
