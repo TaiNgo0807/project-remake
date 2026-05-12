@@ -23,7 +23,9 @@ const uploadImage = async (req, res) => {
     }
 
     // Lặp qua mảng file vừa up để tạo ra mảng các đường link
-    const imageUrls = req.files.map((file) => `./uploads/${file.filename}`);
+    const imageUrls = req.files.map(
+      (file) => `https://project-remake.onrender.com/uploads/${file.filename}`,
+    );
 
     // Trả về mảng imageUrls cho Frontend xài
     res.status(200).json({ message: "Tải lên thành công!", imageUrls });

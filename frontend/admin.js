@@ -57,18 +57,23 @@ function addBlock(type) {
 
   if (type !== "image") el.focus();
 }
-function buildContent() {
+
+function buildContent(imageUrls = []) {
   let content = "";
+
+  let imageIndex = 0;
 
   canvas.querySelectorAll(".content-block").forEach((block) => {
     const type = block.dataset.type;
+
     const input = block.querySelector(".block-input");
 
-    if (!input) return;
+    if (!input && type !== "image") return;
 
-    const value = escapeHtml(input.value.trim());
+    const value =
+      input && input.type !== "file" ? escapeHtml(input.value.trim()) : "";
 
-    if (!value && input.type !== "file") return;
+    if (!value && type !== "image") return;
 
     switch (type) {
       case "heading":
@@ -92,12 +97,28 @@ function buildContent() {
 
         content += `<ul class="blog-list">${items}</ul>`;
         break;
+
+      case "image":
+        const imageUrl = imageUrls[imageIndex];
+
+        if (imageUrl) {
+          content += `
+            <img 
+              src="${imageUrl}" 
+              class="blog-image"
+              alt="blog image"
+            />
+          `;
+
+          imageIndex++;
+        }
+
+        break;
     }
   });
 
   return content;
 }
-
 async function uploadImages(container = document) {
   try {
     const formData = new FormData();
@@ -136,7 +157,7 @@ async function uploadImages(container = document) {
   } catch (error) {
     console.error("Upload image error:", error);
 
-    alert(error.message);
+    showError("error.message");
 
     return [];
   }
@@ -156,11 +177,12 @@ async function submitBlog({
     headers: {
       "Content-Type": "application/json",
     },
+
     body: JSON.stringify({
       title,
       topic,
       author,
-      image_url: imageUrls[0] || "", // Lấy ảnh đầu tiên làm ảnh đại diện
+      image_url: JSON.stringify(imageUrls),
       short_description: shortDesc,
       content,
     }),
@@ -168,6 +190,7 @@ async function submitBlog({
 
   if (!res.ok) {
     const err = await res.json();
+
     throw new Error(err.message || "Đăng bài thất bại");
   }
 }

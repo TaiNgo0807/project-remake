@@ -86,6 +86,8 @@ app.use("/api/v1/auth", authRouter);
 const adminRouter = require("./routes/adminRouter");
 app.use("/api/v1/admin", adminRouter);
 
+//uploads
+
 // ---- Contact ----
 app.post("/api/v1/contact", async (req, res, next) => {
   try {

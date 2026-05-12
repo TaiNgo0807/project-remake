@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
     blogs.forEach((blog) => {
       container.innerHTML += `
             <div class="blog-card">
-                <img src="${blog.image_url}" />
+                <img src="${blog.thumbnail}" />
                 <h3 class="blog-title">${blog.title}</h3>
                 <p class="blog-excerpt">${blog.short_description}</p>
                 <a href="/blog-detail.html?id=${blog.id}" class="read-more">Xem chi tiết</a>
