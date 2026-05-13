@@ -2,32 +2,24 @@ const db = require("../models/db.js");
 const multer = require("multer");
 const path = require("path");
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "uploads/"),
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + "-" + Math.random();
-    cb(null, uniqueSuffix + path.extname(file.originalname));
-  },
-});
-
-const upload = multer({ storage });
+const { upload } = require("../config/cloudinaryConfig");
 
 const uploadImage = async (req, res) => {
   try {
-    console.log(req.files);
-
     if (!req.files || req.files.length === 0) {
       return res
         .status(400)
         .json({ message: "Vui lòng tải lên ít nhất một tệp!" });
     }
 
-    // Lặp qua mảng file vừa up để tạo ra mảng các đường link
-    const imageUrls = req.files.map(
-      (file) => `https://project-remake.onrender.com/uploads/${file.filename}`,
-    );
+    const imageUrls = req.files.map((file) => file.path);
 
-    res.status(200).json({ message: "Tải lên thành công!", imageUrls });
+    console.log("Ảnh đã lên mây:", imageUrls);
+
+    res.status(200).json({
+      message: "Tải lên Cloudinary thành công!",
+      imageUrls,
+    });
   } catch (err) {
     console.error("Lỗi up ảnh:", err);
     res.status(500).json({ message: "Lỗi khi tải lên hình ảnh!" });
