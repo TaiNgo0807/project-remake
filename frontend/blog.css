@@ -139,30 +139,53 @@ strong {
   margin: 0 auto;
   padding: 0 20px;
 }
+
+/* Tiêu đề chính của đoạn */
 .blog-heading {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: bold;
-  margin: 30px 0 15px;
+  color: var(--leaf-green); /* Đổi sang màu xanh đậm của brand */
+  margin: 40px 0 20px;
+  border-left: 5px solid var(--accent-orange); /* Gạch viền cam bên trái nhấn mạnh */
+  background: #f9fbf7; /* Phủ nền xanh nhạt siêu nhẹ */
+  padding: 10px 15px;
+  border-radius: 0 8px 8px 0;
 }
 
-.blog-decs {
-  font-size: 14px;
-  color: gray;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
+/* Đoạn văn bản */
 .blog-para {
   font-size: 18px;
   line-height: 1.8;
+  color: #333; /* Chữ xám đen dễ đọc, đỡ chói mắt hơn đen thui */
   margin-bottom: 20px;
+  text-align: justify; /* Căn đều 2 bên cho thẳng tắp như mặt ruộng */
 }
 
+/* Danh sách (List) */
 .blog-list {
-  padding-left: 30px;
-  margin-bottom: 20px;
+  padding-left: 0;
+  margin-bottom: 25px;
+  list-style: none; /* Xóa dấu chấm tròn mặc định tẻ nhạt */
 }
 
+/* Từng dòng trong danh sách */
 .blog-list li {
-  margin-bottom: 10px;
+  font-size: 18px;
+  line-height: 1.8;
+  color: #333;
+  margin-bottom: 15px;
+  position: relative;
+  padding-left: 35px; /* Thụt vào nhường chỗ cho icon */
+}
+
+/* Biến dấu chấm thành icon Checkmark màu xanh lá */
+.blog-list li::before {
+  content: "\f00c"; /* Code icon của FontAwesome */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  color: var(--sprout-green);
+  font-size: 16px;
 }
