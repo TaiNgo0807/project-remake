@@ -480,7 +480,7 @@ async function fetchProducts(page) {
         <td>${formatDescription(product.description)}</td>
         <td><img src="${product.image_url}" alt="${product.name}" style="width: 100px;"></td>
         <td>
-          <button class="btn-sm " onclick="editProduct(${product.id})">
+          <button class="btn-sm" style= "background-color:  var(--leaf-green)" onclick="editProduct(${product.id})">
             <i class="fa-solid fa-edit"></i> Sửa
           </button>
           <button class="btn-sm btn-clear"   onclick="deleteProduct(${product.id})">
