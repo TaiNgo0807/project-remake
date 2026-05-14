@@ -189,3 +189,8 @@ strong {
   color: var(--sprout-green);
   font-size: 16px;
 }
+
+.blog-image {
+  width: 100%;
+  height: auto;
+}
