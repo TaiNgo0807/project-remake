@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
       container.innerHTML += `
             <div class="blog-card">
                 <img src="${blog.thumbnail}" />
-                <h3 class="blog-title">${blog.title}(Đang duyệt)</h3>
+                <h3 class="blog-title">${blog.title} (Đang duyệt)</h3>
                 <p class="blog-excerpt">${blog.short_description}</p>
                 <a href="/blog-detail.html?id=${blog.id}" class="read-more">Xem chi tiết</a>
             </div>

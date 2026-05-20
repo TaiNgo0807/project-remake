@@ -17,12 +17,14 @@ const {
   getProductById,
   getContact,
   serviceContact,
+  addPostActivity,
+  deleteNews,
 } = require("../controllers/adminController");
 
 const { protectedRoutes } = require("../middlewares/authMiddleware");
 
 //img
-router.post("/upload", protectedRoutes, upload.array("image", 5), uploadImage);
+router.post("/upload", protectedRoutes, upload.array("image", 10), uploadImage);
 
 //product
 router.post("/product", protectedRoutes, upload.single("image"), addProduct);
@@ -51,5 +53,9 @@ router.get("/activity", protectedRoutes, getUserActivity);
 //contact
 router.get("/contacts", protectedRoutes, getContact);
 router.put("/contact/:id", protectedRoutes, serviceContact);
+
+//postActivity
+router.post("/news", protectedRoutes, addPostActivity);
+router.patch("/news", protectedRoutes, deleteNews);
 
 module.exports = router;

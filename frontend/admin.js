@@ -198,10 +198,7 @@ async function submitBlog({
   }
 }
 
-document.addEventListener("submit", (e) => {
-  e.preventDefault();
-});
-
+//click và gửi blog
 document
   .getElementById("save-post-btn")
   .addEventListener("click", async (e) => {
@@ -327,6 +324,7 @@ async function setActivity(activity) {
   }
 }
 
+//job
 async function postJob() {
   // confirm before posting
   const okPost = await (window.showConfirm
@@ -450,6 +448,7 @@ const loadingEl = document.getElementById("loading");
 const endMessageEl = document.getElementById("end-message");
 const productList = document.getElementById("products-list");
 
+//product
 async function fetchProducts(page) {
   if (isLoading || !hasMore) return;
 
@@ -529,6 +528,7 @@ async function deleteProduct(id) {
   }
 }
 
+//validate description
 function validateDescription(text) {
   const requiredSections = ["Thành phần:", "Công dụng:", "Hướng dẫn sử dụng:"];
 
@@ -762,6 +762,7 @@ window.addEventListener("scroll", () => {
 });
 fetchProducts(currentPage);
 
+//Blog
 async function fetchPosts() {
   try {
     const response = await apiFetch(`${API_BASE}/blogs`, {
@@ -824,6 +825,7 @@ async function deletePost(id) {
   }
 }
 
+//contact
 async function getContacts() {
   try {
     const res = await apiFetch(`${API_BASE}/admin/contacts`, {
@@ -886,6 +888,163 @@ async function getContacts() {
   }
 }
 
+// newsfeed
+// Hàm hiển thị ảnh xem trước khi người dùng chọn nhiều file
+function previewImages(event) {
+  const grid = document.getElementById("image-preview-grid");
+  grid.innerHTML = ""; // Xóa ảnh cũ (nếu sếp muốn chọn lại từ đầu)
+
+  const files = event.target.files; // Lấy danh sách file sếp vừa chọn
+
+  if (files) {
+    Array.from(files).forEach((file, index) => {
+      // Đọc file thành đường dẫn tạm thời trên trình duyệt
+      const imageUrl = URL.createObjectURL(file);
+
+      // Tạo ô chứa ảnh
+      const box = document.createElement("div");
+      box.className = "preview-box";
+
+      box.innerHTML = `
+              <img src="${imageUrl}" alt="Preview">
+              <button class="preview-remove" onclick="this.parentElement.remove()" title="Xóa ảnh này">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            `;
+
+      grid.appendChild(box);
+    });
+  }
+}
+
+async function addNews() {
+  const title = document.getElementById("news-title").value;
+  const date = document.getElementById("news-date").value;
+  const content = document.getElementById("news-content").value;
+  const imageUrls = await uploadImages();
+
+  if (!title || !date || !content) {
+    showError("Vui lòng nhập đầy đủ thông tin!");
+  }
+  try {
+    const res = await apiFetch(`${API_BASE}/admin/news`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title,
+        date,
+        content,
+        image_urls: JSON.stringify(imageUrls),
+      }),
+    });
+    if (!res.ok) {
+      showError("Lỗi khi thêm bài hoạt động!");
+    }
+  } catch (error) {
+    console.error("Lỗi: ", error);
+  }
+}
+
+const renderDeleteNews = async () => {
+  const deleteNewsSection = document.getElementById("delete-news");
+
+  if (!deleteNewsSection) {
+    console.warn("Không tìm thấy #delete-news ở trang này");
+    return;
+  }
+
+  try {
+    const res = await apiFetch(`${API_BASE}/news`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) {
+      showError("Không lấy được danh sách news!");
+      return;
+    }
+
+    const result = await res.json();
+    const data = Array.isArray(result) ? result : result.data;
+
+    deleteNewsSection.innerHTML = "";
+
+    if (!data || data.length === 0) {
+      deleteNewsSection.innerHTML = `<p>Chưa có bài news nào.</p>`;
+      return;
+    }
+
+    data.forEach((news) => {
+      const item = document.createElement("div");
+      item.className = "delete-news-item";
+
+      item.innerHTML = `
+        <div class="delete-news-info">
+          <h3>${escapeHtml(news.title)}</h3>
+          <span>${formatDate(news.date)}</span>
+        </div>
+
+        <button class="delete-news-btn" data-id="${news.id}">
+          Xóa
+        </button>
+      `;
+
+      deleteNewsSection.appendChild(item);
+    });
+  } catch (error) {
+    console.error("Lỗi render news:", error);
+    showError("Lỗi khi tải danh sách news!");
+  }
+};
+
+const deleteNews = async (id) => {
+  const confirmDelete = confirm("Mày chắc muốn xóa bài này không?");
+  if (!confirmDelete) return;
+
+  try {
+    const res = await apiFetch(`${API_BASE}/admin/news/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        // Nếu API cần token thì mở dòng này
+        // Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!res.ok) {
+      showError("Xóa news thất bại!");
+      return;
+    }
+
+    showSuccess("Xóa news thành công!");
+
+    // Load lại danh sách sau khi xóa
+    renderDeleteNews();
+  } catch (error) {
+    console.error("Lỗi xóa news:", error);
+    showError("Lỗi khi xóa news!");
+  }
+};
+
+function formatDate(date) {
+  if (!date) return "";
+
+  return new Date(date).toLocaleDateString("vi-VN", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+const btnPost = document.getElementById("post-news");
+btnPost.addEventListener("click", () => {
+  addNews();
+});
+
 // escape HTML to avoid injecting raw user input into generated HTML
 function escapeHtml(str) {
   if (!str && str !== 0) return "";
@@ -922,4 +1081,18 @@ document.addEventListener("DOMContentLoaded", () => {
   fetchJobs();
   fetchPosts();
   getContacts();
+  const deleteNewsSection = document.getElementById("delete-news");
+
+  // Nếu page hiện tại không có section này thì khỏi chạy
+
+  if (!deleteNewsSection) return;
+  renderDeleteNews();
+  document.getElementById("delete-news").addEventListener("click", (e) => {
+    const deleteBtn = e.target.closest(".delete-news-btn");
+
+    if (!deleteBtn) return;
+
+    const id = deleteBtn.dataset.id;
+    deleteNews(id);
+  });
 });

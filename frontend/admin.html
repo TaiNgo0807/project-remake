@@ -83,6 +83,9 @@
         <button class="tab-btn" onclick="openTab('customer-messages')">
           <i class="fa-solid fa-envelope-open-text"></i> Tin nhắn khách hàng
         </button>
+        <button class="tab-btn" onclick="openTab('add-activity')">
+          <i class="fa-solid fa-camera-retro"></i> Đăng Hoạt Động
+        </button>
       </div>
 
       <!-- CỘT PHẢI: NỘI DUNG -->
@@ -432,6 +435,192 @@
             </tbody>
           </table>
         </div>
+
+        <!-- Tab 8: Đăng Hoạt Động Thực Tế (Kiểu Facebook) -->
+        <div id="add-activity" class="tab-pane">
+          <h2 class="section-title">Chia Sẻ Hoạt Động Thực Tế</h2>
+
+          <div
+            style="
+              background: #fff;
+              padding: 25px;
+              border-radius: 12px;
+              border: 1px solid #e0eadd;
+              box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+              max-width: 800px;
+            "
+          >
+            <!-- Dòng 1: Tiêu đề & Ngày tháng -->
+            <div class="grid-2-cols" style="margin-bottom: 20px">
+              <div class="form-group" style="margin-bottom: 0">
+                <input
+                  type="text"
+                  class="block-input"
+                  id="news-title"
+                  placeholder="Tiêu đề hoạt động (VD: Xuống giống vụ Hè Thu...)"
+                  style="
+                    margin-bottom: 0;
+                    font-weight: bold;
+                    font-size: 1.1rem;
+                    color: var(--leaf-green);
+                  "
+                />
+              </div>
+              <div class="form-group" style="margin-bottom: 0">
+                <input
+                  type="date"
+                  id="news-date"
+                  class="block-input"
+                  style="margin-bottom: 0; color: #555"
+                />
+              </div>
+            </div>
+
+            <!-- Dòng 2: Nội dung Status -->
+            <div class="form-group">
+              <textarea
+                class="block-input"
+                id="news-content"
+                style="
+                  min-height: 120px;
+                  resize: vertical;
+                  border: none;
+                  padding: 15px;
+                  background: #f9fbf7;
+                  border-radius: 10px;
+                "
+                placeholder="Sếp đang nghĩ gì? Hãy chia sẻ câu chuyện hôm nay nhé..."
+              ></textarea>
+            </div>
+
+            <!-- Dòng 3: Khu vực Up nhiều ảnh (Drag & Drop) -->
+            <div class="form-group">
+              <div
+                class="upload-zone"
+                onclick="document.getElementById('activity-images').click()"
+              >
+                <i
+                  class="fa-solid fa-images"
+                  style="
+                    font-size: 2.5rem;
+                    color: var(--sprout-green);
+                    margin-bottom: 10px;
+                  "
+                ></i>
+                <p
+                  style="
+                    font-weight: 600;
+                    color: var(--leaf-green);
+                    font-size: 1.1rem;
+                    margin-bottom: 5px;
+                  "
+                >
+                  Thêm ảnh vào bài viết
+                </p>
+                <p style="color: #777; font-size: 0.9rem">
+                  Bấm vào đây để chọn nhiều ảnh cùng lúc
+                </p>
+                <!-- Thẻ input ẨN, có chữ 'multiple' để chọn nhiều file -->
+                <input
+                  type="file"
+                  id="activity-images"
+                  accept="image/*"
+                  multiple
+                  style="display: none"
+                  onchange="previewImages(event)"
+                />
+              </div>
+
+              <!-- Khu vực hiển thị ảnh xem trước -->
+              <div id="image-preview-grid" class="preview-grid"></div>
+            </div>
+
+            <!-- Nút Đăng Bài -->
+            <div
+              style="
+                text-align: right;
+                border-top: 1px solid #eee;
+                padding-top: 20px;
+                margin-top: 10px;
+              "
+            >
+              <button
+                class="btn-sm"
+                id="post-news"
+                style="
+                  background: var(--leaf-green);
+                  padding: 12px 35px;
+                  font-size: 1.1rem;
+                  border-radius: 8px;
+                "
+              >
+                <i class="fa-solid fa-paper-plane"></i> Đăng Bài Ngay
+              </button>
+            </div>
+          </div>
+          <section id="delete-news"></section>
+        </div>
+
+        <style>
+          /* CSS riêng cho khu vực Đăng Hoạt Động */
+          .upload-zone {
+            border: 2px dashed #4caf50;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            background: #fdfdfd;
+            transition: 0.3s ease;
+          }
+          .upload-zone:hover {
+            background: #f0f7f0;
+            border-color: var(--leaf-green);
+          }
+          /* Lưới xếp ảnh tự động */
+          .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+          }
+          /* Ô chứa 1 ảnh */
+          .preview-box {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1; /* Giữ ảnh luôn vuông vức */
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.4s ease;
+          }
+          .preview-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Cắt cúp ảnh cho đầy ô vuông */
+          }
+          /* Nút Xóa ảnh màu đỏ góc phải */
+          .preview-remove {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(220, 53, 69, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            transition: 0.2s;
+          }
+          .preview-remove:hover {
+            background: red;
+            transform: scale(1.1);
+          }
+        </style>
       </div>
     </div>
     <script src="toast.js"></script>

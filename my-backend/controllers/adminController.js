@@ -353,8 +353,8 @@ const deleteProduct = async (req, res) => {
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: "Sản phẩm không tồn tại!" });
     }
-    if (req.user && req.user.id) {
-      await logUserActivity(req.user.id, `Đã xóa sản phẩm id=${id}`);
+    if (req.user && req.user.display_name) {
+      await logUserActivity(req.user.display_name, `Đã xóa sản phẩm id=${id}`);
     }
     return res.status(200).json({ message: "Xóa sản phẩm thành công!" });
   } catch (error) {
@@ -364,7 +364,6 @@ const deleteProduct = async (req, res) => {
 };
 
 const addProduct = async (req, res) => {
-  const userId = req.user.id;
   let { name, category, description, summary, image_url } = req.body;
 
   // nếu upload file image thì dùng đường dẫn file vừa up
@@ -389,7 +388,9 @@ const addProduct = async (req, res) => {
       [result.insertId],
     );
 
-    await logUserActivity(userId, `Đã thêm sản phẩm: ${name}`);
+    if (req.user && req.user.display_name) {
+      await logUserActivity(req.user.display_name, `Đã thêm sản phẩm: ${name}`);
+    }
 
     return res
       .status(201)
@@ -435,12 +436,62 @@ const serviceContact = async (req, res) => {
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: "Thông tin không tồn tại!" });
     }
-    if (req.user && req.user.id) {
-      await logUserActivity(req.user.id, `Đã phục vụ contact id=${id}`);
+    if (req.user && req.user.display_name) {
+      await logUserActivity(
+        req.user.display_name,
+        `Đã phục vụ contact id=${id}`,
+      );
     }
+
     return res.status(200).json({ message: "Đã phục vụ!" });
   } catch (error) {
     console.error("Xảy ra lỗi khi nhận contact:", error);
+    return res.status(500).json({ message: "Lỗi máy chủ nội bộ!" });
+  }
+};
+
+const addPostActivity = async (req, res) => {
+  const { title, date, content, image_urls } = req.body;
+  try {
+    await db.execute(
+      "INSERT INTO news (title, date, content, image_urls) VALUES (?, ?, ?, ?)",
+      [title, date, content, image_urls],
+    );
+    if (req.user && req.user.display_name) {
+      await logUserActivity(
+        req.user.display_name,
+        `Đã thêm hoạt động thực tế: ${title}`,
+      );
+    }
+    return res
+      .status(201)
+      .json({ message: "Thêm hoạt động thực tế thành công!" });
+  } catch (error) {
+    console.error("Lỗi khi thêm hoạt động thực tế:", error);
+    return res.status(500).json({ message: "Lỗi máy chủ nội bộ!" });
+  }
+};
+
+const deleteNews = async (req, res) => {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).json({ message: "Không nhận được ID tin tức!" });
+  }
+
+  try {
+    const [result] = await db.execute(
+      "UPDATE news SET is_published = 0 WHERE id = ?",
+      [id],
+    );
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Bản tin không tồn tại!" });
+    }
+    if (req.user && req.user.id) {
+      await logUserActivity(req.user.id, `Đã xóa bản tin id=${id}`);
+    }
+    return res.status(200).json({ message: "Xóa bản tin thành công!" });
+  } catch (error) {
+    console.error("Xảy ra lỗi khi xóa bản tin:", error);
     return res.status(500).json({ message: "Lỗi máy chủ nội bộ!" });
   }
 };
@@ -461,4 +512,6 @@ module.exports = {
   deleteJob,
   getContact,
   serviceContact,
+  addPostActivity,
+  deleteNews,
 };
