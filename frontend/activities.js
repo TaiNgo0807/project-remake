@@ -77,14 +77,17 @@ function renderGallery(images) {
   const total = images.length;
   const galleryClass = `gallery-${Math.min(total, 5)}`;
 
+  // Lưu toàn bộ ảnh, kể cả ảnh đang bị ẩn
+  const encodedImages = encodeURIComponent(JSON.stringify(images));
+
   return `
-    <div class="act-gallery ${galleryClass}">
+    <div class="act-gallery ${galleryClass}" data-images="${encodedImages}">
       ${visibleImages
         .map((url, index) => {
           const isLast = index === 4 && total > 5;
 
           return `
-            <div class="img-wrap gi-${index + 1}">
+            <div class="img-wrap gi-${index + 1}" data-index="${index}">
               <img src="${url}" alt="Hình hoạt động ${index + 1}" />
 
               ${isLast ? `<div class="img-more">+${total - 5}</div>` : ""}
@@ -116,3 +119,136 @@ function escapeHtml(value) {
 }
 
 getNews();
+let currentImages = [];
+let currentImageIndex = 0;
+
+function createImageViewer() {
+  if (document.getElementById("image-viewer")) return;
+
+  const viewer = document.createElement("div");
+  viewer.id = "image-viewer";
+
+  viewer.innerHTML = `
+    <div class="image-viewer-backdrop"></div>
+
+    <button class="image-viewer-close">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <button class="image-viewer-prev">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+
+    <img class="image-viewer-img" src="" alt="Ảnh phóng to" />
+
+    <button class="image-viewer-next">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+
+    <div class="image-viewer-count"></div>
+  `;
+
+  document.body.appendChild(viewer);
+
+  viewer
+    .querySelector(".image-viewer-close")
+    .addEventListener("click", closeImageViewer);
+  viewer
+    .querySelector(".image-viewer-backdrop")
+    .addEventListener("click", closeImageViewer);
+
+  viewer.querySelector(".image-viewer-prev").addEventListener("click", () => {
+    showPrevImage();
+  });
+
+  viewer.querySelector(".image-viewer-next").addEventListener("click", () => {
+    showNextImage();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (!viewer.classList.contains("show")) return;
+
+    if (e.key === "Escape") closeImageViewer();
+    if (e.key === "ArrowLeft") showPrevImage();
+    if (e.key === "ArrowRight") showNextImage();
+  });
+}
+
+function openImageViewer(images, index) {
+  currentImages = images;
+  currentImageIndex = index;
+
+  createImageViewer();
+  updateImageViewer();
+
+  document.getElementById("image-viewer").classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+
+function closeImageViewer() {
+  const viewer = document.getElementById("image-viewer");
+  if (!viewer) return;
+
+  viewer.classList.remove("show");
+  document.body.style.overflow = "";
+}
+
+function updateImageViewer() {
+  const viewer = document.getElementById("image-viewer");
+  if (!viewer) return;
+
+  const img = viewer.querySelector(".image-viewer-img");
+  const count = viewer.querySelector(".image-viewer-count");
+  const prevBtn = viewer.querySelector(".image-viewer-prev");
+  const nextBtn = viewer.querySelector(".image-viewer-next");
+
+  img.src = currentImages[currentImageIndex];
+
+  count.textContent = `${currentImageIndex + 1} / ${currentImages.length}`;
+
+  if (currentImages.length <= 1) {
+    prevBtn.style.display = "none";
+    nextBtn.style.display = "none";
+  } else {
+    prevBtn.style.display = "flex";
+    nextBtn.style.display = "flex";
+  }
+}
+
+function showPrevImage() {
+  if (currentImages.length <= 1) return;
+
+  currentImageIndex--;
+
+  if (currentImageIndex < 0) {
+    currentImageIndex = currentImages.length - 1;
+  }
+
+  updateImageViewer();
+}
+
+function showNextImage() {
+  if (currentImages.length <= 1) return;
+
+  currentImageIndex++;
+
+  if (currentImageIndex >= currentImages.length) {
+    currentImageIndex = 0;
+  }
+
+  updateImageViewer();
+}
+
+// Bắt sự kiện click ảnh trong activity feed
+document.addEventListener("click", (e) => {
+  const imgWrap = e.target.closest(".act-gallery .img-wrap");
+  if (!imgWrap) return;
+
+  const gallery = imgWrap.closest(".act-gallery");
+  if (!gallery) return;
+
+  const images = JSON.parse(decodeURIComponent(gallery.dataset.images));
+  const index = Number(imgWrap.dataset.index) || 0;
+
+  openImageViewer(images, index);
+});
