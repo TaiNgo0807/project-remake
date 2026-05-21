@@ -430,7 +430,7 @@ const serviceContact = async (req, res) => {
 
   try {
     const [result] = await db.execute(
-      "UPDATE products SET is_serviced = 1 WHERE id = ?",
+      "UPDATE contacts SET is_serviced = 1 WHERE id = ?",
       [id],
     );
     if (result.affectedRows === 0) {

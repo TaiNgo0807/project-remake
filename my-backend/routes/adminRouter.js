@@ -52,7 +52,7 @@ router.get("/activity", protectedRoutes, getUserActivity);
 
 //contact
 router.get("/contacts", protectedRoutes, getContact);
-router.put("/contact/:id", protectedRoutes, serviceContact);
+router.put("/contacts/:id", protectedRoutes, serviceContact);
 
 //postActivity
 router.post("/news", protectedRoutes, addPostActivity);

@@ -90,26 +90,12 @@ app.use("/api/v1/admin", adminRouter);
 
 //news
 const newsRouter = require("./routes/activitiesRouter");
+const { error } = require("console");
 app.use("/api/v1", newsRouter);
 
 // ---- Contact ----
-app.post("/api/v1/contact", async (req, res, next) => {
-  try {
-    const { name, phone, message } = req.body || {};
 
-    // 🔧 sửa tối thiểu: không ép message
-    if (!name || !phone) {
-      return res.status(400).json({
-        error: "name and at least one of phone or mail required",
-      });
-    }
-
-    await contactController.submitContact({ name, phone, message });
-    res.status(201).json({ ok: true });
-  } catch (err) {
-    next(err);
-  }
-});
+app.post("/api/v1/contact", contactController.submitContact);
 
 app.get("/", (_req, res) => {
   res.json({

@@ -1,49 +1,45 @@
 const db = require("../models/db");
 
-exports.submitContact = async (req, res, next) => {
+exports.submitContact = async (req, res) => {
   try {
-    let { name, phone, message } = req.body;
+    let { name, phone, message } = req.body || {};
 
-    // ---- Normalize ----
     name = typeof name === "string" ? name.trim() : "";
-    message = typeof message === "string" ? message.trim() : "";
     phone = typeof phone === "string" ? phone.trim() : "";
+    message = typeof message === "string" ? message.trim() : "";
 
-    // ---- Validate ----
-    if (!name || !message || !phone) {
+    if (!name || !phone || !message) {
       return res.status(400).json({
-        error: "name, message, and at least one of phone or mail are required",
+        ok: false,
+        error: "Vui lòng nhập đầy đủ tên, số điện thoại và nội dung",
       });
     }
 
-    if (name.length > 100 || message.length > 2000) {
-      return res.status(400).json({ error: "Input data is too long" });
+    if (name.length > 100 || phone.length > 20 || message.length > 2000) {
+      return res.status(400).json({
+        ok: false,
+        error: "Dữ liệu nhập quá dài",
+      });
     }
 
-    // ---- Build dynamic insert ----
-    const columns = ["name", "message"];
-    const placeholders = ["?", "?"];
-    const params = [name, message];
-
-    if (phone) {
-      columns.push("phone");
-      placeholders.push("?");
-      params.push(phone);
-    }
     const sql = `
-      INSERT INTO contacts (${columns.join(", ")})
-      VALUES (${placeholders.join(", ")})
+      INSERT INTO contacts (name, phone, message)
+      VALUES (?, ?, ?)
     `;
 
-    // ---- Execute ----
-    const [result] = await db.query(sql, params);
+    const [result] = await db.execute(sql, [name, phone, message]);
 
-    res.status(201).json({
+    return res.status(201).json({
       ok: true,
-      insertId: result?.insertId,
+      message: "Gửi liên hệ thành công",
+      insertId: result.insertId,
     });
   } catch (err) {
     console.error("[submitContact]", err);
-    next(err);
+
+    return res.status(500).json({
+      ok: false,
+      message: "Lỗi máy chủ",
+    });
   }
 };

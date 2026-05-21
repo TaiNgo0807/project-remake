@@ -840,7 +840,7 @@ async function getContacts() {
     console.log(data);
     const contactList = document.getElementById("contact-list");
     contactList.innerHTML = "";
-    if (data.data.length === 0) {
+    if (data.length === 0) {
       return (contactList.innerHTML = `<td colspan="6" style = "text-align:center;">Chưa có câu hỏi nào!</td>`);
     }
 
@@ -887,6 +887,26 @@ async function getContacts() {
     console.error(error);
   }
 }
+
+const serviceContact = async (id) => {
+  try {
+    const res = await apiFetch(`${API_BASE}/admin/contacts/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!res.ok) {
+      showError("Lỗi khi phục vụ người dùng!");
+      return;
+    }
+    showSuccess("Đã tiếp nhận thông tin người dùng!");
+    location.reload();
+  } catch (error) {
+    showError("Lỗi khi tiếp nhận thông tin");
+    console.error("Contact: ", error);
+  }
+};
 
 // newsfeed
 // Hàm hiển thị ảnh xem trước khi người dùng chọn nhiều file
@@ -942,6 +962,8 @@ async function addNews() {
     if (!res.ok) {
       showError("Lỗi khi thêm bài hoạt động!");
     }
+    showSuccess("Đã thêm bản tin thành công!");
+    location.reload();
   } catch (error) {
     console.error("Lỗi: ", error);
   }

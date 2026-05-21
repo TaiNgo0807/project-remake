@@ -229,38 +229,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const API_BASE = `${apiUrl}/api/v1`;
 
-  submitBtn.addEventListener("click", (e) => {
+  submitBtn.addEventListener("click", async (e) => {
     e.preventDefault();
+
     const name = document.getElementById("name")?.value.trim() || "";
     const phone = document.getElementById("phone")?.value.trim() || "";
     const message = document.getElementById("message")?.value.trim() || "";
 
-    if (!name || !phone) {
-      showError("Vui lòng điền đầy đủ tên và số điện thoại");
+    if (!name || !phone || !message) {
+      showError("Vui lòng điền đầy đủ tên, số điện thoại và nội dung");
       return;
     }
 
-    fetch(`${API_BASE}/contact`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name,
-        phone: phone || null,
-        message,
-      }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.ok) {
-          showSuccess("Gửi thành công!");
-          location.reload();
-        } else {
-          showError("Gửi thất bại");
-        }
-      })
-      .catch(() => {
-        showError("Gửi thất bại. Vui lòng thử lại.");
+    try {
+      const res = await fetch(`${API_BASE}/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          phone,
+          message,
+        }),
       });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.ok) {
+        showError(data.error || data.message || "Gửi thất bại");
+        return;
+      }
+
+      showSuccess("Gửi thành công!");
+
+      document.getElementById("name").value = "";
+      document.getElementById("phone").value = "";
+      document.getElementById("message").value = "";
+    } catch (error) {
+      console.error("[submitContact FE]", error);
+      showError("Gửi thất bại. Vui lòng thử lại.");
+    }
   });
 });
 
