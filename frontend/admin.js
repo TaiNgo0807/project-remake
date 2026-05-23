@@ -675,6 +675,7 @@ document
       // Validate y hệt như cũ
       const error = validateDescription(rawDescription);
       if (error) return alert(error);
+      const formatedDesc = formatDescription(rawDescription);
 
       const imageUrls = await uploadImages(this);
 
@@ -682,7 +683,7 @@ document
         name: document.getElementById("edit-name").value,
         category: document.getElementById("edit-category").value,
         summary: document.getElementById("edit-summary").value,
-        description: rawDescription,
+        description: formatedDesc,
       };
 
       // Xác định URL và Method dựa trên việc có ID hay không
