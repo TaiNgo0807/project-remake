@@ -476,7 +476,7 @@ async function fetchProducts(page) {
         <td>${product.name}</td>
         <td>${product.category}</td>
         <td>${product.summary}</td>
-        <td>${formatDescription(product.description)}</td>
+        <td>${product.description}</td>
         <td><img src="${product.image_url}" alt="${product.name}" style="width: 100px;"></td>
         <td>
           <button class="btn-sm" style= "background-color:  var(--leaf-green)" onclick="editProduct(${product.id})">
@@ -542,49 +542,84 @@ function validateDescription(text) {
 }
 
 function formatDescription(rawText) {
-  // chống inject html
-  const text = escapeHtml(rawText);
+  const lines = rawText.split(/\r?\n/);
 
-  const lines = text.split("\n");
+  const sections = ["Thành phần:", "Công dụng:", "Hướng dẫn sử dụng:"];
 
   let html = "";
   let inList = false;
+  let currentSection = null;
 
   lines.forEach((line) => {
     line = line.trim();
+    if (line === "") return;
 
-    // title
-    if (
-      line === "Thành phần:" ||
-      line === "Công dụng:" ||
-      line === "Hướng dẫn sử dụng:"
-    ) {
+    const matchedSection = sections.find((section) => line.startsWith(section));
+
+    if (matchedSection) {
       if (inList) {
         html += "</ul>";
         inList = false;
       }
 
-      html += `<span class="desc-title" style="color: red; font-weight: bold;">${line}</span><br>`;
-    }
+      currentSection = matchedSection;
 
-    // bullet
-    else if (line.startsWith("- ")) {
-      if (!inList) {
-        html += "<ul>";
+      html += `
+        <h4 style="color: red; font-size: 1.5rem; font-weight: 800; margin: 24px 0 10px;">
+          ${escapeHtml(matchedSection)}
+        </h4>
+      `;
+
+      const afterTitle = line.replace(matchedSection, "").trim();
+
+      if (afterTitle !== "") {
+        html += `<ul style="margin: 0 0 16px 24px; padding-left: 20px; list-style-type: disc;">`;
+        html += `
+          <li style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 8px; display: list-item;">
+            ${escapeHtml(afterTitle)}
+          </li>
+        `;
         inList = true;
       }
 
-      html += `<li>${line.substring(2)}</li>`;
+      return;
     }
 
-    // text thường
-    else if (line !== "") {
-      if (inList) {
-        html += "</ul>";
-        inList = false;
+    if (line.startsWith("-")) {
+      if (!inList) {
+        html += `<ul style="margin: 0 0 16px 24px; padding-left: 20px; list-style-type: disc;">`;
+        inList = true;
       }
 
-      html += `${line}<br>`;
+      const itemText = line.replace(/^-+\s*/, "");
+
+      html += `
+        <li style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 8px; display: list-item;">
+          ${escapeHtml(itemText)}
+        </li>
+      `;
+
+      return;
+    }
+
+    // Nếu đang ở trong một section thì dòng thường cũng coi như 1 bullet
+    if (currentSection) {
+      if (!inList) {
+        html += `<ul style="margin: 0 0 16px 24px; padding-left: 20px; list-style-type: disc;">`;
+        inList = true;
+      }
+
+      html += `
+        <li style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 8px; display: list-item;">
+          ${escapeHtml(line)}
+        </li>
+      `;
+    } else {
+      html += `
+        <p style="font-size: 1.1rem; line-height: 1.7; margin: 8px 0;">
+          ${escapeHtml(line)}
+        </p>
+      `;
     }
   });
 
@@ -672,18 +707,16 @@ document
       if (!ok) return;
       const rawDescription = document.getElementById("edit-description").value;
 
-      // Validate y hệt như cũ
       const error = validateDescription(rawDescription);
       if (error) return alert(error);
-      const formatedDesc = formatDescription(rawDescription);
 
-      const imageUrls = await uploadImages(this);
+      const formattedDesc = formatDescription(rawDescription);
 
       const payload = {
         name: document.getElementById("edit-name").value,
         category: document.getElementById("edit-category").value,
         summary: document.getElementById("edit-summary").value,
-        description: formatedDesc,
+        description: formattedDesc,
       };
 
       // Xác định URL và Method dựa trên việc có ID hay không
@@ -695,7 +728,7 @@ document
         url += `/${id}`;
         method = "PUT";
       }
-
+      const imageUrls = await uploadImages(this);
       // Nếu thêm mới mà có ảnh, hoặc sửa mà đổi ảnh
       if (imageUrls.length > 0) {
         payload.image_url = imageUrls[0];
@@ -730,6 +763,7 @@ document
       alert(error.message);
     }
   });
+
 function closeEditModal() {
   document.getElementById("editModal").classList.remove("show");
 }
