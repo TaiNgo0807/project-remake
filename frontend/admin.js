@@ -879,7 +879,7 @@ async function getContacts() {
       return (contactList.innerHTML = `<td colspan="6" style = "text-align:center;">Chưa có câu hỏi nào!</td>`);
     }
 
-    data.forEach((contact) => {
+    data.data.forEach((contact) => {
       const tr = document.createElement("tr");
 
       const isServiced = Number(contact.is_serviced) === 1;
