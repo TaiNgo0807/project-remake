@@ -51,6 +51,9 @@
         </a>
         <ul class="nav-menu">
           <li>
+            <div id="admin-employee-corner" class="admin-employee-corner"></div>
+          </li>
+          <li>
             <a id="logout" class="nav-link">
               <i class="fa-solid fa-sign-out-alt"></i> Xem Website và đăng xuất
             </a>
@@ -90,6 +93,7 @@
 
       <!-- CỘT PHẢI: NỘI DUNG -->
       <div class="admin-content">
+        <section id="admin-doc" class="admin-doc"></section>
         <!-- Tab 1: Lịch sử -->
         <div id="history" class="tab-pane active">
           <h2 class="section-title">Nhật Ký Hoạt Động Của Nhân Viên</h2>
@@ -621,6 +625,32 @@
             transform: scale(1.1);
           }
         </style>
+      </div>
+    </div>
+    <div id="admin-notice-modal" class="admin-notice-modal">
+      <div class="admin-notice-box">
+        <div class="admin-notice-icon">
+          <i class="fa-solid fa-user-shield"></i>
+        </div>
+
+        <h2 id="admin-notice-title">Chào mừng đến với Dashboard Admin</h2>
+
+        <p>
+          Vui lòng đọc kỹ phần lưu ý của từng tab trước khi thực hiện thao tác
+          thêm, sửa hoặc xóa dữ liệu trên website.
+        </p>
+
+        <div class="admin-notice-warning">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span>
+            Các thao tác trong trang admin có thể ảnh hưởng trực tiếp đến dữ
+            liệu hiển thị ngoài website.
+          </span>
+        </div>
+
+        <button id="close-admin-notice" class="close-admin-notice">
+          Đã hiểu
+        </button>
       </div>
     </div>
     <script src="toast.js"></script>

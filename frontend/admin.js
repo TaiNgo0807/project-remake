@@ -10,20 +10,294 @@ const showSuccess = (msg) =>
   window.showSuccess ? window.showSuccess(msg) : alert(msg);
 const showError = (msg) =>
   window.showError ? window.showError(msg) : alert(msg);
+
 function openTab(tabId) {
   document
     .querySelectorAll(".tab-pane")
     .forEach((tab) => tab.classList.remove("active"));
+
   document
     .querySelectorAll(".tab-btn")
     .forEach((btn) => btn.classList.remove("active"));
-  document.getElementById(tabId).classList.add("active");
 
-  // Cập nhật trạng thái active cho menu (xử lý luôn cả việc click từ nút ngoài sidebar)
+  const targetTab = document.getElementById(tabId);
+
+  if (!targetTab) {
+    console.warn("Không tìm thấy tab:", tabId);
+    return;
+  }
+
+  targetTab.classList.add("active");
+
   const targetBtn = document.querySelector(
     `.tab-btn[onclick="openTab('${tabId}')"]`,
   );
+
   if (targetBtn) targetBtn.classList.add("active");
+
+  renderAdminDoc(tabId);
+}
+
+const ADMIN_DOCS = {
+  history: {
+    icon: "fa-clock-rotate-left",
+    title: "Tài liệu tab Lịch sử chỉnh sửa",
+    desc: "Tab này dùng để theo dõi các thao tác mà nhân viên đã thực hiện trong hệ thống admin.",
+    checklist: [
+      "Kiểm tra nhân viên nào đã thêm, sửa hoặc xóa dữ liệu.",
+      "Xem thời gian thao tác để dễ truy vết lỗi.",
+      "Dùng tab này khi cần kiểm tra lịch sử hoạt động trước đó.",
+    ],
+    note: "Tab này chỉ dùng để xem, không đăng nội dung mới.",
+  },
+
+  "manage-products": {
+    icon: "fa-box",
+    title: "Tài liệu tab Quản lý Sản phẩm",
+    desc: "Tab này dùng để xem, thêm, sửa hoặc xóa sản phẩm đang hiển thị trên website.",
+    checklist: [
+      "Chỉnh sửa sản phẩm chỉ nên thay đổi hình ảnh",
+      "Nếu thay đổi nội dung nhiều thì nên xóa và thêm lại",
+      "Khi thêm sản phẩm bắt buộc phải theo định dạng của mô tả sản phẩm bao gồm 3 phần",
+      "Thành phần:",
+      "Công dụng: ",
+      "Hướng dẫn sử dụng: ",
+      "Mỗi ý trong các phần sẽ bắt đầu bằng gạch đầu dòng << - >> ",
+    ],
+    note: "Trước khi lưu sản phẩm, kiểm tra kỹ ảnh và mô tả vì phần này ảnh hưởng trực tiếp tới khách hàng.",
+  },
+
+  "manage-posts": {
+    icon: "fa-list-check",
+    title: "Tài liệu tab Quản lý Bài viết",
+    desc: "Tab này dùng để quản lý các bài viết kỹ thuật đã đăng trên website.",
+    checklist: [
+      "Kiểm tra tiêu đề bài viết có đúng nội dung không.",
+      "Xóa các bài viết bị sai, trùng hoặc không còn phù hợp.",
+      "Không xóa bài nếu chưa chắc chắn vì bài có thể đang hiển thị ngoài website.",
+    ],
+    note: "Nên kiểm tra ngoài giao diện website trước khi xóa bài.",
+  },
+
+  "manage-jobs": {
+    icon: "fa-users-viewfinder",
+    title: "Tài liệu tab Quản lý Tuyển dụng",
+    desc: "Tab này dùng để xem và quản lý các tin tuyển dụng đã đăng.",
+    checklist: [
+      "Kiểm tra vị trí tuyển dụng, địa điểm, lương và hạn nộp.",
+      "Xóa tin đã hết hạn hoặc không còn tuyển.",
+      "Đảm bảo mô tả công việc không quá sơ sài.",
+    ],
+    note: "Tin tuyển dụng cần rõ ràng để ứng viên hiểu đúng trước khi liên hệ.",
+  },
+
+  "add-post": {
+    icon: "fa-pen-nib",
+    title: "Tài liệu trước khi đăng Bài viết kỹ thuật",
+    desc: "Tab này dùng để soạn bài viết kỹ thuật như sâu bệnh, phân bón, kỹ thuật canh tác, hướng dẫn nhà nông.",
+    checklist: [
+      "Ảnh đầu tiên sẽ được dùng làm ảnh đại diện bài viết.",
+      "Tiêu đề phải rõ vấn đề chính, ví dụ: Bệnh đạo ôn trên lúa và cách phòng trị.",
+      "Mô tả ngắn nên viết 1-2 câu, không quá dài.",
+      "Nội dung dài nên chia thành nhiều đoạn văn bản để giao diện đẹp hơn.",
+      "Sau mỗi ảnh nên thêm chú thích hoặc nguồn ảnh nếu có.",
+      "Danh sách nên nhập mỗi ý một dòng.",
+    ],
+    note: "Không copy nội dung quá dài vào một block. Nên chia nhỏ bằng Đề mục, Đoạn văn bản, Danh sách và Hình ảnh.",
+  },
+
+  "add-job": {
+    icon: "fa-briefcase",
+    title: "Tài liệu trước khi đăng Tin tuyển dụng",
+    desc: "Tab này dùng để tạo tin tuyển dụng mới cho website.",
+    checklist: [
+      "Tiêu đề công việc phải ghi đúng vị trí cần tuyển.",
+      "Mức lương nên ghi rõ hoặc ghi thỏa thuận nếu chưa cố định.",
+      "Hạn nộp hồ sơ phải chọn đúng ngày.",
+      "Địa điểm làm việc cần cụ thể: tỉnh, huyện hoặc khu vực.",
+      "Mô tả công việc nên có: công việc chính, yêu cầu, quyền lợi.",
+    ],
+    note: "Trước khi đăng, kiểm tra kỹ số lượng cần tuyển và hạn nộp hồ sơ.",
+  },
+
+  "customer-messages": {
+    icon: "fa-envelope-open-text",
+    title: "Tài liệu tab Tin nhắn khách hàng",
+    desc: "Tab này dùng để xem thông tin khách hàng gửi từ form liên hệ ngoài website.",
+    checklist: [
+      "Kiểm tra tên, số điện thoại và nội dung khách để lại.",
+      "Liên hệ khách trước khi bấm xác nhận.",
+      "Sau khi đã tiếp nhận thì chuyển trạng thái sang đã xác nhận.",
+    ],
+    note: "Không bấm xác nhận nếu chưa xử lý hoặc chưa liên hệ khách.",
+  },
+
+  "add-activity": {
+    icon: "fa-camera-retro",
+    title: "Tài liệu trước khi đăng Hoạt động thực tế",
+    desc: "Tab này dùng để đăng các hoạt động thực tế dạng newsfeed giống Facebook.",
+    checklist: [
+      "Tiêu đề nên ngắn gọn, đúng hoạt động thực tế.",
+      "Ngày đăng phải đúng ngày diễn ra hoạt động.",
+      "Nội dung nên viết tự nhiên như một bài chia sẻ.",
+      "Có thể chọn nhiều ảnh cùng lúc.",
+      "Ảnh nên rõ, cùng chủ đề, tránh ảnh mờ hoặc trùng lặp quá nhiều.",
+      "Sau khi đăng, kiểm tra ngoài trang hoạt động xem bố cục ảnh có đẹp không.",
+    ],
+    note: "Nếu ảnh nhiều, hệ thống sẽ ẩn bớt và hiện dạng +n. Người xem có thể bấm để xem ảnh lớn.",
+  },
+};
+
+function renderAdminDoc(tabId) {
+  const docBox = document.getElementById("admin-doc");
+  if (!docBox) return;
+
+  const doc = ADMIN_DOCS[tabId];
+
+  if (!doc) {
+    docBox.innerHTML = "";
+    return;
+  }
+
+  docBox.innerHTML = `
+    <div class="admin-doc-header">
+      <div class="admin-doc-icon">
+        <i class="fa-solid ${doc.icon}"></i>
+      </div>
+
+      <div>
+        <h3>${doc.title}</h3>
+        <p>${doc.desc}</p>
+      </div>
+    </div>
+
+    <div class="admin-doc-body">
+      <h4>Checklist trước khi thao tác</h4>
+
+      <ul>
+        ${doc.checklist.map((item) => `<li>${item}</li>`).join("")}
+      </ul>
+
+      <div class="admin-doc-note">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <span>${doc.note}</span>
+      </div>
+    </div>
+  `;
+}
+
+function getCurrentEmployeeName() {
+  const savedName =
+    localStorage.getItem("displayName") ||
+    localStorage.getItem("employeeName") ||
+    localStorage.getItem("name");
+
+  if (savedName) return savedName;
+
+  const token = localStorage.getItem("token");
+
+  if (!token) return "nhân viên";
+
+  try {
+    const payload = JSON.parse(
+      atob(token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")),
+    );
+
+    return (
+      payload.display_name ||
+      payload.displayName ||
+      payload.name ||
+      payload.username ||
+      payload.email ||
+      "nhân viên"
+    );
+  } catch (error) {
+    console.warn("Không đọc được tên nhân viên từ token:", error);
+    return "nhân viên";
+  }
+}
+
+function decodeJwtPayload(token) {
+  try {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map((c) => {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join(""),
+    );
+
+    return JSON.parse(jsonPayload);
+  } catch (error) {
+    console.error("Không decode được token:", error);
+    return null;
+  }
+}
+
+function getCurrentEmployeeName() {
+  const savedName = localStorage.getItem("employeeName");
+
+  if (savedName) return savedName;
+
+  const token = localStorage.getItem("token");
+  if (!token) return "nhân viên";
+
+  const payload = decodeJwtPayload(token);
+
+  return payload?.displayName || payload?.username || "nhân viên";
+}
+
+function renderEmployeeCorner() {
+  const corner = document.getElementById("admin-employee-corner");
+  if (!corner) return;
+
+  const employeeName = getCurrentEmployeeName();
+
+  corner.innerHTML = `
+    <div class="employee-avatar">
+      <i class="fa-solid fa-user"></i>
+    </div>
+
+    <div class="employee-info">
+      <span>Nhân viên</span>
+      <strong>${escapeHtml(employeeName)}</strong>
+    </div>
+  `;
+
+  corner.classList.add("show");
+}
+
+function showAdminNoticeModal() {
+  const modal = document.getElementById("admin-notice-modal");
+  const title = document.getElementById("admin-notice-title");
+  const closeBtn = document.getElementById("close-admin-notice");
+
+  if (!modal || !title || !closeBtn) return;
+
+  const employeeName = getCurrentEmployeeName();
+
+  if (sessionStorage.getItem("adminNoticeSeen") === "true") {
+    renderEmployeeCorner();
+    return;
+  }
+
+  title.textContent = `Chào mừng ${employeeName} đến với Dashboard Admin`;
+
+  modal.classList.add("show");
+  document.body.style.overflow = "hidden";
+
+  closeBtn.addEventListener("click", () => {
+    sessionStorage.setItem("adminNoticeSeen", "true");
+
+    modal.classList.remove("show");
+    document.body.style.overflow = "";
+
+    renderEmployeeCorner();
+  });
 }
 
 const canvas = document.getElementById("editor-canvas");
@@ -565,7 +839,7 @@ function formatDescription(rawText) {
       currentSection = matchedSection;
 
       html += `
-        <h4 style="color: red; font-size: 1.5rem; font-weight: 800; margin: 24px 0 10px;">
+        <h4 style="color: green; font-size: 1.5rem; font-weight: 800; margin: 24px 0 10px;">
           ${escapeHtml(matchedSection)}
         </h4>
       `;
@@ -1132,12 +1406,17 @@ async function logout() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  showAdminNoticeModal();
+  renderAdminDoc("history");
+
   document.getElementById("post-job-btn").addEventListener("click", postJob);
   document.getElementById("logout").addEventListener("click", logout);
+
   fetchUserActivity();
   fetchJobs();
   fetchPosts();
   getContacts();
+
   const deleteNewsSection = document.getElementById("delete-news");
 
   // Nếu page hiện tại không có section này thì khỏi chạy

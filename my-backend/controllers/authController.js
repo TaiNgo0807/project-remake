@@ -78,9 +78,15 @@ exports.login = async (req, res) => {
     });
 
     // trả access token cho client
-    return res
-      .status(200)
-      .json({ message: "Đăng nhập thành công!", accessToken });
+    return res.status(200).json({
+      message: "Đăng nhập thành công!",
+      accessToken,
+      user: {
+        id: user.id,
+        username: user.username,
+        displayName: user.display_name,
+      },
+    });
   } catch (err) {
     console.error("Lỗi đăng nhập:", err);
     res.status(500).json({
