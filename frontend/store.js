@@ -99,6 +99,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const API_BASE = `${apiUrl}/api/v1`;
 
+  async function safeFetch(url, options) {
+    if (window.withLoading)
+      return window.withLoading(() => fetch(url, options));
+    if (window.showLoading) window.showLoading();
+    try {
+      return await fetch(url, options);
+    } finally {
+      if (window.hideLoading) window.hideLoading();
+    }
+  }
+
   const dealerList = document.getElementById("dealerList");
   const searchBtn = document.getElementById("searchBtn");
   const cucMoiNhu = document.getElementById("cuc-moi-nhu");
@@ -127,7 +138,9 @@ document.addEventListener("DOMContentLoaded", () => {
         page: currentPage, // Ném thêm số trang lên API
       });
 
-      const response = await fetch(`${API_BASE}/stores/search?${queryParams}`);
+      const response = await safeFetch(
+        `${API_BASE}/stores/search?${queryParams}`,
+      );
       const stores = await response.json();
 
       // Nếu là bấm tìm kiếm mới -> xóa sạch list cũ

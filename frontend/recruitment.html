@@ -251,7 +251,7 @@
       const API = `${apiUrl}/api/v1/jobs`;
 
       async function loadJobs() {
-        const res = await fetch(API);
+        const res = await safeFetch(API);
         const jobs = await res.json();
 
         const container = document.getElementById("jobContainer");

@@ -1,8 +1,18 @@
 const API_BASE = `${apiUrl}/api/v1`;
 
+async function safeFetch(url, options) {
+  if (window.withLoading) return window.withLoading(() => fetch(url, options));
+  if (window.showLoading) window.showLoading();
+  try {
+    return await fetch(url, options);
+  } finally {
+    if (window.hideLoading) window.hideLoading();
+  }
+}
+
 const getNews = async () => {
   try {
-    const res = await fetch(`${API_BASE}/news`, {
+    const res = await safeFetch(`${API_BASE}/news`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -11,6 +11,19 @@ const showSuccess = (msg) =>
 const showError = (msg) =>
   window.showError ? window.showError(msg) : alert(msg);
 
+// ensure loading helper is available (dynamically inject if needed)
+function ensureLoading() {
+  if (window.showLoading) return Promise.resolve();
+  return new Promise((resolve) => {
+    if (document.querySelector("script[data-loading]")) return resolve();
+    const s = document.createElement("script");
+    s.src = "loading.js";
+    s.setAttribute("data-loading", "1");
+    s.onload = () => resolve();
+    s.onerror = () => resolve();
+    document.head.appendChild(s);
+  });
+}
 function openTab(tabId) {
   document
     .querySelectorAll(".tab-pane")
@@ -509,6 +522,8 @@ document
 
 async function apiFetch(url, options = {}) {
   try {
+    await ensureLoading();
+    if (window.showLoading) window.showLoading();
     let response = await fetch(url, {
       ...options,
       headers: {
@@ -545,6 +560,8 @@ async function apiFetch(url, options = {}) {
   } catch (err) {
     console.error("FETCH ERROR:", err);
     return null; // ❗ chặn crash
+  } finally {
+    if (window.hideLoading) window.hideLoading();
   }
 }
 
@@ -657,18 +674,21 @@ async function fetchJobs() {
   try {
     const response = await apiFetch(`${API_BASE}/jobs`, {
       method: "GET",
-      headers: { Authorization: `Bearer ${token}` },
     });
     if (!response.ok) {
       console.error("Lỗi khi lấy công việc:", response.statusText);
       throw new Error("Không thể lấy công việc");
     }
     const data = await response.json();
+    console.log("Job:", data);
     const jobList = document.getElementById("jobs-list");
-    jobList.innerHTML = "";
-    data.forEach((job) => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
+    if (data.length === 0) {
+      return (jobList.innerHTML = `<td colspan="7" style = "text-align:center;">Chưa có bài tuyển dụng nào!</td>`);
+    } else {
+      jobList.innerHTML = "";
+      data.forEach((job) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
         <td>${job.title}</td>
         <td>${job.location}</td>
         <td>${new Date(job.deadline).toLocaleDateString()}</td>
@@ -681,8 +701,9 @@ async function fetchJobs() {
           </button>
         </td>
       `;
-      jobList.appendChild(tr);
-    });
+        jobList.appendChild(tr);
+      });
+    }
   } catch (error) {
     console.error("Lỗi khi lấy công việc:", error);
     showError("Không thể lấy công việc");
@@ -1145,11 +1166,9 @@ async function getContacts() {
       console.error("Lỗi khi lấy contact!");
     }
     const data = await res.json();
-
-    console.log(data);
     const contactList = document.getElementById("contact-list");
     contactList.innerHTML = "";
-    if (data.length === 0) {
+    if (data.data.length === 0) {
       return (contactList.innerHTML = `<td colspan="6" style = "text-align:center;">Chưa có câu hỏi nào!</td>`);
     }
 

@@ -1,3 +1,24 @@
+async function safeFetch(url, options) {
+  if (window.withLoading) return window.withLoading(() => fetch(url, options));
+  if (window.showLoading) window.showLoading();
+  try {
+    return await fetch(url, options);
+  } finally {
+    if (window.hideLoading) window.hideLoading();
+  }
+}
+
+// ensure loading helper present for pages using main.js
+(function ensureLoadingMain() {
+  if (window.showLoading) return;
+  if (document.querySelector("script[data-loading]")) return;
+  const s = document.createElement("script");
+  s.src = "loading.js";
+  s.setAttribute("data-loading", "1");
+  s.onload = () => {};
+  document.head.appendChild(s);
+})();
+
 document.addEventListener("DOMContentLoaded", () => {
   function createToast(type, title, message) {
     const container = document.getElementById("toast-container");
@@ -60,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const search = searchInput ? searchInput.value : "";
     const API_BASE = `${apiUrl}/api/v1`;
 
-    const res = await fetch(
+    const res = await safeFetch(
       `${API_BASE}/blogs?search=${encodeURIComponent(search)}&page=1&limit=15`,
     );
     const result = await res.json();
@@ -94,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "<p>Không tìm thấy bài viết.</p>";
       return;
     }
-    const res = await fetch(`${API_BASE}/blogs/${id}`);
+    const res = await safeFetch(`${API_BASE}/blogs/${id}`);
     const blog = await res.json();
 
     document.getElementsByClassName("blog-title")[0].innerText = blog.title;
@@ -125,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Nếu index page, chỉ show 3 sp đầu
   if (document.body.classList.contains("index-page")) {
-    fetch(`${API_BASE}/products?page=1&limit=3`)
+    safeFetch(`${API_BASE}/products?page=1&limit=3`)
       .then((res) => res.json())
       .then(({ data }) => {
         data.forEach(renderProductCard);
@@ -154,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
         url.searchParams.set("category", categoryFilter.value);
       }
 
-      fetch(url.toString())
+      safeFetch(url.toString())
         .then((res) => res.json())
         .then(({ data, total }) => {
           productListContainer.innerHTML = "";
@@ -242,7 +263,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const res = await fetch(`${API_BASE}/contact`, {
+      const res = await safeFetch(`${API_BASE}/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -284,7 +305,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  fetch(`${API_BASE}/products/${productId}`)
+  safeFetch(`${API_BASE}/products/${productId}`)
     .then((response) => {
       if (!response.ok) throw new Error("Product not found");
       return response.json();

@@ -1,0 +1,69 @@
+/* Nền tối phủ toàn màn hình */
+#global-loading-overlay {
+  position: fixed;
+  inset: 0;
+  display: none; /* Khi gọi bằng JS thì đổi thành flex */
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+}
+
+/* Hộp loading ở giữa - Ép chết layout dọc */
+.loading-box {
+  background: #ffffff;
+  padding: 35px 50px;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+
+  /* Cặp lệnh tối thượng ép mọi thứ xếp dọc và căn giữa */
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+
+  animation: popUpLoading 0.3s ease;
+}
+
+/* Spinner nằm ngay giữa */
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(76, 175, 80, 0.15);
+  border-top-color: var(--leaf-green);
+  border-right-color: var(--sprout-green);
+  border-radius: 50%;
+  animation: spinLoading 0.8s linear infinite;
+
+  /* Khóa cứng vị trí ở giữa */
+  display: block !important;
+  margin: 0 auto 20px auto !important;
+}
+
+/* Chữ nằm ngay dưới */
+.loading-message {
+  color: var(--leaf-green);
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 !important;
+  display: block !important;
+  width: 100%;
+}
+
+@keyframes spinLoading {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes popUpLoading {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

@@ -6,6 +6,16 @@ const apiUrl =
 
 const API_URL = `${apiUrl}/api/v1/auth/login`;
 
+async function safeFetch(url, options) {
+  if (window.withLoading) return window.withLoading(() => fetch(url, options));
+  if (window.showLoading) window.showLoading();
+  try {
+    return await fetch(url, options);
+  } finally {
+    if (window.hideLoading) window.hideLoading();
+  }
+}
+
 const loginForm = document.getElementById("login-form");
 
 loginForm.addEventListener("submit", async (e) => {
@@ -21,7 +31,7 @@ loginForm.addEventListener("submit", async (e) => {
   }
 
   try {
-    const response = await fetch(API_URL, {
+    const response = await safeFetch(API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

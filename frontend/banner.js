@@ -3,7 +3,17 @@ const dotsContainer = document.querySelector(".slider-dots");
 
 const API_BASE = `${apiUrl}/api/v1`;
 
-fetch(`${API_BASE}/banners`)
+async function safeFetch(url, options) {
+  if (window.withLoading) return window.withLoading(() => fetch(url, options));
+  if (window.showLoading) window.showLoading();
+  try {
+    return await fetch(url, options);
+  } finally {
+    if (window.hideLoading) window.hideLoading();
+  }
+}
+
+safeFetch(`${API_BASE}/banners`)
   .then((response) => {
     if (!response.ok) throw new Error("Mạng mẽo chán quá!");
     return response.json();
