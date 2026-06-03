@@ -60,6 +60,78 @@ app.use("/api/v1/contact", rateLimit({ windowMs: 5 * 60 * 1000, max: 30 }));
 app.get("/health", (_req, res) =>
   res.json({ ok: true, uptime: process.uptime() }),
 );
+const frontendPath = path.join(__dirname, "../frontend");
+
+// Redirect URL cũ sang URL mới
+app.get("/trang-chu.html", (req, res) => {
+  res.redirect(301, "/trang-chu");
+});
+
+app.get("/product.html", (req, res) => {
+  res.redirect(301, "/san-pham");
+});
+
+app.get("/blog.html", (req, res) => {
+  res.redirect(301, "/bai-viet-ky-thuat");
+});
+
+app.get("/about.html", (req, res) => {
+  res.redirect(301, "/gioi-thieu");
+});
+
+app.get("/activities.html", (req, res) => {
+  res.redirect(301, "/hoat-dong");
+});
+
+app.get("/recruitment.html", (req, res) => {
+  res.redirect(301, "/tuyen-dung");
+});
+
+app.get("/detail.html", (req, res) => {
+  const id = req.query.id;
+
+  if (id) {
+    return res.redirect(301, `/san-pham/${id}`);
+  }
+
+  res.redirect(301, "/san-pham");
+});
+
+// Cho phép load css, js, images trong frontend
+app.use(express.static(frontendPath));
+
+// Route URL đẹp
+app.get("/", (req, res) => {
+  res.sendFile(path.join(frontendPath, "index.html"));
+});
+
+app.get("/trang-chu", (req, res) => {
+  res.sendFile(path.join(frontendPath, "trang-chu.html"));
+});
+
+app.get("/san-pham", (req, res) => {
+  res.sendFile(path.join(frontendPath, "product.html"));
+});
+
+app.get("/bai-viet-ky-thuat", (req, res) => {
+  res.sendFile(path.join(frontendPath, "blog.html"));
+});
+
+app.get("/gioi-thieu", (req, res) => {
+  res.sendFile(path.join(frontendPath, "about.html"));
+});
+
+app.get("/hoat-dong", (req, res) => {
+  res.sendFile(path.join(frontendPath, "activities.html"));
+});
+
+app.get("/tuyen-dung", (req, res) => {
+  res.sendFile(path.join(frontendPath, "recruitment.html"));
+});
+
+app.get("/san-pham/:id", (req, res) => {
+  res.sendFile(path.join(frontendPath, "detail.html"));
+});
 
 const productsRouter = require("./routes/products");
 app.use("/api/v1/products", productsRouter);
@@ -97,17 +169,10 @@ app.use("/api/v1", newsRouter);
 
 app.post("/api/v1/contact", contactController.submitContact);
 
-app.get("/", (_req, res) => {
+app.get("/api", (_req, res) => {
   res.json({
     ok: true,
     message: "Backend server is running!",
-    endpoints: {
-      health: "/health",
-      recruitment: "/api/v1/recruitment",
-      banners: "/api/v1/banners",
-      blogs: "/api/v1/blogs",
-      stores: "/api/v1/stores",
-    },
   });
 });
 
