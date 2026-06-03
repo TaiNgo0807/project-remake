@@ -1,11 +1,12 @@
 const slider = document.querySelector(".slider");
-const dotsContainer = document.querySelector(".slider-dots");
 
 const API_BASE = `${apiUrl}/api/v1`;
 
 async function safeFetch(url, options) {
   if (window.withLoading) return window.withLoading(() => fetch(url, options));
+
   if (window.showLoading) window.showLoading();
+
   try {
     return await fetch(url, options);
   } finally {
@@ -32,43 +33,45 @@ safeFetch(`${API_BASE}/banners`)
 
       slidesHtml += `
         <div class="slide-item ${activeClass}">
-          <img class="slide-img" src="${banner.image}" alt="${banner.alt}"/>
+          <img class="slide-img" src="${banner.image}" alt="${banner.alt || "Banner"}">
         </div>
       `;
 
       dotsHtml += `<span class="dot ${activeClass}" data-index="${i}"></span>`;
     });
 
-    slider.innerHTML = slidesHtml;
-    if (dotsContainer) {
-      dotsContainer.innerHTML = dotsHtml;
-    }
+    slider.innerHTML = `
+      ${slidesHtml}
+      <div class="slider-dots">
+        ${dotsHtml}
+      </div>
+    `;
 
-    const slideItems = document.querySelectorAll(".slide-item");
-    const dots = document.querySelectorAll(".dot");
+    const slideItems = slider.querySelectorAll(".slide-item");
+    const dots = slider.querySelectorAll(".dot");
+
     let index = 0;
     let timer;
 
+    const switchSlide = (newIndex) => {
+      slideItems[index].classList.remove("active");
+      dots[index].classList.remove("active");
+
+      index = newIndex;
+
+      slideItems[index].classList.add("active");
+      dots[index].classList.add("active");
+    };
+
+    const startAutoPlay = () => {
+      timer = setInterval(() => {
+        const nextIndex = (index + 1) % slideItems.length;
+        switchSlide(nextIndex);
+      }, 5000);
+    };
+
     if (slideItems.length > 1) {
-      const switchSlide = (newIndex) => {
-        slideItems[index].classList.remove("active");
-        if (dots.length) dots[index].classList.remove("active");
-
-        index = newIndex;
-
-        slideItems[index].classList.add("active");
-        if (dots.length) dots[index].classList.add("active");
-      };
-
-      const startAutoPlay = () => {
-        timer = setInterval(() => {
-          let nextIndex = (index + 1) % slideItems.length;
-          switchSlide(nextIndex);
-        }, 5000);
-      };
-
       dots.forEach((dot, i) => {
-        dot.style.cursor = "pointer";
         dot.onclick = () => {
           clearInterval(timer);
           switchSlide(i);

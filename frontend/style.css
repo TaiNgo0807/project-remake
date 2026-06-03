@@ -846,13 +846,12 @@ footer {
   aspect-ratio: 16 / 9;
   max-height: calc(100vh - 80px);
   overflow: hidden;
+  background: #fff;
 }
+
 .slide-item {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   opacity: 0;
   transition: opacity 1s ease-in-out;
 }
@@ -865,28 +864,60 @@ footer {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  display: block;
 }
+
 .slider-dots {
   position: absolute;
-  bottom: 20px;
+  bottom: clamp(8px, 2vw, 20px);
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 12px;
+  gap: clamp(6px, 1.8vw, 12px);
   z-index: 10;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(4px);
 }
 
 .dot {
-  width: 14px;
-  height: 14px;
-  background-color: #666; /* Màu xám */
+  width: clamp(8px, 2.5vw, 14px);
+  height: clamp(8px, 2.5vw, 14px);
+  background-color: #666;
   border-radius: 50%;
   cursor: pointer;
   transition: 0.3s;
+  flex-shrink: 0;
 }
 
 .dot.active {
-  background-color: #2b8a3e; /* Màu xanh lá lúc được chọn */
+  background-color: #2b8a3e;
+}
+
+@media (max-width: 768px) {
+  .slider {
+    margin-top: 60px;
+    aspect-ratio: 16 / 10;
+    max-height: 45vh;
+  }
+
+  .slider-dots {
+    bottom: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .slider {
+    aspect-ratio: 4 / 3;
+    max-height: 38vh;
+  }
+
+  .slider-dots {
+    bottom: 6px;
+    gap: 6px;
+    padding: 5px 8px;
+  }
 }
 
 .blog-container {
