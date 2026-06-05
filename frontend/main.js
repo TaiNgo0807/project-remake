@@ -13,7 +13,7 @@ async function safeFetch(url, options) {
   if (window.showLoading) return;
   if (document.querySelector("script[data-loading]")) return;
   const s = document.createElement("script");
-  s.src = "loading.js";
+  s.src = "/loading.js";
   s.setAttribute("data-loading", "1");
   s.onload = () => {};
   document.head.appendChild(s);
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-
+//blog
 document.addEventListener("DOMContentLoaded", () => {
   async function loadBlogs() {
     const searchInput = document.getElementById("search");
@@ -84,11 +84,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const res = await safeFetch(
       `${API_BASE}/blogs?search=${encodeURIComponent(search)}&page=1&limit=15`,
     );
+
     const result = await res.json();
-    const blogs = result.data;
+    const blogs = result.data || [];
 
     const container = document.getElementById("blog-container");
+    if (!container) return;
+
     container.innerHTML = "";
+
     if (blogs.length === 0) {
       container.innerHTML = "<p>Không tìm thấy bài viết phù hợp.</p>";
       return;
@@ -96,44 +100,76 @@ document.addEventListener("DOMContentLoaded", () => {
 
     blogs.forEach((blog) => {
       container.innerHTML += `
-            <div class="blog-card">
-                <img src="${blog.thumbnail}" />
-                <h3 class="blog-title">${blog.title} (Đang duyệt)</h3>
-                <p class="blog-excerpt">${blog.short_description}</p>
-                <a href="/blog-detail.html?id=${blog.id}" class="read-more">Xem chi tiết</a>
-            </div>
-        `;
+        <div class="blog-card">
+          <img src="${blog.thumbnail}" />
+          <h3 class="blog-title">${blog.title}</h3>
+          <p class="blog-excerpt">${blog.short_description}</p>
+          <a href="/bai-viet-ky-thuat/${blog.id}" class="read-more">Xem chi tiết</a>
+        </div>
+      `;
     });
   }
+
   async function loadBlogDetail() {
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get("id");
     const API_BASE = `${apiUrl}/api/v1`;
 
+    const params = new URLSearchParams(window.location.search);
+    let id = params.get("id");
+
     if (!id) {
-      document.getElementById("content").innerHTML =
-        "<p>Không tìm thấy bài viết.</p>";
+      const parts = window.location.pathname.split("/").filter(Boolean);
+      const idx = parts.indexOf("bai-viet-ky-thuat");
+
+      if (idx !== -1 && parts.length > idx + 1) {
+        id = parts[idx + 1];
+      }
+    }
+
+    if (!id) {
+      const contentEl = document.getElementById("content");
+      if (contentEl) contentEl.innerHTML = "<p>Không tìm thấy bài viết.</p>";
       return;
     }
+
     const res = await safeFetch(`${API_BASE}/blogs/${id}`);
+
+    if (!res.ok) {
+      const contentEl = document.getElementById("content");
+      if (contentEl) contentEl.innerHTML = "<p>Không tìm thấy bài viết.</p>";
+      return;
+    }
+
     const blog = await res.json();
 
-    document.getElementsByClassName("blog-title")[0].innerText = blog.title;
-    document.getElementsByClassName("author")[0].innerText = blog.author;
-    document.getElementsByClassName("date")[0].innerText = new Date(
-      blog.created_at,
-    ).toLocaleDateString("vi-VN");
+    const titleEl = document.getElementsByClassName("blog-title")[0];
+    const authorEl = document.getElementsByClassName("author")[0];
+    const dateEl = document.getElementsByClassName("date")[0];
+    const contentEl = document.getElementsByClassName("content")[0];
 
-    document.getElementsByClassName("content")[0].innerHTML = blog.content;
+    if (titleEl) titleEl.innerText = blog.title;
+    if (authorEl) authorEl.innerText = blog.author || "Việt Sang";
+    if (dateEl) {
+      dateEl.innerText = new Date(blog.created_at).toLocaleDateString("vi-VN");
+    }
+    if (contentEl) contentEl.innerHTML = blog.content;
   }
-  if (document.getElementById("blog-container")) {
+
+  const blogContainer = document.getElementById("blog-container");
+
+  if (blogContainer) {
     loadBlogs();
+
+    const searchEl = document.getElementById("search");
     let timeout;
-    document.getElementById("search").addEventListener("input", () => {
+
+    searchEl?.addEventListener("input", () => {
       clearTimeout(timeout);
       timeout = setTimeout(loadBlogs, 300);
     });
-  } else if (window.location.pathname.includes("/blog-detail.html")) {
+  } else if (
+    window.location.pathname.startsWith("/bai-viet-ky-thuat/") ||
+    window.location.pathname.includes("blog-detail.html")
+  ) {
     loadBlogDetail();
   }
 });
@@ -293,20 +329,35 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  let productId = urlParams.get("id");
-  if (!productId) {
-    const parts = window.location.pathname.split("/").filter(Boolean);
-    const idx = parts.indexOf("san-pham");
-    if (idx !== -1 && parts.length > idx + 1) productId = parts[idx + 1];
+  const productDetailSection = document.querySelector(".product-detail");
+
+  // Không phải trang chi tiết sản phẩm thì bỏ qua
+  if (!productDetailSection) return;
+
+  const parts = window.location.pathname.split("/").filter(Boolean);
+  const idx = parts.indexOf("san-pham");
+
+  let productId = null;
+
+  if (idx !== -1 && parts.length > idx + 1) {
+    productId = parts[idx + 1];
   }
+
+  // Vẫn hỗ trợ URL cũ detail.html?id=30
+  if (!productId) {
+    const urlParams = new URLSearchParams(window.location.search);
+    productId = urlParams.get("id");
+  }
+
   const API_BASE = `${apiUrl}/api/v1`;
 
   if (!productId) {
-    document.querySelector(".detail-content").innerHTML =
-      "<p>Không tìm thấy sản phẩm.</p>";
+    productDetailSection.innerHTML = "<p>Không tìm thấy sản phẩm.</p>";
     return;
   }
+
+  console.log("Product ID:", productId);
+  console.log("Fetch URL:", `${API_BASE}/products/${productId}`);
 
   safeFetch(`${API_BASE}/products/${productId}`)
     .then((response) => {
@@ -314,20 +365,23 @@ document.addEventListener("DOMContentLoaded", () => {
       return response.json();
     })
     .then((product) => {
+      console.log("Product data:", product);
+
       document.querySelector(".detail-img").innerHTML = `
         <img src="${product.image_url}" alt="${product.name}" />
       `;
 
       document.querySelector(".product-summary").innerHTML = `
-        <p style="font-size: 1.4rem">${product.summary}</p>
+        <p style="font-size: 1.4rem">${product.summary || ""}</p>
       `;
+
       document.querySelector(".detail-bottom").innerHTML = `
-        <h3 class="product-name">${product.name}</h3>
-        <p class="product-info">${product.description}</p>
+        <h3 class="product-name">${product.name || ""}</h3>
+        <p class="product-info">${product.description || ""}</p>
       `;
     })
-    .catch(() => {
-      document.querySelector(".detail-content").innerHTML =
-        "<p>Không tìm thấy sản phẩm.</p>";
+    .catch((err) => {
+      console.error("Lỗi tải sản phẩm:", err);
+      productDetailSection.innerHTML = "<p>Không tìm thấy sản phẩm.</p>";
     });
 });

@@ -112,6 +112,15 @@ app.get("/product.html", (req, res) => {
 app.get("/blog.html", (req, res) => {
   res.redirect(301, "/bai-viet-ky-thuat");
 });
+app.get("/blog-detail.html", (req, res) => {
+  const id = req.query.id;
+
+  if (id) {
+    return res.redirect(301, `/bai-viet-ky-thuat/${id}`);
+  }
+
+  res.redirect(301, "/bai-viet-ky-thuat");
+});
 
 app.get("/about.html", (req, res) => {
   res.redirect(301, "/gioi-thieu");
@@ -155,10 +164,29 @@ app.get("/san-pham", (req, res) => {
   res.sendFile(path.join(frontendPath, "product.html"));
 });
 
+app.get("/san-pham/:id", (req, res, next) => {
+  const { id } = req.params;
+
+  if (!/^\d+$/.test(id)) {
+    return next();
+  }
+
+  res.sendFile(path.join(frontendPath, "detail.html"));
+});
+
 app.get("/bai-viet-ky-thuat", (req, res) => {
   res.sendFile(path.join(frontendPath, "blog.html"));
 });
 
+app.get("/bai-viet-ky-thuat/:id", (req, res, next) => {
+  const { id } = req.params;
+
+  if (!/^\d+$/.test(id)) {
+    return next();
+  }
+
+  res.sendFile(path.join(frontendPath, "blog-detail.html"));
+});
 app.get("/gioi-thieu", (req, res) => {
   res.sendFile(path.join(frontendPath, "about.html"));
 });
@@ -169,10 +197,6 @@ app.get("/hoat-dong", (req, res) => {
 
 app.get("/tuyen-dung", (req, res) => {
   res.sendFile(path.join(frontendPath, "recruitment.html"));
-});
-
-app.get("/san-pham/:id", (req, res) => {
-  res.sendFile(path.join(frontendPath, "detail.html"));
 });
 
 app.get("/dai-ly", (req, res) => {

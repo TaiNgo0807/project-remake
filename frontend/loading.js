@@ -4,17 +4,17 @@
 
   // inject stylesheet
   try {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'loading.css';
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "/loading.css";
     document.head.appendChild(link);
   } catch (e) {
     // ignore
   }
 
   // create overlay
-  const overlay = document.createElement('div');
-  overlay.id = 'global-loading-overlay';
+  const overlay = document.createElement("div");
+  overlay.id = "global-loading-overlay";
   overlay.innerHTML = `
     <div class="loading-box">
       <div>
@@ -29,14 +29,14 @@
 
   function showLoading() {
     count = Math.max(0, count) + 1;
-    overlay.style.display = 'flex';
+    overlay.style.display = "flex";
   }
 
   function hideLoading() {
     count = Math.max(0, count - 1);
     if (count <= 0) {
       count = 0;
-      overlay.style.display = 'none';
+      overlay.style.display = "none";
     }
   }
 

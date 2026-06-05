@@ -17,6 +17,11 @@
       "destination": "/blog.html"
     },
     {
+      "source": "/bai-viet-ky-thuat/:id",
+      "destination": "/blog-detail.html"
+    },
+
+    {
       "source": "/gioi-thieu",
       "destination": "/about.html"
     },
@@ -56,6 +61,11 @@
     {
       "source": "/blog.html",
       "destination": "/bai-viet-ky-thuat",
+      "permanent": true
+    },
+    {
+      "source": "/blog-detail.html",
+      "destination": "/bai-viet-ky-thuat/:id",
       "permanent": true
     },
     {
