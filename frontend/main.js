@@ -220,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderProductCard(product) {
     const html = `
       <div class="product-card">
-        <a href="detail.html?id=${product.id}" class="product-link">
+        <a href="/san-pham/${product.id}" class="product-link">
           <div class="product-img">
             <img src="${product.image_url}" alt="${product.name}" />
           </div>
@@ -232,9 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }</p>
           </div>
         </a>
-        <a href="detail.html?id=${
-          product.id
-        }" class="product-btn">Xem chi tiết</a>
+        <a href="/san-pham/${product.id}" class="product-btn">Xem chi tiết</a>
       </div>
     `;
     document
@@ -296,7 +294,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   const urlParams = new URLSearchParams(window.location.search);
-  const productId = urlParams.get("id");
+  let productId = urlParams.get("id");
+  if (!productId) {
+    const parts = window.location.pathname.split("/").filter(Boolean);
+    const idx = parts.indexOf("san-pham");
+    if (idx !== -1 && parts.length > idx + 1) productId = parts[idx + 1];
+  }
   const API_BASE = `${apiUrl}/api/v1`;
 
   if (!productId) {
