@@ -1,47 +1,4 @@
 {
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/trang-chu",
-      "destination": "/trang-chu.html"
-    },
-    {
-      "source": "/san-pham",
-      "destination": "/product.html"
-    },
-    {
-      "source": "/bai-viet-ky-thuat",
-      "destination": "/blog.html"
-    },
-    {
-      "source": "/bai-viet-ky-thuat/:id",
-      "destination": "/blog-detail.html"
-    },
-
-    {
-      "source": "/gioi-thieu",
-      "destination": "/about.html"
-    },
-    {
-      "source": "/hoat-dong",
-      "destination": "/activities.html"
-    },
-    {
-      "source": "/tuyen-dung",
-      "destination": "/recruitment.html"
-    },
-    {
-      "source": "/san-pham/:id",
-      "destination": "/detail.html"
-    },
-    {
-      "source": "/dai-ly",
-      "destination": "/store.html"
-    }
-  ],
   "redirects": [
     {
       "source": "/index.html",
@@ -64,11 +21,6 @@
       "permanent": true
     },
     {
-      "source": "/blog-detail.html",
-      "destination": "/bai-viet-ky-thuat/:id",
-      "permanent": true
-    },
-    {
       "source": "/about.html",
       "destination": "/gioi-thieu",
       "permanent": true
@@ -84,9 +36,75 @@
       "permanent": true
     },
     {
-      "source": "/dai-ly",
-      "destination": "/store.html",
+      "source": "/store.html",
+      "destination": "/dai-ly",
       "permanent": true
+    },
+    {
+      "source": "/detail.html",
+      "has": [
+        {
+          "type": "query",
+          "key": "id",
+          "value": "(?<id>[^&]+)"
+        }
+      ],
+      "destination": "/san-pham/:id",
+      "permanent": true
+    },
+    {
+      "source": "/blog-detail.html",
+      "has": [
+        {
+          "type": "query",
+          "key": "id",
+          "value": "(?<id>[^&]+)"
+        }
+      ],
+      "destination": "/bai-viet-ky-thuat/:id",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/trang-chu",
+      "destination": "/trang-chu.html"
+    },
+    {
+      "source": "/san-pham",
+      "destination": "/product.html"
+    },
+    {
+      "source": "/san-pham/:id",
+      "destination": "/detail.html"
+    },
+    {
+      "source": "/bai-viet-ky-thuat",
+      "destination": "/blog.html"
+    },
+    {
+      "source": "/bai-viet-ky-thuat/:id",
+      "destination": "/blog-detail.html"
+    },
+    {
+      "source": "/gioi-thieu",
+      "destination": "/about.html"
+    },
+    {
+      "source": "/hoat-dong",
+      "destination": "/activities.html"
+    },
+    {
+      "source": "/tuyen-dung",
+      "destination": "/recruitment.html"
+    },
+    {
+      "source": "/dai-ly",
+      "destination": "/store.html"
     }
   ]
 }
