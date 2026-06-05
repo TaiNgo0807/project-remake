@@ -125,6 +125,10 @@ app.get("/recruitment.html", (req, res) => {
   res.redirect(301, "/tuyen-dung");
 });
 
+app.get("/store.html", (req, res) => {
+  res.redirect(301, "/dai-ly");
+});
+
 app.get("/detail.html", (req, res) => {
   const id = req.query.id;
 
@@ -171,6 +175,9 @@ app.get("/san-pham/:id", (req, res) => {
   res.sendFile(path.join(frontendPath, "detail.html"));
 });
 
+app.get("/dai-ly", (req, res) => {
+  res.sendFile(path.join(frontendPath, "store.html"));
+});
 const productsRouter = require("./routes/products");
 app.use("/api/v1/products", productsRouter);
 
