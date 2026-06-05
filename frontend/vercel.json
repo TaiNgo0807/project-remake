@@ -1,8 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/trang-chu",
+      "source": "/",
       "destination": "/index.html"
+    },
+    {
+      "source": "/trang-chu",
+      "destination": "/trang-chu.html"
     },
     {
       "source": "/san-pham",
@@ -36,6 +40,11 @@
   "redirects": [
     {
       "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/trang-chu.html",
       "destination": "/trang-chu",
       "permanent": true
     },
