@@ -83,24 +83,33 @@ function parseImageUrls(imageUrls) {
 function renderGallery(images) {
   if (!images || images.length === 0) return "";
 
-  const visibleImages = images.slice(0, 5);
   const total = images.length;
+  const visibleImages = images.slice(0, 5);
   const galleryClass = `gallery-${Math.min(total, 5)}`;
-
-  // Lưu toàn bộ ảnh, kể cả ảnh đang bị ẩn
   const encodedImages = encodeURIComponent(JSON.stringify(images));
 
   return `
     <div class="act-gallery ${galleryClass}" data-images="${encodedImages}">
       ${visibleImages
         .map((url, index) => {
-          const isLast = index === 4 && total > 5;
+          const isDesktopMore = index === 4 && total > 5;
+          const isMobileMore = index === 3 && total > 4;
 
           return `
             <div class="img-wrap gi-${index + 1}" data-index="${index}">
-              <img src="${url}" alt="Hình hoạt động ${index + 1}" />
+              <img src="${escapeHtml(url)}" alt="Hình hoạt động ${index + 1}" />
 
-              ${isLast ? `<div class="img-more">+${total - 5}</div>` : ""}
+              ${
+                isDesktopMore
+                  ? `<div class="img-more img-more-desktop">+${total - 5}</div>`
+                  : ""
+              }
+
+              ${
+                isMobileMore
+                  ? `<div class="img-more img-more-mobile">+${total - 4}</div>`
+                  : ""
+              }
             </div>
           `;
         })
